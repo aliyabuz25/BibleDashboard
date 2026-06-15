@@ -72,6 +72,108 @@
     #userNavbarAvatarImg {
       display: none !important;
     }
+
+    /* Shadcn/ui-like Light Sidebar styling */
+    .main-sidebar, .main-sidebar *, .main-sidebar *::before, .main-sidebar *::after {
+      box-shadow: none !important;
+    }
+    .main-sidebar {
+      background-color: #ffffff !important;
+      border-right: 1px solid #e4e4e7 !important;
+    }
+    .brand-link {
+      background-color: #ffffff !important;
+      border-bottom: 1px solid #e4e4e7 !important;
+      color: #09090b !important;
+      font-weight: 600 !important;
+      display: flex !important;
+      align-items: center !important;
+      height: 57px !important;
+    }
+    .brand-link .brand-text {
+      color: #09090b !important;
+      font-weight: 600 !important;
+    }
+    .sidebar {
+      background-color: #ffffff !important;
+    }
+    /* Nav items styling */
+    .nav-sidebar .nav-item {
+      margin: 4px 8px !important;
+    }
+    .nav-sidebar .nav-link {
+      border-radius: 6px !important;
+      color: #3f3f46 !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      padding: 8px 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      transition: background-color 0.15s, color 0.15s !important;
+    }
+    .nav-sidebar .nav-link i {
+      color: #71717a !important;
+      font-size: 15px !important;
+      width: 20px !important;
+      margin-right: 10px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    /* Active Link state */
+    .nav-sidebar .nav-link.active {
+      background-color: #f4f4f5 !important;
+      color: #09090b !important;
+    }
+    .nav-sidebar .nav-link.active i {
+      color: #09090b !important;
+    }
+    /* Hover state */
+    .nav-sidebar .nav-link:hover:not(.active) {
+      background-color: #f4f4f5 !important;
+      color: #09090b !important;
+    }
+    .nav-sidebar .nav-link:hover:not(.active) i {
+      color: #09090b !important;
+    }
+    /* Sidebar Headers */
+    .nav-sidebar .nav-header {
+      color: #71717a !important;
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+      padding: 16px 12px 6px 12px !important;
+    }
+    /* Treeview style adjustment */
+    .nav-sidebar .menu-open > .nav-link {
+      background-color: transparent !important;
+      color: #09090b !important;
+    }
+    .nav-sidebar .menu-open > .nav-link.active {
+      background-color: #f4f4f5 !important;
+    }
+    /* Submenus layout (treeview children) */
+    .nav-treeview {
+      padding-left: 10px !important;
+    }
+    .nav-treeview .nav-link {
+      padding: 6px 12px !important;
+      font-size: 13.5px !important;
+      color: #71717a !important;
+    }
+    .nav-treeview .nav-link.active {
+      background-color: #f4f4f5 !important;
+      color: #09090b !important;
+    }
+    .nav-treeview .nav-link:hover:not(.active) {
+      background-color: #f4f4f5 !important;
+      color: #09090b !important;
+    }
+    /* Light style sidebar toggle / brand icon update */
+    .brand-link i {
+      color: #09090b !important;
+    }
   </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -152,7 +254,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-light-primary">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <i class="fas fa-layer-group text-info ml-3 mr-2" style="font-size: 20px;"></i>
