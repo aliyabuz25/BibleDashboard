@@ -2,3 +2,7 @@ node_modules/
 database.sqlite
 .env
 .DS_Store
+*.pem
+test.mp4
+test-video.mp4
+*.log

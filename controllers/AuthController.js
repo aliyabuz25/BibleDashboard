@@ -38,53 +38,24 @@ class AuthController {
         return res.status(400).json({ message: 'Bu e-posta adresi zaten kullanımda.' });
       }
 
-      const verificationToken = crypto.randomBytes(32).toString('hex');
-
       const newUser = await userModel.create({
         firstName,
         lastName,
         email,
         phoneNumber,
         password,
-        verificationToken
+        verificationToken: null
       });
 
-      // Send confirmation email
-      const verificationLink = `${req.protocol}://${req.get('host')}/api/auth/verify?token=${verificationToken}`;
-      
-      console.log('--- E-POSTA ONAY BAĞLANTISI ---');
-      console.log(verificationLink);
-      console.log('-------------------------------');
-
-      const mailOptions = {
-        from: process.env.SMTP_FROM || 'noreply@biblecms.com',
-        to: email,
-        subject: 'BibleCMS E-posta Onayı',
-        html: `
-          <h3>BibleCMS E-posta Onaylama</h3>
-          <p>Merhaba ${firstName} ${lastName},</p>
-          <p>Kaydınızı tamamlamak için lütfen aşağıdaki bağlantıya tıklayarak e-posta adresinizi onaylayın:</p>
-          <p><a href="${verificationLink}" style="padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; display: inline-block;">E-postamı Onayla</a></p>
-          <p>Alternatif olarak bu bağlantıyı tarayıcınıza yapıştırabilirsiniz:</p>
-          <p>${verificationLink}</p>
-        `
-      };
-
-      try {
-        await transporter.sendMail(mailOptions);
-      } catch (err) {
-        console.warn('SMTP gönderimi başarısız oldu (muhtemelen yapılandırılmadı):', err.message);
-      }
-
       res.status(201).json({
-        message: 'Kayıt başarıyla tamamlandı. Lütfen e-postanıza gönderilen onay bağlantısını kontrol edin.',
+        message: 'Kayıt başarıyla tamamlandı.',
         user: {
           id: newUser.id,
           firstName: newUser.firstName,
           lastName: newUser.lastName,
           email: newUser.email,
           phoneNumber: newUser.phoneNumber,
-          isVerified: 0
+          isVerified: 1
         }
       });
     } catch (error) {
@@ -149,10 +120,6 @@ class AuthController {
       const user = await userModel.findByEmail(email);
       if (!user) {
         return res.status(400).json({ message: 'E-posta veya şifre hatalı.' });
-      }
-
-      if (user.isVerified !== 1) {
-        return res.status(400).json({ message: 'Lütfen e-posta adresinizi onaylayın.' });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);

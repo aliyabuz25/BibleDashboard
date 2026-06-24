@@ -1,0 +1,246 @@
+BibleCMS Payment Process
+Last updated: 2026-06-19
+
+Purpose
+-------
+This document explains the current payment flow for the frontend team.
+It focuses on how a purchase should move from product selection to Stripe
+checkout, then back into the app and subscription validation.
+
+Current architecture
+--------------------
+The backend currently supports two payment-related flows:
+
+1. Payment record creation in the local SQLite database.
+2. Stripe Checkout Session creation that returns a redirect URL.
+
+The backend does not currently include a Stripe webhook handler.
+That means payment finalization is not yet confirmed server-to-server
+after checkout completion. The frontend should treat Stripe success as
+the redirect outcome and then trigger a local verification step.
+
+End-to-end flow
+---------------
+1. User selects a product or subscription in the frontend.
+2. Frontend sends payment intent data to the backend.
+3. Backend creates a local payment record.
+4. Backend creates a Stripe Checkout Session.
+5. Backend returns `checkoutUrl`.
+6. Frontend redirects the user to Stripe using `checkoutUrl`.
+7. Stripe completes or cancels the checkout.
+8. Stripe redirects back to the app using the configured success or cancel URL.
+9. Frontend checks subscription status using `/api/subscription/check`.
+10. Frontend updates UI state based on active or exhausted subscription data.
+
+Available backend endpoints
+---------------------------
+- `GET /api/payments`
+  - Lists stored payment records
+
+- `POST /api/payments`
+  - Creates a local payment record
+  - Can also return Stripe checkout data when Stripe is requested
+
+- `POST /api/payments/stripe-checkout`
+  - Creates a Stripe Checkout Session and returns a redirect URL
+
+- `GET /api/subscription/check`
+  - Checks the latest payment/subscription state for a user
+
+- `POST /api/subscription/check`
+  - Same purpose as the GET version, but accepts body payload instead of query params
+
+Request inputs
+--------------
+The payment creation and checkout endpoints accept these fields:
+
+- `uid`
+- `userId`
+- `uuid`
+- `userEmail`
+- `productId`
+- `productName`
+- `amount`
+- `currency`
+- `status`
+- `transactionId`
+- `subscriptionEndDate`
+- `ip`
+- `location`
+- `successUrl`
+- `cancelUrl`
+- `provider`
+- `paymentMethod`
+- `returnStripeLink`
+
+Important backend behavior
+--------------------------
+- `uid` is required.
+- If `uid` is missing, the backend returns `400`.
+- `amount` is converted to Stripe minor units by multiplying by 100.
+- `currency` defaults to `usd` for Stripe if omitted.
+- `checkoutUrl` is only returned when Stripe checkout is requested.
+- Local payment data is still inserted into SQLite by `/api/payments`.
+
+How to use Stripe checkout
+--------------------------
+Recommended frontend flow:
+
+1. Collect user and product data.
+2. POST the payload to `/api/payments/stripe-checkout`.
+3. Read `checkoutUrl` from the response.
+4. Redirect the browser:
+
+```js
+window.location.href = data.checkoutUrl;
+```
+
+Suggested request body:
+```json
+{
+  "uid": "user_123",
+  "userEmail": "user@example.com",
+  "productId": "premium_yearly",
+  "productName": "Premium Yearly",
+  "amount": 49.99,
+  "currency": "USD",
+  "successUrl": "https://16-171-22-191.sslip.io/billing/success",
+  "cancelUrl": "https://16-171-22-191.sslip.io/billing/cancel"
+}
+```
+
+Example response:
+```json
+{
+  "message": "Stripe checkout bağlantısı oluşturuldu.",
+  "checkoutUrl": "https://checkout.stripe.com/c/pay/cs_test_...",
+  "checkoutSessionId": "cs_test_..."
+}
+```
+
+Success and cancel handling
+---------------------------
+The backend uses these default URLs when none are provided:
+
+- `STRIPE_CHECKOUT_SUCCESS_URL`
+- `STRIPE_CHECKOUT_CANCEL_URL`
+
+If the frontend does not pass custom URLs, the app should still listen for
+the query string or path state after redirect and refresh subscription data.
+
+Recommended success screen behavior:
+
+1. Show a processing or success message.
+2. Call `/api/subscription/check?uid=...`.
+3. If status is `active`, unlock the paid feature.
+4. If status is `exhausted`, keep the UI locked and ask the user to retry.
+
+Subscription verification
+-------------------------
+Use the subscription endpoint after checkout return:
+
+```http
+GET /api/subscription/check?uid=user_123
+```
+
+Accepted identifiers:
+- `uid`
+- `userId`
+- `uuid`
+
+Possible responses:
+- `active`
+- `exhausted`
+
+How the backend decides state:
+- If a latest payment exists and has a valid `subscriptionEndDate`, it is checked first.
+- If there is no expiry date, the status must be `completed` or `active`.
+- If no qualifying payment exists, the response is `exhausted`.
+
+Frontend implementation guidance
+--------------------------------
+- Do not assume Stripe success alone means entitlement is active.
+- Always re-check subscription status after redirect.
+- Keep the payment UI idempotent.
+- If the user refreshes the success page, call the subscription endpoint again.
+- Do not block the UI forever while waiting; show a retry state if verification fails.
+- Preserve the payment intent product id in the client so the user can retry cleanly.
+
+What is not implemented yet
+---------------------------
+- Stripe webhook verification
+- Server-side confirmation that Stripe payment succeeded
+- Automatic payment status sync from Stripe to the local database
+
+Why this matters:
+- Without a webhook, Stripe checkout completion is only known through the redirect.
+- If you need strict payment integrity, the next step is to add a webhook route
+  that verifies Stripe events and updates the local payment row.
+
+Suggested frontend states
+-------------------------
+1. `idle`
+   - User is browsing products
+
+2. `creating_checkout`
+   - Payment request is being sent to the backend
+
+3. `redirecting_to_stripe`
+   - `checkoutUrl` has been received
+
+4. `returning_from_stripe`
+   - User came back from Stripe success or cancel URL
+
+5. `verifying_subscription`
+   - Frontend is calling `/api/subscription/check`
+
+6. `active`
+   - Paid access is unlocked
+
+7. `failed`
+   - Checkout or verification did not complete successfully
+
+Environment variables
+---------------------
+The backend expects these for Stripe checkout:
+
+- `STRIPE_SECRET_KEY`
+- `STRIPE_CHECKOUT_SUCCESS_URL`
+- `STRIPE_CHECKOUT_CANCEL_URL`
+
+Useful implementation pattern
+-----------------------------
+Frontend payment button flow:
+
+```js
+async function startCheckout(payload) {
+  const res = await fetch('/api/payments/stripe-checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || 'Checkout creation failed');
+  }
+
+  window.location.href = data.checkoutUrl;
+}
+```
+
+After return from Stripe:
+
+```js
+async function verifyAccess(uid) {
+  const res = await fetch(`/api/subscription/check?uid=${encodeURIComponent(uid)}`);
+  const data = await res.json();
+  return data.status;
+}
+```
+
+Practical note
+-------------
+At the moment, the payment row is created before the Stripe checkout redirect.
+That is useful for tracking, but it also means the frontend should be prepared
+for a payment record to exist before the subscription is actually validated.

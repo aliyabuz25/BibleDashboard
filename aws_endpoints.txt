@@ -5,25 +5,25 @@ KID BIBLE SERVICE - RAW API ENDPOINT USAGE GUIDE
 All API requests must include the following User-Agent header:
 User-Agent: bible-appclient
 
-Base URL: http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com
+Base URL: https://app.thekidsbiblestories.com
 
 --------------------------------------------------------------------------------
 1. LOCALES ENDPOINT (Multi-language Translations Dictionary)
 --------------------------------------------------------------------------------
 Method: GET
-URL: http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/locales
+URL: https://app.thekidsbiblestories.com/api/locales
 Headers:
   User-Agent: bible-appclient
 
 Example curl request:
 curl -H "User-Agent: bible-appclient" \
-     http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/locales
+     https://app.thekidsbiblestories.com/api/locales
 
 --------------------------------------------------------------------------------
 2. LOGIN ENDPOINT (Retrieve JWT Token)
 --------------------------------------------------------------------------------
 Method: POST
-URL: http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/login
+URL: https://app.thekidsbiblestories.com/api/login
 Headers:
   Content-Type: application/json
   User-Agent: bible-appclient
@@ -38,25 +38,25 @@ curl -X POST \
      -H "Content-Type: application/json" \
      -H "User-Agent: bible-appclient" \
      -d '{"email":"your_email@example.com","password":"your_password"}' \
-     http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/login
+     https://app.thekidsbiblestories.com/api/login
 
 --------------------------------------------------------------------------------
 3. GET CATALOGS ENDPOINT (List Visual Publications)
 --------------------------------------------------------------------------------
 Method: GET
-URL: http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/catalogs
+URL: https://app.thekidsbiblestories.com/api/catalogs
 Headers:
   User-Agent: bible-appclient
 
 Example curl request:
 curl -H "User-Agent: bible-appclient" \
-     http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/catalogs
+     https://app.thekidsbiblestories.com/api/catalogs
 
 --------------------------------------------------------------------------------
 4. POST CATALOGS ENDPOINT (Add New Visual Publication)
 --------------------------------------------------------------------------------
 Method: POST
-URL: http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/catalogs
+URL: https://app.thekidsbiblestories.com/api/catalogs
 Headers:
   Authorization: Bearer <JWT_TOKEN>
   User-Agent: bible-appclient
@@ -74,13 +74,13 @@ curl -X POST \
      -F "description=My Book Description" \
      -F "verticalImage=@/path/to/vertical.jpg" \
      -F "horizontalImage=@/path/to/horizontal.jpg" \
-     http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/catalogs
+     https://app.thekidsbiblestories.com/api/catalogs
 
 --------------------------------------------------------------------------------
 5. AWS S3 FILE UPLOAD ENDPOINT (Direct File Uploads)
 --------------------------------------------------------------------------------
 Method: POST
-URL: http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/aws/upload
+URL: https://app.thekidsbiblestories.com/api/aws/upload
 Headers:
   Authorization: Bearer <JWT_TOKEN>
   User-Agent: bible-appclient
@@ -96,13 +96,13 @@ curl -X POST \
      -H "Authorization: Bearer YOUR_JWT_TOKEN" \
      -H "User-Agent: bible-appclient" \
      -F "file=@/path/to/story.mp3" \
-     http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/aws/upload
+     https://app.thekidsbiblestories.com/api/aws/upload
 
 --------------------------------------------------------------------------------
 6. CREATE PURCHASE/PAYMENT ENDPOINT
 --------------------------------------------------------------------------------
 Method: POST
-URL: http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/payments
+URL: https://app.thekidsbiblestories.com/api/payments
 Headers:
   User-Agent: bible-appclient
   Content-Type: application/json
@@ -126,13 +126,13 @@ curl -X POST \
      -H "Content-Type: application/json" \
      -H "User-Agent: bible-appclient" \
      -d '{"uid":"user_1234","userEmail":"test@example.com","productId":"premium_yearly","amount":49.99,"currency":"USD","status":"completed","transactionId":"GPA.1111","uuid":"some-device-uuid","subscriptionEndDate":"2027-06-16T23:59:59.000Z"}' \
-     http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/payments
+     https://app.thekidsbiblestories.com/api/payments
 
 --------------------------------------------------------------------------------
 7. CHECK SUBSCRIPTION ENDPOINT (Verifies status, returns "exhausted" if expired)
 --------------------------------------------------------------------------------
 Method: GET or POST
-URL: http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/subscription/check
+URL: https://app.thekidsbiblestories.com/api/subscription/check
 Headers:
   User-Agent: bible-appclient
 Query parameters (for GET) or JSON body (for POST):
@@ -140,14 +140,14 @@ Query parameters (for GET) or JSON body (for POST):
 
 Example GET curl request:
 curl -H "User-Agent: bible-appclient" \
-     "http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/subscription/check?uid=user_1234"
+     "https://app.thekidsbiblestories.com/api/subscription/check?uid=user_1234"
 
 Example POST curl request:
 curl -X POST \
      -H "Content-Type: application/json" \
      -H "User-Agent: bible-appclient" \
      -d '{"uid":"user_1234"}' \
-     http://ec2-16-171-22-191.eu-north-1.compute.amazonaws.com/api/subscription/check
+     https://app.thekidsbiblestories.com/api/subscription/check
 
 Response status is "active" if valid/active, or "exhausted" if expired or not found.
 ================================================================================

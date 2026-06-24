@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KidBibleService | Admin Console</title>
+  <title>CMS Dashboard | Admin Console</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -63,6 +63,295 @@
       margin-bottom: 6px;
       color: #adb5bd;
     }
+
+    .video-form-card {
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      padding: 14px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+      margin-bottom: 14px;
+    }
+    .video-form-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .video-form-label .hint {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .video-upload-note {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 6px;
+    }
+    .upload-progress-wrap {
+      display: none;
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    }
+    .upload-progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #475569;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .upload-progress-bar {
+      width: 100%;
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .upload-progress-bar > span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ef4444 0%, #f97316 100%);
+      transition: width 0.15s ease;
+    }
+    .offcanvas-footer-sheet .btn {
+      min-width: 120px;
+      border-radius: 999px;
+      padding: 0.7rem 1.15rem;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+    .offcanvas-footer-sheet .btn-secondary {
+      background: #e2e8f0;
+      border-color: #e2e8f0;
+      color: #0f172a;
+    }
+    .offcanvas-footer-sheet .btn-secondary:hover {
+      background: #cbd5e1;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+    .offcanvas-footer-sheet .btn-danger {
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+      border: 0;
+    }
+    .offcanvas-footer-sheet .btn-danger:hover {
+      background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+    }
+
+    /* Stripe-inspired receipt preview */
+    .receipt-modal .modal-content {
+      border: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(15, 23, 42, 0.18);
+      background: #f8fafc;
+    }
+    .receipt-modal .modal-header {
+      border: 0;
+      padding: 1rem 1.25rem 0.85rem;
+      background:
+        radial-gradient(circle at top right, rgba(37, 99, 235, 0.10), transparent 34%),
+        linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+    }
+    .receipt-modal .modal-title {
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .receipt-modal .modal-body {
+      padding: 0 1.25rem 1.25rem;
+      background: linear-gradient(180deg, #f9fbff 0%, #f8fafc 100%);
+    }
+    .receipt-summary {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .receipt-card {
+      background: linear-gradient(135deg, #0f172a 0%, #111827 52%, #1e293b 100%);
+      color: #fff;
+      border-radius: 14px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      min-height: 168px;
+    }
+    .receipt-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.32), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.16), transparent 30%);
+      pointer-events: none;
+    }
+    .receipt-card > * {
+      position: relative;
+      z-index: 1;
+    }
+    .receipt-kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 12px;
+    }
+    .receipt-amount {
+      font-size: 2rem;
+      font-weight: 750;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin-bottom: 10px;
+    }
+    .receipt-meta-line {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.88rem;
+      margin-bottom: 4px;
+    }
+    .receipt-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      background: rgba(255, 255, 255, 0.10);
+      color: #fff;
+      margin-top: 14px;
+    }
+    .receipt-side {
+      display: grid;
+      gap: 10px;
+    }
+    .receipt-side-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    }
+    .receipt-side-label {
+      display: block;
+      color: #64748b;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 6px;
+    }
+    .receipt-side-value {
+      color: #0f172a;
+      font-weight: 600;
+      word-break: break-word;
+    }
+    .receipt-details {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.03);
+    }
+    .receipt-details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 14px;
+    }
+    .receipt-detail {
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.75);
+    }
+    .receipt-detail:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+    .receipt-detail label {
+      display: block;
+      color: #64748b;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 4px;
+    }
+    .receipt-detail strong {
+      color: #0f172a;
+      font-size: 0.92rem;
+      word-break: break-word;
+    }
+    .receipt-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .receipt-logo-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-size: 13px;
+    }
+    .receipt-quick-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .receipt-quick-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      background: rgba(255, 255, 255, 0.8);
+      color: #0f172a;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 999px;
+    }
+    .receipt-titleline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .receipt-subtitle {
+      color: #64748b;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+    .receipt-close {
+      opacity: 1;
+      color: #475569;
+      text-shadow: none;
+    }
+    .receipt-close:hover {
+      color: #0f172a;
+    }
+    @media (max-width: 767.98px) {
+      .receipt-summary,
+      .receipt-details-grid {
+        grid-template-columns: 1fr;
+      }
+      .receipt-amount {
+        font-size: 1.7rem;
+      }
+    }
     /* Remove shadow and border from the navbar (topbar) */
     .main-header.navbar {
       box-shadow: none !important;
@@ -97,6 +386,43 @@
     .sidebar {
       background-color: #ffffff !important;
     }
+    /* Sidebar User Panel Styling */
+    .sidebar-user-panel {
+      display: flex !important;
+      align-items: center !important;
+      padding: 12px 16px !important;
+      margin: 12px 12px 8px 12px !important;
+      border: 1px solid #e4e4e7 !important;
+      border-radius: 8px !important;
+      background-color: #fafafa !important;
+    }
+    .sidebar-user-panel img {
+      width: 32px !important;
+      height: 32px !important;
+      border-radius: 50% !important;
+      margin-right: 10px !important;
+      object-fit: cover !important;
+      border: 1px solid #e4e4e7 !important;
+    }
+    .sidebar-user-panel .user-info {
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      line-height: 1.2 !important;
+    }
+    .sidebar-user-panel .user-name {
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: #09090b !important;
+      white-space: nowrap !important;
+      text-overflow: ellipsis !important;
+      overflow: hidden !important;
+    }
+    .sidebar-user-panel .user-role {
+      font-size: 11px !important;
+      color: #71717a !important;
+      font-weight: 500 !important;
+    }
     /* Nav items styling */
     .nav-sidebar .nav-item {
       margin: 2px 8px !important;
@@ -110,9 +436,11 @@
       display: flex !important;
       align-items: center !important;
       transition: background-color 0.15s, color 0.15s !important;
+      width: auto !important;
+      box-sizing: border-box !important;
     }
     .nav-sidebar .nav-link i {
-      color: #71717a !important;
+      color: #71717a;
       font-size: 14px !important;
       width: 20px !important;
       margin-right: 10px !important;
@@ -480,6 +808,186 @@
       font-size: 13px !important;
     }
 
+    /* Custom Offcanvas Sliding Sheet Panel (Shadcn Style) */
+    .offcanvas-sheet {
+      position: fixed;
+      top: 0;
+      right: -550px; /* Hidden by default */
+      width: 550px;
+      max-width: 100%;
+      height: 100vh;
+      background-color: #ffffff;
+      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.08) !important;
+      z-index: 1050;
+      transition: right 0.3s ease-in-out;
+      border-left: 1px solid #e4e4e7;
+      display: flex;
+      flex-direction: column;
+    }
+    .offcanvas-sheet.show {
+      right: 0 !important;
+    }
+    .offcanvas-backdrop-sheet {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(9, 9, 11, 0.4);
+      z-index: 1040;
+      display: none;
+      transition: opacity 0.2s ease-in-out;
+      opacity: 0;
+    }
+    .offcanvas-backdrop-sheet.show {
+      display: block !important;
+      opacity: 1 !important;
+    }
+    .offcanvas-header-sheet {
+      padding: 1.25rem 1.5rem !important;
+      border-bottom: 1px solid #e4e4e7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+    }
+    .offcanvas-header-sheet .offcanvas-title {
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      color: #09090b !important;
+      margin: 0 !important;
+    }
+    .offcanvas-header-sheet .close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #71717a;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+    .offcanvas-header-sheet .close-btn:hover {
+      color: #09090b;
+    }
+    .offcanvas-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #videoModal .header-save-btn {
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem;
+      font-weight: 700;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+      white-space: nowrap;
+    }
+    .offcanvas-body-sheet {
+      padding: 1.5rem !important;
+      overflow-y: auto;
+      flex: 1;
+    }
+    #videoModal .offcanvas-body-sheet {
+      padding-bottom: 7.5rem !important;
+    }
+    .offcanvas-footer-sheet {
+      padding: 1rem 1.5rem !important;
+      border-top: 1px solid #e4e4e7;
+      background-color: #fafafa;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .offcanvas-footer-sheet .btn {
+      min-width: 132px;
+      border-radius: 14px;
+      padding: 0.8rem 1.2rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.10);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+    .offcanvas-footer-sheet .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.14);
+    }
+    .offcanvas-footer-sheet .btn-secondary {
+      background: #fff;
+      color: #0f172a;
+      border-color: #e2e8f0;
+    }
+    .offcanvas-footer-sheet .btn-secondary:hover {
+      background: #f8fafc;
+      color: #0f172a;
+      border-color: #cbd5e1;
+    }
+    .offcanvas-footer-sheet .btn-danger,
+    .offcanvas-footer-sheet .btn-success,
+    .offcanvas-footer-sheet .btn-primary,
+    .offcanvas-footer-sheet .btn-info,
+    .offcanvas-footer-sheet .btn-warning {
+      color: #fff;
+    }
+    .offcanvas-footer-sheet .btn-danger {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    }
+    .offcanvas-footer-sheet .btn-success {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+    .offcanvas-footer-sheet .btn-primary {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    }
+    .offcanvas-footer-sheet .btn-info {
+      background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    }
+    .offcanvas-footer-sheet .btn-warning {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+    .offcanvas-footer-sheet .btn-danger:hover,
+    .offcanvas-footer-sheet .btn-success:hover,
+    .offcanvas-footer-sheet .btn-primary:hover,
+    .offcanvas-footer-sheet .btn-info:hover,
+    .offcanvas-footer-sheet .btn-warning:hover {
+      color: #fff;
+      filter: brightness(0.98);
+    }
+    .offcanvas-sheet .form-group {
+      margin-bottom: 1rem;
+    }
+    .offcanvas-sheet .form-control,
+    .offcanvas-sheet .custom-select {
+      border-radius: 14px;
+      min-height: 46px;
+      border-color: #dbe3ee;
+      box-shadow: none;
+    }
+    .offcanvas-sheet .form-control:focus,
+    .offcanvas-sheet .custom-select:focus {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 0.2rem rgba(239, 68, 68, 0.12);
+    }
+    .offcanvas-sheet .form-control-file {
+      display: block;
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px dashed #cbd5e1;
+      border-radius: 14px;
+      background: #f8fafc;
+    }
+    .offcanvas-sheet .form-control-file:hover {
+      background: #f1f5f9;
+    }
+    #videoModal .offcanvas-body-sheet,
+    #musicItemModal .offcanvas-body-sheet,
+    #storyModal .offcanvas-body-sheet {
+      padding-bottom: 7.5rem !important;
+    }
+    #videoModal .offcanvas-footer-sheet {
+      position: sticky;
+      bottom: 0;
+      z-index: 2;
+      box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.06);
+    }
+
   </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -556,92 +1064,60 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-light-primary">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-      <i class="fas fa-bible text-info ml-3 mr-2" style="font-size: 20px;"></i>
-      <span class="brand-text font-weight-light"><b>KidBible</b>Service</span>
+    <a href="#" class="brand-link pl-4">
+      <span class="brand-text font-weight-bold" style="font-size: 18px; letter-spacing: -0.03em;">CMS<span style="font-weight: 400; color: #71717a;">Dashboard</span></span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
+
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
           <li class="nav-item">
-            <a href="#" class="nav-link active" id="nav-stats">
-              <i class="nav-icon fas fa-tachometer-alt text-info"></i>
-              <p data-i18n="dashboardOverview">Dashboard Overview</p>
-            </a>
-          </li>
-
-          <li class="nav-header text-uppercase text-muted">Catalogs</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-catalogs-list">
-              <i class="nav-icon fas fa-list text-info"></i>
-              <p data-i18n="catalogList">Catalog List</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-add-catalog">
-              <i class="nav-icon fas fa-plus-circle text-info"></i>
-              <p data-i18n="addCatalogItem">Add Catalog Item</p>
-            </a>
-          </li>
-
-          <li class="nav-header text-uppercase text-muted">Bible Content</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-categories">
-              <i class="nav-icon fas fa-tags text-info"></i>
-              <p>Categories</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-stories">
-              <i class="nav-icon fas fa-book text-info"></i>
-              <p>Stories</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-audio-items">
-              <i class="nav-icon fas fa-music text-info"></i>
-              <p>Audio Items</p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="#" class="nav-link" id="nav-products">
-              <i class="nav-icon fas fa-shopping-cart text-info"></i>
-              <p>Products</p>
+              <i class="nav-icon fas fa-shopping-bag"></i>
+              <p data-i18n="products">Ürünler</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" id="nav-videos">
+              <i class="nav-icon fas fa-video"></i>
+              <p data-i18n="videos">Videolar</p>
             </a>
           </li>
 
-          <li class="nav-header text-uppercase text-muted">System</li>
+          <li class="nav-header text-uppercase text-muted" data-i18n="contentManagement">İçerik Yönetimi</li>
           <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-security">
-              <i class="nav-icon fas fa-shield-alt text-info"></i>
-              <p data-i18n="securityShield">Security Shield</p>
+            <a href="#" class="nav-link" id="nav-music-items">
+              <i class="nav-icon fas fa-music"></i>
+              <p data-i18n="musicItems">Audio Items</p>
             </a>
           </li>
+
+          <li class="nav-header text-uppercase text-muted" data-i18n="system">Sistem</li>
           <li class="nav-item">
             <a href="#" class="nav-link" id="nav-users">
-              <i class="nav-icon fas fa-users text-info"></i>
-              <p data-i18n="users">Users</p>
+              <i class="nav-icon fas fa-users-cog"></i>
+              <p data-i18n="users">Kullanıcılar</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" id="nav-admins">
+              <i class="nav-icon fas fa-user-shield"></i>
+              <p data-i18n="admins">Adminler</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link" id="nav-payments">
-              <i class="nav-icon fas fa-credit-card text-info"></i>
-              <p data-i18n="payments">Payments</p>
+              <i class="nav-icon fas fa-credit-card"></i>
+              <p data-i18n="payments">Ödemeler</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link" id="nav-notifications">
-              <i class="nav-icon fas fa-bell text-info"></i>
-              <p data-i18n="notifications">Notifications</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-aws-upload">
-              <i class="nav-icon fas fa-cloud-upload-alt text-info"></i>
-              <p data-i18n="awsUploadPanel">AWS Upload Panel</p>
+              <i class="nav-icon fas fa-bell"></i>
+              <p data-i18n="notifications">Bildirimler</p>
             </a>
           </li>
         </ul>
@@ -678,52 +1154,83 @@
         <!-- Section 1: Stats Overview -->
         <div class="content-section" id="stats-section">
           <div class="row mb-4">
-            <div class="col-lg-3 col-6">
-              <div class="small-box bg-info">
-                <div class="inner">
-                  <h3 id="catalogsCount">0</h3>
-                  <p data-i18n="totalCatalogItems">Total Catalog Items</p>
+            <!-- Card 1: Catalogs -->
+            <div class="col-lg-3 col-sm-6 mb-3">
+              <div class="card h-100 m-0" style="border: 1px solid #e4e4e7; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: all 0.2s;">
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                      <span class="text-xs font-weight-bold text-uppercase tracking-wider text-muted d-block mb-1" data-i18n="totalCatalogItems">Total Catalog Items</span>
+                      <h3 class="font-weight-bold m-0" id="catalogsCount" style="font-size: 26px; color: #09090b; letter-spacing: -0.02em;">0</h3>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; background: #e0f2fe; border-radius: 8px; color: #0284c7;">
+                      <i class="fas fa-book-open" style="font-size: 18px;"></i>
+                    </div>
+                  </div>
+                  <a href="#" class="d-flex align-items-center text-xs font-weight-semibold text-info" onclick="$('#nav-catalogs-list').trigger('click'); return false;" style="gap: 4px; text-decoration: none;">
+                    <span data-i18n="viewDetails">View Details</span> <i class="fas fa-chevron-right" style="font-size: 10px;"></i>
+                  </a>
                 </div>
-                <div class="icon">
-                  <i class="fas fa-book-open"></i>
-                </div>
-                <a href="#" class="small-box-footer" onclick="$('#nav-catalogs-list').trigger('click'); return false;"><span data-i18n="viewDetails">View Details</span> <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
-            <div class="col-lg-3 col-6">
-              <div class="small-box bg-success">
-                <div class="inner">
-                  <h3 id="usersCount">0</h3>
-                  <p data-i18n="users">Users</p>
+
+            <!-- Card 2: Users -->
+            <div class="col-lg-3 col-sm-6 mb-3">
+              <div class="card h-100 m-0" style="border: 1px solid #e4e4e7; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: all 0.2s;">
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                      <span class="text-xs font-weight-bold text-uppercase tracking-wider text-muted d-block mb-1" data-i18n="users">Users</span>
+                      <h3 class="font-weight-bold m-0" id="usersCount" style="font-size: 26px; color: #09090b; letter-spacing: -0.02em;">0</h3>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; background: #dcfce7; border-radius: 8px; color: #15803d;">
+                      <i class="fas fa-users" style="font-size: 18px;"></i>
+                    </div>
+                  </div>
+                  <a href="#" class="d-flex align-items-center text-xs font-weight-semibold text-success" onclick="$('#nav-users').trigger('click'); return false;" style="gap: 4px; text-decoration: none;">
+                    <span data-i18n="viewDetails">View Details</span> <i class="fas fa-chevron-right" style="font-size: 10px;"></i>
+                  </a>
                 </div>
-                <div class="icon">
-                  <i class="fas fa-users"></i>
-                </div>
-                <a href="#" class="small-box-footer" onclick="$('#nav-users').trigger('click'); return false;"><span data-i18n="viewDetails">View Details</span> <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
-            <div class="col-lg-3 col-6">
-              <div class="small-box bg-warning">
-                <div class="inner" style="color: white !important;">
-                  <h3 style="color: white !important;" id="paymentsCount">0</h3>
-                  <p style="color: white !important;" data-i18n="payments">Payments</p>
+
+            <!-- Card 3: Payments -->
+            <div class="col-lg-3 col-sm-6 mb-3">
+              <div class="card h-100 m-0" style="border: 1px solid #e4e4e7; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: all 0.2s;">
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                      <span class="text-xs font-weight-bold text-uppercase tracking-wider text-muted d-block mb-1" data-i18n="payments">Payments</span>
+                      <h3 class="font-weight-bold m-0" id="paymentsCount" style="font-size: 26px; color: #09090b; letter-spacing: -0.02em;">0</h3>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; background: #fef3c7; border-radius: 8px; color: #b45309;">
+                      <i class="fas fa-credit-card" style="font-size: 18px;"></i>
+                    </div>
+                  </div>
+                  <a href="#" class="d-flex align-items-center text-xs font-weight-semibold text-warning" onclick="$('#nav-payments').trigger('click'); return false;" style="gap: 4px; text-decoration: none; color: #d97706 !important;">
+                    <span data-i18n="viewDetails">View Details</span> <i class="fas fa-chevron-right" style="font-size: 10px;"></i>
+                  </a>
                 </div>
-                <div class="icon">
-                  <i class="fas fa-credit-card"></i>
-                </div>
-                <a href="#" class="small-box-footer" style="color: white !important;" onclick="$('#nav-payments').trigger('click'); return false;"><span data-i18n="viewDetails" style="color: white !important;">View Details</span> <i class="fas fa-arrow-circle-right" style="color: white !important;"></i></a>
               </div>
             </div>
-            <div class="col-lg-3 col-6">
-              <div class="small-box bg-danger">
-                <div class="inner">
-                  <h3 id="notificationsCount">0</h3>
-                  <p data-i18n="notifications">Notifications</p>
+
+            <!-- Card 4: Notifications -->
+            <div class="col-lg-3 col-sm-6 mb-3">
+              <div class="card h-100 m-0" style="border: 1px solid #e4e4e7; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: all 0.2s;">
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                      <span class="text-xs font-weight-bold text-uppercase tracking-wider text-muted d-block mb-1" data-i18n="notifications">Notifications</span>
+                      <h3 class="font-weight-bold m-0" id="notificationsCount" style="font-size: 26px; color: #09090b; letter-spacing: -0.02em;">0</h3>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; background: #fee2e2; border-radius: 8px; color: #b91c1c;">
+                      <i class="fas fa-bell" style="font-size: 18px;"></i>
+                    </div>
+                  </div>
+                  <a href="#" class="d-flex align-items-center text-xs font-weight-semibold text-danger" onclick="$('#nav-notifications').trigger('click'); return false;" style="gap: 4px; text-decoration: none;">
+                    <span data-i18n="viewDetails">View Details</span> <i class="fas fa-chevron-right" style="font-size: 10px;"></i>
+                  </a>
                 </div>
-                <div class="icon">
-                  <i class="fas fa-bell"></i>
-                </div>
-                <a href="#" class="small-box-footer" onclick="$('#nav-notifications').trigger('click'); return false;"><span data-i18n="viewDetails">View Details</span> <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
           </div>
@@ -732,20 +1239,12 @@
           <div class="card card-primary card-outline mt-4">
             <div class="card-header d-flex align-items-center">
               <i class="fas fa-info-circle text-info mr-2" style="font-size: 18px;"></i>
-              <h5 class="m-0 font-weight-bold" data-i18n="welcomeTitle">Visual Catalog System</h5>
+              <h5 class="m-0 font-weight-bold" data-i18n="welcomeTitle">CMS Panel</h5>
             </div>
             <div class="card-body">
               <p class="card-text text-muted" style="font-size: 15px; line-height: 1.6;" data-i18n="welcomeText">
-                Welcome to the CMS Admin Console. This user-friendly interface allows you to easily manage, filter, and organize visual catalog publications. All uploads automatically optimize and format to high-definition vertical/horizontal thumbnails. Security protocols like HTML injection protection and rate limit protection are active.
+                Manage content, users, payments, notifications, and media from a single admin panel.
               </p>
-              <div class="mt-3">
-                <a href="#" class="btn btn-info mr-2" onclick="$('#nav-catalogs-list').trigger('click'); return false;">
-                  <i class="fas fa-list mr-1"></i> <span data-i18n="browseCatalogList">Browse Catalog List</span>
-                </a>
-                <a href="#" class="btn btn-outline-secondary" onclick="$('#nav-add-catalog').trigger('click'); return false;">
-                  <i class="fas fa-plus mr-1"></i> <span data-i18n="addPublication">Add Publication</span>
-                </a>
-              </div>
             </div>
           </div>
         </div>
@@ -861,11 +1360,13 @@
         <!-- Section 3.1: Categories -->
         <div class="content-section d-none" id="categories-section">
           <div class="card card-warning card-outline">
-            <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-header">
               <h3 class="card-title font-weight-bold text-dark m-0">
                 <i class="fas fa-tags text-warning mr-1"></i> Categories
               </h3>
-              <button class="btn btn-success btn-sm float-right" onclick="openAddCategoryModal()"><i class="fas fa-plus mr-1"></i> Add Category</button>
+              <div class="card-tools">
+                <button class="btn btn-success btn-sm" onclick="openAddCategoryModal()"><i class="fas fa-plus mr-1"></i> Add Category</button>
+              </div>
             </div>
             <div class="card-body">
               <table id="categoriesTable" class="table table-bordered table-striped table-hover w-100">
@@ -893,11 +1394,13 @@
         <!-- Section 3.2: Stories -->
         <div class="content-section d-none" id="stories-section">
           <div class="card card-success card-outline">
-            <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-header">
               <h3 class="card-title font-weight-bold text-dark m-0">
                 <i class="fas fa-book text-success mr-1"></i> Stories
               </h3>
-              <button class="btn btn-success btn-sm float-right" onclick="openAddStoryModal()"><i class="fas fa-plus mr-1"></i> Add Story</button>
+              <div class="card-tools">
+                <button class="btn btn-success btn-sm" onclick="openAddStoryModal()"><i class="fas fa-plus mr-1"></i> Add Story</button>
+              </div>
             </div>
             <div class="card-body">
               <table id="storiesTable" class="table table-bordered table-striped table-hover w-100">
@@ -927,11 +1430,13 @@
         <!-- Section 3.3: Audio Items -->
         <div class="content-section d-none" id="audio-items-section">
           <div class="card card-primary card-outline">
-            <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-header">
               <h3 class="card-title font-weight-bold text-dark m-0">
                 <i class="fas fa-music text-primary mr-1"></i> Audio Items
               </h3>
-              <button class="btn btn-success btn-sm float-right" onclick="openAddAudioItemModal()"><i class="fas fa-plus mr-1"></i> Add Audio Item</button>
+              <div class="card-tools">
+                <button class="btn btn-success btn-sm" onclick="openAddAudioItemModal()"><i class="fas fa-plus mr-1"></i> Add Audio Item</button>
+              </div>
             </div>
             <div class="card-body">
               <table id="audioItemsTable" class="table table-bordered table-striped table-hover w-100">
@@ -958,14 +1463,49 @@
           </div>
         </div>
 
+        <!-- Section 3.3.5: Audio Items -->
+        <div class="content-section d-none" id="music-items-section">
+          <div class="card card-purple card-outline" style="border-top: 3px solid #6f42c1;">
+            <div class="card-header">
+              <h3 class="card-title font-weight-bold text-dark m-0">
+                <i class="fas fa-music text-purple mr-1" style="color: #6f42c1;"></i> Audio Items
+              </h3>
+              <div class="card-tools">
+                <button class="btn btn-success btn-sm" onclick="openAddMusicItemModal()"><i class="fas fa-plus mr-1"></i> Add Music</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <table id="musicItemsTable" class="table table-bordered table-striped table-hover w-100">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;">ID</th>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Category Name</th>
+                    <th>Category ID</th>
+                    <th>Image</th>
+                    <th>Audio File Path / URL</th>
+                    <th style="width: 150px; text-align: center;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="musicItemsTableBody">
+                  <!-- Loaded via AJAX -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
         <!-- Section 3.4: Products -->
         <div class="content-section d-none" id="products-section">
           <div class="card card-info card-outline">
-            <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-header">
               <h3 class="card-title font-weight-bold text-dark m-0">
                 <i class="fas fa-shopping-cart text-info mr-1"></i> Products (Store Items)
               </h3>
-              <button class="btn btn-success btn-sm float-right" onclick="openAddProductModal()"><i class="fas fa-plus mr-1"></i> Add Product</button>
+              <div class="card-tools">
+                <button class="btn btn-success btn-sm" onclick="openAddProductModal()"><i class="fas fa-plus mr-1"></i> Add Product</button>
+              </div>
             </div>
             <div class="card-body">
               <table id="productsTable" class="table table-bordered table-striped table-hover w-100">
@@ -983,6 +1523,45 @@
                   </tr>
                 </thead>
                 <tbody id="productsTableBody">
+                  <!-- Loaded via AJAX -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3.5: Videos -->
+        <div class="content-section d-none" id="videos-section">
+          <div class="card card-danger card-outline">
+            <div class="card-header">
+              <h3 class="card-title font-weight-bold text-dark m-0">
+                <i class="fas fa-video text-danger mr-1"></i> Videos
+              </h3>
+              <div class="card-tools">
+                <button class="btn btn-danger btn-sm" onclick="openAddVideoModal()">
+                  <i class="fas fa-plus mr-1"></i> Add Video
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <table id="videosTable" class="table table-bordered table-striped table-hover w-100">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;">ID</th>
+                    <th>Title</th>
+                    <th>Slug</th>
+                    <th>Category</th>
+                    <th>Category ID</th>
+                    <th>Vertical Banner (3:4)</th>
+                    <th>Video File Path / URL</th>
+                    <th>SRT / Subtitle</th>
+                    <th>Locked</th>
+                    <th>Published</th>
+                    <th>Order</th>
+                    <th style="width: 150px; text-align: center;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="videosTableBody">
                   <!-- Loaded via AJAX -->
                 </tbody>
               </table>
@@ -1149,29 +1728,98 @@
           </div>
         </div>
 
+        <!-- Section 6b: Admins List -->
+        <div class="content-section d-none" id="admins-section">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card card-dark card-outline">
+                <div class="card-header">
+                  <h3 class="card-title font-weight-bold text-dark m-0">
+                    <i class="fas fa-user-plus mr-1"></i> <span data-i18n="addAdmin">Admin Ekle</span>
+                  </h3>
+                </div>
+                <form id="addAdminForm">
+                  <div class="card-body">
+                    <div id="admin-alert"></div>
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="adminFirstName" data-i18n="firstName">Ad</label>
+                      <input type="text" class="form-control" id="adminFirstName" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="adminLastName" data-i18n="lastName">Soyad</label>
+                      <input type="text" class="form-control" id="adminLastName" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="adminEmail" data-i18n="email">E-posta</label>
+                      <input type="email" class="form-control" id="adminEmail" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="adminPhoneNumber" data-i18n="phoneNumber">Telefon</label>
+                      <input type="text" class="form-control" id="adminPhoneNumber" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="adminPassword" data-i18n="password">Şifre</label>
+                      <input type="password" class="form-control" id="adminPassword" required>
+                    </div>
+                  </div>
+                  <div class="card-footer bg-light">
+                    <button type="submit" class="btn btn-dark btn-block"><i class="fas fa-user-plus mr-1"></i> <span data-i18n="addAdminSubmit">Admin Kaydet</span></button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card card-dark card-outline">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h3 class="card-title font-weight-bold text-dark m-0">
+                    <i class="fas fa-user-shield mr-1"></i> <span data-i18n="admins">Adminler</span>
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <table id="adminsTable" class="table table-bordered table-striped table-hover w-100">
+                    <thead>
+                      <tr>
+                        <th style="width: 50px;">ID</th>
+                        <th data-i18n="fullName">Ad Soyad</th>
+                        <th data-i18n="email">Email</th>
+                        <th data-i18n="phoneNumber">Telefon</th>
+                        <th style="width: 130px;" data-i18n="createdAt">Created At</th>
+                        <th style="width: 180px; text-align: center;" data-i18n="action">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminsTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Section 6: Payments List -->
         <div class="content-section d-none" id="payments-section">
           <div class="card card-success card-outline">
             <div class="card-header">
               <h3 class="card-title font-weight-bold text-dark m-0">
-                <i class="fas fa-credit-card text-success mr-1"></i> <span data-i18n="payments">Payments</span>
+                <i class="fab fa-stripe mr-1"></i> <span data-i18n="payments">Payments</span>
               </h3>
             </div>
             <div class="card-body">
               <table id="paymentsTable" class="table table-bordered table-striped table-hover w-100">
                 <thead>
-                  <tr>
-                    <th style="width: 50px;">ID</th>
-                    <th>User ID</th>
-                    <th data-i18n="email">Email</th>
-                    <th data-i18n="productId">Product ID</th>
+                      <tr>
+                        <th style="width: 50px;">ID</th>
+                        <th>User ID</th>
+                        <th data-i18n="email">Email</th>
+                        <th data-i18n="productId">Product ID</th>
                     <th data-i18n="amount">Amount</th>
                     <th data-i18n="currency">Currency</th>
-                    <th data-i18n="status">Status</th>
-                    <th data-i18n="transactionId">Transaction ID</th>
-                    <th style="width: 130px;" data-i18n="createdAt">Created At</th>
-                  </tr>
-                </thead>
+                        <th>Gateway</th>
+                        <th data-i18n="status">Status</th>
+                        <th data-i18n="transactionId">Transaction ID</th>
+                        <th style="width: 130px;" data-i18n="createdAt">Created At</th>
+                        <th style="width: 220px;" data-i18n="action">Action</th>
+                      </tr>
+                    </thead>
                 <tbody id="paymentsTableBody">
                   <!-- Loaded via AJAX -->
                 </tbody>
@@ -1346,9 +1994,9 @@
   <!-- Main Footer -->
   <footer class="main-footer">
     <div class="float-right d-none d-sm-inline">
-      KidBibleService v1.0.0
+      CMS Panel v1.0.0
     </div>
-    <strong>Copyright &copy; 2026 <a href="#" class="text-info">KidBibleService</a>.</strong> <span data-i18n="welcomeTitle">Visual Catalog System</span>
+    <strong>Copyright &copy; 2026 <a href="#" class="text-info">CMS Panel</a>.</strong> <span data-i18n="welcomeTitle">CMS Panel</span>
   </footer>
 </div>
 <!-- ./wrapper -->
@@ -1435,8 +2083,8 @@
             addCatalogItem: "Add Catalog Item", securityShield: "Security Shield", totalCatalogItems: "Total Catalog Items",
             apiServiceStatus: "API Service Status", multipartUploadActive: "Multipart Upload Active", protectedLabel: "Protected",
             xssBruteforceShield: "XSS & Bruteforce Shield", viewDetails: "View Details", checkProtection: "Check Protection",
-            uploadCover: "Upload Cover", securitySpecs: "Security Specs", welcomeTitle: "Visual Catalog System",
-            welcomeText: "Welcome to the CMS Admin Console. This user-friendly interface allows you to easily manage, filter, and organize visual catalog publications.", browseCatalogList: "Browse Catalog List", addPublication: "Add Publication",
+            uploadCover: "Upload Cover", securitySpecs: "Security Specs", welcomeTitle: "CMS Panel",
+            welcomeText: "Manage content, users, payments, notifications, and media from a single admin panel.",
             registeredVisualPublications: "Registered Visual Publications", searchPublications: "Search...",
             id: "ID", publicationName: "Name", description: "Description", verticalCover: "Vertical Cover (3:4)",
             horizontalCover: "Horizontal Cover (16:9)", createdAt: "Created At", noPublicationsFound: "No publications found.",
@@ -1454,6 +2102,11 @@
         loadCatalogs();
       }
     });
+  }
+
+  function generateRandomSlug(prefix) {
+    const randomPart = Math.random().toString(36).slice(2, 10);
+    return `${prefix}-${Date.now().toString(36)}-${randomPart}`;
   }
 
   // Section switcher helper
@@ -1603,19 +2256,30 @@
       showSection('audio-items-section', 'nav-audio-items');
       loadAudioItems();
     });
+    $('#nav-music-items').click(function(e) {
+      e.preventDefault();
+      showSection('music-items-section', 'nav-music-items');
+      loadMusicItems();
+    });
     $('#nav-products').click(function(e) {
       e.preventDefault();
       showSection('products-section', 'nav-products');
       loadProducts();
     });
-    $('#nav-security').click(function(e) {
+    $('#nav-videos').click(function(e) {
       e.preventDefault();
-      showSection('security-section', 'nav-security');
+      showSection('videos-section', 'nav-videos');
+      loadVideos();
     });
     $('#nav-users').click(function(e) {
       e.preventDefault();
       showSection('users-section', 'nav-users');
       loadUsers();
+    });
+    $('#nav-admins').click(function(e) {
+      e.preventDefault();
+      showSection('admins-section', 'nav-admins');
+      loadAdmins();
     });
     $('#nav-payments').click(function(e) {
       e.preventDefault();
@@ -1627,11 +2291,6 @@
       showSection('notifications-section', 'nav-notifications');
       loadNotifications();
     });
-    $('#nav-aws-upload').click(function(e) {
-      e.preventDefault();
-      showSection('aws-upload-section', 'nav-aws-upload');
-    });
-
     // Language switcher click events
     $('.lang-btn').click(function(e) {
       e.preventDefault();
@@ -1643,109 +2302,14 @@
       if ($('#nav-categories').hasClass('active')) loadCategories();
       if ($('#nav-stories').hasClass('active')) loadStories();
       if ($('#nav-audio-items').hasClass('active')) loadAudioItems();
+      if ($('#nav-music-items').hasClass('active')) loadMusicItems();
       if ($('#nav-products').hasClass('active')) loadProducts();
+      if ($('#nav-videos').hasClass('active')) loadVideos();
       if ($('#nav-users').hasClass('active')) loadUsers();
+      if ($('#nav-admins').hasClass('active')) loadAdmins();
       if ($('#nav-payments').hasClass('active')) loadPayments();
       if ($('#nav-notifications').hasClass('active')) loadNotifications();
       updateDashboardStats();
-    });
-
-    // Custom file input initialization for AWS file
-    $('#awsFileInput').change(function() {
-      if (this.files && this.files[0]) {
-        $('#awsFileLabel').text(this.files[0].name);
-      }
-    });
-
-    // AWS Upload submission handler
-    $('#awsUploadForm').submit(function(e) {
-      e.preventDefault();
-      
-      const fileInput = $('#awsFileInput')[0];
-      if (!fileInput.files || fileInput.files.length === 0) {
-        return;
-      }
-      
-      const file = fileInput.files[0];
-      const formData = new FormData();
-      formData.append('file', file);
-      
-      // Append credentials/settings if provided
-      const bucketName = $('#awsS3BucketInput').val().trim();
-      const accessKeyId = $('#awsAccessKeyIdInput').val().trim();
-      const secretAccessKey = $('#awsSecretAccessKeyInput').val().trim();
-      const region = $('#awsRegionInput').val().trim();
-      
-      if (bucketName) formData.append('bucketName', bucketName);
-      if (accessKeyId) formData.append('accessKeyId', accessKeyId);
-      if (secretAccessKey) formData.append('secretAccessKey', secretAccessKey);
-      if (region) formData.append('region', region);
-      
-      // UI state
-      $('#aws-upload-alert').html('');
-      $('#awsResultContainer').hide();
-      $('#awsProgressContainer').show();
-      $('#awsProgressBar').css('width', '0%').attr('aria-valuenow', 0).text('0%');
-      
-      const uploadingText = locales[currentLang] && locales[currentLang].uploading ? locales[currentLang].uploading : 'Uploading...';
-      $('#awsUploadSubmitBtn').prop('disabled', true).html(`<i class="fas fa-spinner fa-spin mr-1"></i> <span>${uploadingText}</span>`);
-      
-      $.ajax({
-        xhr: function() {
-          const xhr = new window.XMLHttpRequest();
-          xhr.upload.addEventListener('progress', function(evt) {
-            if (evt.lengthComputable) {
-              const percentComplete = Math.round((evt.loaded / evt.total) * 100);
-              $('#awsProgressBar').css('width', percentComplete + '%').attr('aria-valuenow', percentComplete).text(percentComplete + '%');
-            }
-          }, false);
-          return xhr;
-        },
-        url: '/api/aws/upload',
-        type: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        },
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(response) {
-          $('#awsProgressContainer').hide();
-          
-          const uploadToAwsText = locales[currentLang] && locales[currentLang].uploadToAws ? locales[currentLang].uploadToAws : 'Upload to AWS';
-          $('#awsUploadSubmitBtn').prop('disabled', false).html(`<i class="fas fa-upload mr-1"></i> <span>${uploadToAwsText}</span>`);
-          
-          $('#awsResultUrl').val(response.url);
-          $('#awsResultContainer').fadeIn();
-        },
-        error: function(xhr) {
-          $('#awsProgressContainer').hide();
-          
-          const uploadToAwsText = locales[currentLang] && locales[currentLang].uploadToAws ? locales[currentLang].uploadToAws : 'Upload to AWS';
-          $('#awsUploadSubmitBtn').prop('disabled', false).html(`<i class="fas fa-upload mr-1"></i> <span>${uploadToAwsText}</span>`);
-          
-          const errMsg = xhr.responseJSON ? xhr.responseJSON.message : 'Error uploading file to AWS S3';
-          $('#aws-upload-alert').html(`<div class="alert alert-danger">${errMsg}</div>`);
-        }
-      });
-    });
-
-    // Copy URL helper
-    $('#copyAwsUrlBtn').click(function() {
-      const urlInput = document.getElementById('awsResultUrl');
-      urlInput.select();
-      urlInput.setSelectionRange(0, 99999); // For mobile devices
-      
-      navigator.clipboard.writeText(urlInput.value).then(function() {
-        const copyBtnText = locales[currentLang] && locales[currentLang].copied ? locales[currentLang].copied : 'Copied!';
-        $('#copyAwsUrlBtn').html(`<i class="fas fa-check"></i> <span>${copyBtnText}</span>`);
-        setTimeout(() => {
-          const originalText = locales[currentLang] && locales[currentLang].copy ? locales[currentLang].copy : 'Copy';
-          $('#copyAwsUrlBtn').html(`<i class="far fa-copy"></i> <span>${originalText}</span>`);
-        }, 2000);
-      }).catch(function(err) {
-        console.error('Could not copy text: ', err);
-      });
     });
 
     // Initialize Localization
@@ -1802,13 +2366,15 @@
             });
             
             // Map uploaded local file or absolute CDN url
-            const verticalURL = catalog.thumbnailVertical.startsWith('https://cdn.biblecms.com') && !catalog.thumbnailVertical.includes('bible_vertical')
+            const verticalURL = catalog.thumbnailVertical.startsWith('https://cdn.biblecms.com')
               ? '/uploads/' + catalog.thumbnailVertical.split('/').pop() 
               : catalog.thumbnailVertical;
               
-            const horizontalURL = catalog.thumbnailHorizontal.startsWith('https://cdn.biblecms.com') && !catalog.thumbnailHorizontal.includes('bible_horizontal')
+            const horizontalURL = catalog.thumbnailHorizontal.startsWith('https://cdn.biblecms.com')
               ? '/uploads/' + catalog.thumbnailHorizontal.split('/').pop()
               : catalog.thumbnailHorizontal;
+            const coverFallback = '/uploads/sample_vertical.jpg';
+            const bannerFallback = '/uploads/sample_horizontal.jpg';
 
             const viewText = currentLang === 'tr' ? 'Görüntüle' : 'View';
 
@@ -1818,12 +2384,12 @@
                 <td><strong>${catalog.name}</strong></td>
                 <td><span class="text-secondary small">${catalog.description}</span></td>
                 <td class="text-center">
-                  <img src="${verticalURL}" class="img-thumbnail preview-trigger" style="max-height: 55px; object-fit: contain; cursor: pointer;" data-title="${catalog.name} - Cover" href="${verticalURL}" onerror="this.src='https://via.placeholder.com/60x80?text=Cover'">
+                  <img src="${verticalURL}" class="img-thumbnail preview-trigger" style="max-height: 55px; object-fit: contain; cursor: pointer;" data-title="${catalog.name} - Cover" href="${verticalURL}" onerror="this.onerror=null;this.src='${coverFallback}'">
                   <br>
                   <a href="${verticalURL}" class="btn btn-xs btn-link text-info mt-1 preview-trigger" data-title="${catalog.name} - Cover"><i class="fas fa-expand"></i> ${viewText} Cover</a>
                 </td>
                 <td class="text-center">
-                  <img src="${horizontalURL}" class="img-thumbnail preview-trigger" style="max-height: 55px; object-fit: contain; cursor: pointer;" data-title="${catalog.name} - Banner" href="${horizontalURL}" onerror="this.src='https://via.placeholder.com/120x70?text=Banner'">
+                  <img src="${horizontalURL}" class="img-thumbnail preview-trigger" style="max-height: 55px; object-fit: contain; cursor: pointer;" data-title="${catalog.name} - Banner" href="${horizontalURL}" onerror="this.onerror=null;this.src='${bannerFallback}'">
                   <br>
                   <a href="${horizontalURL}" class="btn btn-xs btn-link text-info mt-1 preview-trigger" data-title="${catalog.name} - Banner"><i class="fas fa-expand"></i> ${viewText} Banner</a>
                 </td>
@@ -1969,9 +2535,11 @@
                 <td><code>${c.image || ''}</code></td>
                 <td>${c.orderIndex || 0}</td>
                 <td>${c.isPublished ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'}</td>
-                <td class="text-center">
-                  <button class="btn btn-sm btn-info mr-1" onclick="openEditCategoryModal(${c.id}, '${escapeHtml(c.title)}', '${escapeHtml(c.subtitle)}', '${escapeHtml(c.type)}', ${c.count}, '${escapeHtml(c.image)}', ${c.orderIndex}, ${c.isPublished})"><i class="fas fa-edit"></i></button>
-                  <button class="btn btn-sm btn-danger" onclick="deleteCategory(${c.id})"><i class="fas fa-trash"></i></button>
+                <td class="text-center" style="white-space: nowrap;">
+                  <div class="d-inline-flex" style="gap: 4px;">
+                    <button class="btn btn-sm btn-info" onclick="openEditCategoryModal(${c.id}, '${escapeHtml(c.title)}', '${escapeHtml(c.subtitle)}', '${escapeHtml(c.type)}', ${c.count}, '${escapeHtml(c.image)}', ${c.orderIndex}, ${c.isPublished})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteCategory(${c.id})"><i class="fas fa-trash"></i></button>
+                  </div>
                 </td>
               </tr>
             `;
@@ -2091,9 +2659,11 @@
                 <td>${s.isLocked ? '<span class="badge badge-warning">Locked</span>' : '<span class="badge badge-light">Free</span>'}</td>
                 <td>${s.isPublished ? '<span class="badge badge-success">Published</span>' : '<span class="badge badge-danger">Draft</span>'}</td>
                 <td>${s.orderIndex || 0}</td>
-                <td class="text-center">
-                  <button class="btn btn-sm btn-info mr-1" onclick="openEditStoryModal(${s.id}, '${escapeHtml(s.title)}', '${escapeHtml(s.slug)}', '${escapeHtml(s.type)}', '${s.categoryId || ''}', '${escapeHtml(s.duration)}', ${s.durationSeconds || 0}, '${escapeHtml(s.image)}', '${escapeHtml(s.contentText || '')}', '${escapeHtml(s.audioUrl || '')}', ${s.isLocked}, ${s.isPublished}, ${s.orderIndex || 0})"><i class="fas fa-edit"></i></button>
-                  <button class="btn btn-sm btn-danger" onclick="deleteStory(${s.id})"><i class="fas fa-trash"></i></button>
+                <td class="text-center" style="white-space: nowrap;">
+                  <div class="d-inline-flex" style="gap: 4px;">
+                    <button class="btn btn-sm btn-info" onclick="openEditStoryModal(${s.id}, '${escapeHtml(s.title)}', '${escapeHtml(s.slug)}', '${escapeHtml(s.type)}', '${s.categoryId || ''}', '${escapeHtml(s.duration)}', ${s.durationSeconds || 0}, '${escapeHtml(s.image)}', '${escapeHtml(s.contentText || '')}', '${escapeHtml(s.audioUrl || '')}', ${s.isLocked}, ${s.isPublished}, ${s.orderIndex || 0})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteStory(${s.id})"><i class="fas fa-trash"></i></button>
+                  </div>
                 </td>
               </tr>
             `;
@@ -2108,8 +2678,10 @@
       $('#storyModalLabel').text('Add Story');
       $('#storyForm')[0].reset();
       $('#storyId').val('');
+      $('#storySlug').val(generateRandomSlug('story'));
       $('#storyImage').val('');
       $('#storyImageFile').val('');
+      $('#storyAudioFile').val('');
       $('#storyImagePreviewContainer').hide();
       $('#storyImagePreview').attr('src', '');
       $('#storyModal').modal('show');
@@ -2119,7 +2691,7 @@
       $('#storyModalLabel').text('Edit Story');
       $('#storyId').val(id);
       $('#storyTitle').val(title);
-      $('#storySlug').val(slug);
+      $('#storySlug').val(slug || generateRandomSlug('story'));
       $('#storyType').val(type);
       $('#storyCategoryId').val(categoryId);
       $('#storyDuration').val(duration);
@@ -2131,6 +2703,7 @@
       $('#storyIsPublished').val(isPublished ? 'true' : 'false');
       $('#storyOrderIndex').val(orderIndex);
       $('#storyImageFile').val('');
+      $('#storyAudioFile').val('');
       if (image) {
         const displayImage = image.startsWith('https://cdn.biblecms.com')
           ? '/uploads/' + image.split('/').pop()
@@ -2155,7 +2728,7 @@
 
       const formData = new FormData();
       formData.append('title', $('#storyTitle').val());
-      formData.append('slug', $('#storySlug').val());
+      formData.append('slug', $('#storySlug').val() || generateRandomSlug('story'));
       formData.append('type', $('#storyType').val());
       formData.append('categoryId', $('#storyCategoryId').val() ? parseInt($('#storyCategoryId').val()) : '');
       formData.append('duration', $('#storyDuration').val());
@@ -2170,6 +2743,11 @@
         formData.append('image', fileInput.files[0]);
       } else {
         formData.append('image', $('#storyImage').val());
+      }
+
+      const audioFileInput = $('#storyAudioFile')[0];
+      if (audioFileInput.files && audioFileInput.files[0]) {
+        formData.append('audio', audioFileInput.files[0]);
       }
 
       const url = id ? `/api/stories/${id}` : '/api/stories';
@@ -2223,9 +2801,11 @@
                 <td>${a.isLocked ? '<span class="badge badge-warning">Locked</span>' : '<span class="badge badge-light">Free</span>'}</td>
                 <td>${a.isPublished ? '<span class="badge badge-success">Published</span>' : '<span class="badge badge-danger">Draft</span>'}</td>
                 <td>${a.orderIndex || 0}</td>
-                <td class="text-center">
-                  <button class="btn btn-sm btn-info mr-1" onclick="openEditAudioItemModal(${a.id}, '${escapeHtml(a.title)}', '${escapeHtml(a.slug)}', '${escapeHtml(a.category)}', '${a.categoryId || ''}', '${escapeHtml(a.duration)}', ${a.durationSeconds || 0}, '${escapeHtml(a.image)}', '${escapeHtml(a.audioUrl)}', '${escapeHtml(a.badgeColor || '')}', ${a.isLocked}, ${a.isPublished}, ${a.orderIndex || 0})"><i class="fas fa-edit"></i></button>
-                  <button class="btn btn-sm btn-danger" onclick="deleteAudioItem(${a.id})"><i class="fas fa-trash"></i></button>
+                <td class="text-center" style="white-space: nowrap;">
+                  <div class="d-inline-flex" style="gap: 4px;">
+                    <button class="btn btn-sm btn-info" onclick="openEditAudioItemModal(${a.id}, '${escapeHtml(a.title)}', '${escapeHtml(a.slug)}', '${escapeHtml(a.category)}', '${a.categoryId || ''}', '${escapeHtml(a.duration)}', ${a.durationSeconds || 0}, '${escapeHtml(a.image)}', '${escapeHtml(a.audioUrl)}', '${escapeHtml(a.badgeColor || '')}', ${a.isLocked}, ${a.isPublished}, ${a.orderIndex || 0})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteAudioItem(${a.id})"><i class="fas fa-trash"></i></button>
+                  </div>
                 </td>
               </tr>
             `;
@@ -2240,8 +2820,10 @@
       $('#audioItemModalLabel').text('Add Audio Item');
       $('#audioItemForm')[0].reset();
       $('#audioItemId').val('');
+      $('#audioSlug').val(generateRandomSlug('audio'));
       $('#audioImage').val('');
       $('#audioImageFile').val('');
+      $('#audioAudioFile').val('');
       $('#audioImagePreviewContainer').hide();
       $('#audioImagePreview').attr('src', '');
       $('#audioItemModal').modal('show');
@@ -2251,7 +2833,7 @@
       $('#audioItemModalLabel').text('Edit Audio Item');
       $('#audioItemId').val(id);
       $('#audioTitle').val(title);
-      $('#audioSlug').val(slug);
+      $('#audioSlug').val(slug || generateRandomSlug('audio'));
       $('#audioCategory').val(category);
       $('#audioCategoryId').val(categoryId);
       $('#audioDuration').val(duration);
@@ -2263,6 +2845,7 @@
       $('#audioIsPublished').val(isPublished ? 'true' : 'false');
       $('#audioOrderIndex').val(orderIndex);
       $('#audioImageFile').val('');
+      $('#audioAudioFile').val('');
       if (image) {
         const displayImage = image.startsWith('https://cdn.biblecms.com')
           ? '/uploads/' + image.split('/').pop()
@@ -2287,7 +2870,7 @@
 
       const formData = new FormData();
       formData.append('title', $('#audioTitle').val());
-      formData.append('slug', $('#audioSlug').val());
+      formData.append('slug', $('#audioSlug').val() || generateRandomSlug('audio'));
       formData.append('category', $('#audioCategory').val());
       formData.append('categoryId', $('#audioCategoryId').val() ? parseInt($('#audioCategoryId').val()) : '');
       formData.append('duration', $('#audioDuration').val());
@@ -2302,6 +2885,11 @@
         formData.append('image', fileInput.files[0]);
       } else {
         formData.append('image', $('#audioImage').val());
+      }
+
+      const audioFileInput = $('#audioAudioFile')[0];
+      if (audioFileInput.files && audioFileInput.files[0]) {
+        formData.append('audio', audioFileInput.files[0]);
       }
 
       const url = id ? `/api/audio-items/${id}` : '/api/audio-items';
@@ -2331,6 +2919,116 @@
       });
     };
 
+    // Music Items Loading Functions
+    window.loadMusicItems = function() {
+      if ($.fn.DataTable.isDataTable('#musicItemsTable')) {
+        $('#musicItemsTable').DataTable().destroy();
+      }
+
+      $.ajax({
+        url: '/api/music-items',
+        type: 'GET',
+        success: function(items) {
+          let rows = '';
+          items.forEach(m => {
+            rows += `
+              <tr>
+                <td><span class="badge badge-secondary">${m.id}</span></td>
+                <td><strong>${m.title || ''}</strong></td>
+                <td><span class="badge badge-info">${m.type || ''}</span></td>
+                <td>${m.category || ''}</td>
+                <td>${m.categoryId || ''}</td>
+                <td>
+                  ${m.image ? `<img src="${m.image}" style="max-height: 50px; border-radius: 4px;" class="border">` : ''}
+                  <br><small class="text-muted">${m.image || ''}</small>
+                </td>
+                <td><code>${m.audioUrl || ''}</code></td>
+                <td class="text-center" style="white-space: nowrap;">
+                  <button class="btn btn-sm btn-danger" onclick="deleteMusicItem(${m.id})"><i class="fas fa-trash"></i> Delete</button>
+                </td>
+              </tr>
+            `;
+          });
+          $('#musicItemsTableBody').html(rows);
+          $('#musicItemsTable').DataTable({ "responsive": true, "autoWidth": false });
+        }
+      });
+    };
+
+    window.openAddMusicItemModal = function() {
+      $('#musicItemModalLabel').text('Add Music Item');
+      $('#musicItemForm')[0].reset();
+      $('#musicItemId').val('');
+      $('#musicCategory').val('');
+      $('#musicCategoryId').val('');
+      $('#musicImage').val('');
+      $('#musicImageFile').val('');
+      $('#musicAudioFile').val('');
+      $('#musicUrlField').val('');
+      $('#musicImagePreviewContainer').hide();
+      $('#musicImagePreview').attr('src', '');
+      $('#musicItemModal').modal('show');
+    };
+
+    $('#musicItemForm').submit(function(e) {
+      e.preventDefault();
+      const imageFileInput = $('#musicImageFile')[0];
+      const audioFileInput = $('#musicAudioFile')[0];
+
+      if (!imageFileInput.files.length && !$('#musicImage').val()) {
+        alert('Please select an image file to upload or enter an image URL.');
+        return;
+      }
+      if (!audioFileInput.files.length && !$('#musicUrlField').val()) {
+        alert('Please select an audio file to upload or enter an audio URL.');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('title', $('#musicTitle').val());
+      formData.append('type', $('#musicType').val());
+      formData.append('category', $('#musicCategory').val());
+      formData.append('categoryId', $('#musicCategoryId').val() ? parseInt($('#musicCategoryId').val()) : '');
+
+      if (imageFileInput.files && imageFileInput.files[0]) {
+        formData.append('image', imageFileInput.files[0]);
+      } else {
+        formData.append('image', $('#musicImage').val());
+      }
+
+      if (audioFileInput.files && audioFileInput.files[0]) {
+        formData.append('audio', audioFileInput.files[0]);
+      } else {
+        formData.append('audio', $('#musicUrlField').val());
+      }
+
+      $.ajax({
+        url: '/api/music-items',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function() {
+          $('#musicItemModal').modal('hide');
+          loadMusicItems();
+        },
+        error: function(err) {
+          alert(err.responseJSON ? err.responseJSON.message : 'Error adding music item.');
+        }
+      });
+    });
+
+    window.deleteMusicItem = function(id) {
+      if (!confirm('Are you sure you want to delete this music item?')) return;
+      $.ajax({
+        url: `/api/music-items/${id}`,
+        type: 'DELETE',
+        success: function() {
+          loadMusicItems();
+        }
+      });
+    };
+
     // Products Loading Functions
     window.loadProducts = function() {
       if ($.fn.DataTable.isDataTable('#productsTable')) {
@@ -2353,9 +3051,11 @@
                 <td><code>${p.image || ''}</code></td>
                 <td>${p.duration || ''} (${p.durationSeconds || 0}s)</td>
                 <td>${p.isPublished ? '<span class="badge badge-success">Published</span>' : '<span class="badge badge-danger">Draft</span>'}</td>
-                <td class="text-center">
-                  <button class="btn btn-sm btn-info mr-1" onclick="openEditProductModal(${p.id}, '${escapeHtml(p.title)}', '${escapeHtml(p.description)}', ${p.price}, '${escapeHtml(p.priceString)}', '${escapeHtml(p.image)}', '${escapeHtml(p.duration)}', ${p.durationSeconds || 0}, ${p.orderIndex || 0}, ${p.isPublished})"><i class="fas fa-edit"></i></button>
-                  <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button>
+                <td class="text-center" style="white-space: nowrap;">
+                  <div class="d-inline-flex" style="gap: 4px;">
+                    <button class="btn btn-sm btn-info" onclick="openEditProductModal(${p.id}, '${escapeHtml(p.title)}', '${escapeHtml(p.description)}', ${p.price}, '${escapeHtml(p.priceString)}', '${escapeHtml(p.image)}', '${escapeHtml(p.duration)}', ${p.durationSeconds || 0}, ${p.orderIndex || 0}, ${p.isPublished})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button>
+                  </div>
                 </td>
               </tr>
             `;
@@ -2455,6 +3155,252 @@
       });
     };
 
+    // Videos Section Functions
+    window.loadVideos = function() {
+      if ($.fn.DataTable.isDataTable('#videosTable')) {
+        $('#videosTable').DataTable().destroy();
+      }
+
+      $.ajax({
+        url: '/api/videos',
+        type: 'GET',
+        success: function(videos) {
+          let rows = '';
+          videos.forEach(v => {
+            rows += `
+              <tr>
+                <td><span class="badge badge-secondary">${v.id}</span></td>
+                <td><strong>${v.title || ''}</strong></td>
+                <td><code>${v.slug || ''}</code></td>
+                <td>${v.category || ''}</td>
+                <td>${v.categoryId || ''}</td>
+                <td>
+                  ${v.verticalBannerUrl ? `<img src="${v.verticalBannerUrl}" style="max-height: 50px; border-radius: 4px;" class="border">` : ''}
+                  <br><small class="text-muted">${v.verticalBannerUrl || ''}</small>
+                </td>
+                <td><code>${v.videoUrl || ''}</code></td>
+                <td>
+                  ${v.subtitleUrl ? `<span class="badge badge-info">SRT</span><br><small class="text-muted">${v.subtitleUrl}</small>` : '<span class="text-muted">No subtitle</span>'}
+                </td>
+                <td>${v.isLocked ? '<span class="badge badge-warning">Locked</span>' : '<span class="badge badge-light">Free</span>'}</td>
+                <td>${v.isPublished ? '<span class="badge badge-success">Published</span>' : '<span class="badge badge-danger">Draft</span>'}</td>
+                <td>${v.orderIndex || 0}</td>
+                <td class="text-center" style="white-space: nowrap;">
+                  <div class="d-inline-flex" style="gap: 4px;">
+                    <button class="btn btn-sm btn-info" onclick="openEditVideoModal(${v.id}, '${escapeHtml(v.title)}', '${escapeHtml(v.slug)}', '${escapeHtml(v.category)}', '${v.categoryId || ''}', '${escapeHtml(v.verticalBannerUrl)}', '${escapeHtml(v.videoUrl)}', '${escapeHtml(v.subtitleUrl || '')}', ${v.isLocked}, ${v.isPublished}, ${v.orderIndex || 0})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteVideo(${v.id})"><i class="fas fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          });
+          $('#videosTableBody').html(rows);
+          $('#videosTable').DataTable({ "responsive": true, "autoWidth": false });
+        }
+      });
+    };
+
+    window.openAddVideoModal = function() {
+      $('#videoModalLabel').text('Add Video');
+      $('#videoForm')[0].reset();
+      $('#videoId').val('');
+      $('#videoSlug').val(generateRandomSlug('video'));
+      $('#videoVerticalBannerUrl').val('');
+      $('#videoVerticalBannerFile').val('');
+      $('#videoFile').val('');
+      $('#videoSrtFile').val('');
+      $('#videoUrl').val('');
+      $('#videoSrtUrl').val('');
+      $('#videoVerticalBannerPreviewContainer').hide();
+      $('#videoVerticalBannerPreview').attr('src', '');
+      $('#videoModal').modal('show');
+    };
+
+    function normalizeCdnImageUrl(url, fallback) {
+      if (!url) return fallback;
+      if (url.startsWith('https://cdn.biblecms.com')) {
+        return '/uploads/' + url.split('/').pop();
+      }
+      return url;
+    }
+
+    window.openEditVideoModal = function(id, title, slug, category, categoryId, verticalBanner, videoUrl, subtitleUrl, isLocked, isPublished, orderIndex) {
+      $('#videoModalLabel').text('Edit Video');
+      $('#videoId').val(id);
+      $('#videoTitle').val(title);
+      $('#videoSlug').val(slug || generateRandomSlug('video'));
+      $('#videoCategory').val(category);
+      $('#videoCategoryId').val(categoryId);
+      $('#videoVerticalBannerUrl').val(verticalBanner);
+      $('#videoUrl').val(videoUrl);
+      $('#videoSrtFile').val('');
+      $('#videoSrtUrl').val(subtitleUrl || '');
+      $('#videoIsLocked').val(isLocked ? 'true' : 'false');
+      $('#videoIsPublished').val(isPublished ? 'true' : 'false');
+      $('#videoOrderIndex').val(orderIndex);
+      $('#videoVerticalBannerFile').val('');
+      $('#videoFile').val('');
+      if (verticalBanner) {
+        const displayImage = normalizeCdnImageUrl(verticalBanner, '/uploads/sample_vertical.jpg');
+        $('#videoVerticalBannerPreview').attr('src', displayImage);
+        $('#videoVerticalBannerPreviewContainer').show();
+      } else {
+        $('#videoVerticalBannerPreview').attr('src', '/uploads/sample_vertical.jpg');
+        $('#videoVerticalBannerPreviewContainer').hide();
+      }
+      $('#videoModal').modal('show');
+    };
+
+    async function uploadFileToPresignedUrl(file, presign) {
+      const response = await fetch(presign.uploadUrl, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': file.type || presign.contentType || 'application/octet-stream'
+        },
+        body: file
+      });
+
+      if (!response.ok) {
+        const details = await response.text();
+        throw new Error(`S3 upload failed for ${presign.fieldName}: ${details || response.status}`);
+      }
+
+      return presign.url;
+    }
+
+    $('#videoForm').submit(function(e) {
+      e.preventDefault();
+      const id = $('#videoId').val();
+      const bannerFileInput = $('#videoVerticalBannerFile')[0];
+      const videoFileInput = $('#videoFile')[0];
+      const srtFileInput = $('#videoSrtFile')[0];
+      const progressWrap = $('#videoUploadProgressWrap');
+      const progressBar = $('#videoUploadProgressBar');
+      const progressText = $('#videoUploadProgressText');
+
+      if (!id) {
+        if (!bannerFileInput.files.length && !$('#videoVerticalBannerUrl').val()) {
+          alert('Please select a vertical banner file to upload or enter a URL.');
+          return;
+        }
+        if (!videoFileInput.files.length && !$('#videoUrl').val()) {
+          alert('Please select a video file to upload or enter a URL.');
+          return;
+        }
+      }
+
+      const url = id ? `/api/videos/${id}` : '/api/videos';
+      const type = id ? 'PUT' : 'POST';
+
+      progressWrap.show();
+      progressBar.css('width', '0%');
+      progressText.text('0%');
+
+      const selectedFiles = [];
+      if (bannerFileInput.files && bannerFileInput.files[0]) {
+        selectedFiles.push({ fieldName: 'verticalBanner', file: bannerFileInput.files[0] });
+      }
+      if (videoFileInput.files && videoFileInput.files[0]) {
+        selectedFiles.push({ fieldName: 'video', file: videoFileInput.files[0] });
+      }
+      if (srtFileInput.files && srtFileInput.files[0]) {
+        selectedFiles.push({ fieldName: 'subtitleFile', file: srtFileInput.files[0] });
+      }
+
+      const submitMetadata = (payload) => {
+        return $.ajax({
+          url,
+          type,
+          data: payload,
+          success: function() {
+            progressBar.css('width', '100%');
+            progressText.text('100%');
+            $('#videoModal').modal('hide');
+            loadVideos();
+          },
+          error: function(err) {
+            progressWrap.hide();
+            const message = err.responseJSON && err.responseJSON.message
+              ? err.responseJSON.message
+              : (err.responseText || 'Error saving video.');
+            alert(String(message).replace(/<[^>]*>/g, ''));
+          }
+        });
+      };
+
+      const sendWithPresignedUploads = async () => {
+        let videoUrl = $('#videoUrl').val();
+        let verticalBannerUrl = $('#videoVerticalBannerUrl').val();
+        let subtitleUrl = $('#videoSrtUrl').val();
+
+        if (selectedFiles.length) {
+          const presignResponse = await fetch('/api/videos/presign', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              files: selectedFiles.map(({ fieldName, file }) => ({
+                name: fieldName,
+                originalName: file.name,
+                contentType: file.type || 'application/octet-stream'
+              }))
+            })
+          });
+
+          if (!presignResponse.ok) {
+            const errorData = await presignResponse.json().catch(() => null);
+            throw new Error(errorData?.message || 'Could not get presigned URL.');
+          }
+
+          const presignData = await presignResponse.json();
+          const presigns = presignData.uploads || [];
+
+          for (const entry of selectedFiles) {
+            const presign = presigns.find(item => item.fieldName === entry.fieldName);
+            if (!presign) {
+              throw new Error(`Presigned URL eksik: ${entry.fieldName}`);
+            }
+            const uploadedUrl = await uploadFileToPresignedUrl(entry.file, presign);
+            if (entry.fieldName === 'video') videoUrl = uploadedUrl;
+            if (entry.fieldName === 'verticalBanner') verticalBannerUrl = uploadedUrl;
+            if (entry.fieldName === 'subtitleFile') subtitleUrl = uploadedUrl;
+          }
+        }
+
+        const payload = {
+          title: $('#videoTitle').val(),
+          slug: $('#videoSlug').val() || generateRandomSlug('video'),
+          category: $('#videoCategory').val(),
+          categoryId: $('#videoCategoryId').val() ? parseInt($('#videoCategoryId').val()) : '',
+          isLocked: $('#videoIsLocked').val() === 'true',
+          isPublished: $('#videoIsPublished').val() === 'true',
+          orderIndex: parseInt($('#videoOrderIndex').val() || 0),
+          verticalBanner: verticalBannerUrl,
+          video: videoUrl,
+          subtitleUrl: subtitleUrl
+        };
+
+        return submitMetadata(payload);
+      };
+
+      sendWithPresignedUploads().catch((error) => {
+        progressWrap.hide();
+        alert(String(error.message || error).replace(/<[^>]*>/g, ''));
+      });
+    });
+
+    window.deleteVideo = function(id) {
+      if (!confirm('Are you sure you want to delete this video?')) return;
+      $.ajax({
+        url: `/api/videos/${id}`,
+        type: 'DELETE',
+        success: function() {
+          loadVideos();
+        }
+      });
+    };
+
     // Users Section Functions
     window.loadUsers = function() {
       if ($.fn.DataTable.isDataTable('#usersTable')) {
@@ -2474,9 +3420,6 @@
               hour: '2-digit',
               minute: '2-digit'
             });
-            const editLabel = currentLang === 'tr' ? 'Düzenle' : 'Edit';
-            const deleteLabel = currentLang === 'tr' ? 'Sil' : 'Delete';
-            
             rows += `
               <tr>
                 <td><span class="badge badge-secondary">${u.id}</span></td>
@@ -2484,9 +3427,11 @@
                 <td><code>${u.email}</code></td>
                 <td>${u.phoneNumber}</td>
                 <td><small class="text-muted"><i class="far fa-calendar-alt mr-1"></i> ${date}</small></td>
-                <td class="text-center">
-                  <button class="btn btn-sm btn-info mr-1" onclick="openEditUserModal(${u.id}, '${escapeHtml(u.firstName)}', '${escapeHtml(u.lastName)}', '${escapeHtml(u.email)}', '${escapeHtml(u.phoneNumber)}')"><i class="fas fa-edit"></i> ${editLabel}</button>
-                  <button class="btn btn-sm btn-danger" onclick="deleteUser(${u.id})"><i class="fas fa-trash"></i> ${deleteLabel}</button>
+                <td class="text-center" style="white-space: nowrap;">
+                  <div class="d-inline-flex" style="gap: 4px;">
+                    <button class="btn btn-sm btn-dark" title="Edit" aria-label="Edit" onclick="openEditUserModal(${u.id}, '${escapeHtml(u.firstName)}', '${escapeHtml(u.lastName)}', '${escapeHtml(u.email)}', '${escapeHtml(u.phoneNumber)}')"><i class="fas fa-pen"></i></button>
+                    <button class="btn btn-sm btn-dark" title="Delete" aria-label="Delete" onclick="deleteUser(${u.id})"><i class="fas fa-trash"></i></button>
+                  </div>
                 </td>
               </tr>
             `;
@@ -2523,7 +3468,10 @@
       return str.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"').replace(/'/g, '&#039;');
     }
 
+    let editUserMode = 'user';
+
     window.openEditUserModal = function(id, firstName, lastName, email, phoneNumber) {
+      editUserMode = 'user';
       $('#editUserId').val(id);
       $('#editFirstName').val(firstName);
       $('#editLastName').val(lastName);
@@ -2533,36 +3481,6 @@
       $('#edit-user-alert').html('');
       $('#editUserModal').modal('show');
     };
-
-    $('#editUserForm').submit(function(e) {
-      e.preventDefault();
-      const id = $('#editUserId').val();
-      const payload = {
-        firstName: $('#editFirstName').val(),
-        lastName: $('#editLastName').val(),
-        email: $('#editEmail').val(),
-        phoneNumber: $('#editPhoneNumber').val()
-      };
-      const newPwd = $('#editPassword').val();
-      if (newPwd) {
-        payload.password = newPwd;
-      }
-
-      $.ajax({
-        url: `/api/users/${id}`,
-        type: 'PUT',
-        contentType: 'application/json',
-        data: JSON.stringify(payload),
-        success: function() {
-          $('#editUserModal').modal('hide');
-          loadUsers();
-        },
-        error: function(xhr) {
-          const msg = xhr.responseJSON ? xhr.responseJSON.message : 'Error updating user';
-          $('#edit-user-alert').html(`<div class="alert alert-danger">${msg}</div>`);
-        }
-      });
-    });
 
     window.deleteUser = function(id) {
       const confirmMsg = currentLang === 'tr' ? 'Bu kullanıcıyı silmek istediğinize emin misiniz?' : 'Are you sure you want to delete this user?';
@@ -2579,6 +3497,153 @@
         }
       });
     };
+
+    // Admins Section Functions
+    window.loadAdmins = function() {
+      if ($.fn.DataTable.isDataTable('#adminsTable')) {
+        $('#adminsTable').DataTable().destroy();
+      }
+
+      $.ajax({
+        url: '/api/admins',
+        type: 'GET',
+        success: function(admins) {
+          let rows = '';
+          admins.forEach(a => {
+            const date = new Date(a.createdAt).toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+            rows += `
+              <tr>
+                <td><span class="badge badge-secondary">${a.id}</span></td>
+                <td><strong>${a.firstName} ${a.lastName}</strong></td>
+                <td><code>${a.email}</code></td>
+                <td>${a.phoneNumber}</td>
+                <td><small class="text-muted"><i class="far fa-calendar-alt mr-1"></i> ${date}</small></td>
+                <td class="text-center" style="white-space: nowrap;">
+                  <div class="d-inline-flex" style="gap: 4px;">
+                    <button class="btn btn-sm btn-dark" title="Edit" aria-label="Edit" onclick="openEditAdminModal(${a.id}, '${escapeHtml(a.firstName)}', '${escapeHtml(a.lastName)}', '${escapeHtml(a.email)}', '${escapeHtml(a.phoneNumber)}')"><i class="fas fa-pen"></i></button>
+                    <button class="btn btn-sm btn-dark" title="Delete" aria-label="Delete" onclick="deleteAdmin(${a.id})"><i class="fas fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          });
+          $('#adminsTableBody').html(rows);
+
+          $('#adminsTable').DataTable({
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "pageLength": 10,
+            "language": currentLang === 'tr' ? {
+              "search": "Ara:",
+              "lengthMenu": "_MENU_ kayıt göster",
+              "info": "_TOTAL_ kayıttan _START_ - _END_ arası gösteriliyor",
+              "zeroRecords": "Eşleşen admin bulunamadı"
+            } : {
+              "search": "Search:",
+              "lengthMenu": "Show _MENU_ entries",
+              "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+              "zeroRecords": "No matching admins found"
+            }
+          });
+        },
+        error: function(err) {
+          console.error('Failed to load admins', err);
+        }
+      });
+    };
+
+    $('#addAdminForm').submit(function(e) {
+      e.preventDefault();
+      const payload = {
+        firstName: $('#adminFirstName').val(),
+        lastName: $('#adminLastName').val(),
+        email: $('#adminEmail').val(),
+        phoneNumber: $('#adminPhoneNumber').val(),
+        password: $('#adminPassword').val()
+      };
+
+      $.ajax({
+        url: '/api/admins',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function() {
+          $('#addAdminForm')[0].reset();
+          $('#admin-alert').html('');
+          loadAdmins();
+        },
+        error: function(xhr) {
+          const msg = xhr.responseJSON ? xhr.responseJSON.message : 'Error creating admin';
+          $('#admin-alert').html(`<div class="alert alert-danger">${msg}</div>`);
+        }
+      });
+    });
+
+    window.openEditAdminModal = function(id, firstName, lastName, email, phoneNumber) {
+      editUserMode = 'admin';
+      $('#editUserId').val(id);
+      $('#editFirstName').val(firstName);
+      $('#editLastName').val(lastName);
+      $('#editEmail').val(email);
+      $('#editPhoneNumber').val(phoneNumber);
+      $('#editPassword').val('');
+      $('#edit-user-alert').html('');
+      $('#editUserModal').modal('show');
+    };
+
+    window.deleteAdmin = function(id) {
+      const confirmMsg = currentLang === 'tr' ? 'Bu admini silmek istediğinize emin misiniz?' : 'Are you sure you want to delete this admin?';
+      if (!confirm(confirmMsg)) return;
+
+      $.ajax({
+        url: `/api/admins/${id}`,
+        type: 'DELETE',
+        success: function() {
+          loadAdmins();
+        },
+        error: function(xhr) {
+          alert(xhr.responseJSON ? xhr.responseJSON.message : 'Error deleting admin');
+        }
+      });
+    };
+
+    $('#editUserForm').off('submit').submit(function(e) {
+      e.preventDefault();
+      const id = $('#editUserId').val();
+      const payload = {
+        firstName: $('#editFirstName').val(),
+        lastName: $('#editLastName').val(),
+        email: $('#editEmail').val(),
+        phoneNumber: $('#editPhoneNumber').val()
+      };
+      const newPwd = $('#editPassword').val();
+      if (newPwd) {
+        payload.password = newPwd;
+      }
+
+      const url = editUserMode === 'admin' ? `/api/admins/${id}` : `/api/users/${id}`;
+      $.ajax({
+        url,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function() {
+          $('#editUserModal').modal('hide');
+          if (editUserMode === 'admin') loadAdmins(); else loadUsers();
+        },
+        error: function(xhr) {
+          const msg = xhr.responseJSON ? xhr.responseJSON.message : 'Error updating record';
+          $('#edit-user-alert').html(`<div class="alert alert-danger">${msg}</div>`);
+        }
+      });
+    });
 
     // Payments Section Functions
     window.loadPayments = function() {
@@ -2599,21 +3664,48 @@
               hour: '2-digit',
               minute: '2-digit'
             });
-            const statusBadge = p.status === 'completed' 
-              ? '<span class="badge badge-success">Completed</span>' 
-              : `<span class="badge badge-warning">${p.status}</span>`;
-
+            const normalizedStatus = String(p.status || '').toLowerCase();
+            const statusMap = {
+              completed: 'success',
+              approved: 'success',
+              pending: 'warning',
+              blocked: 'dark',
+              failed: 'danger',
+              refunded: 'info',
+              cancelled: 'secondary'
+            };
+            const statusLabelMap = {
+              completed: 'Completed',
+              approved: 'Approved',
+              pending: 'Pending',
+              blocked: 'Blocked',
+              failed: 'Failed',
+              refunded: 'Refunded',
+              cancelled: 'Cancelled'
+            };
+            const statusClass = statusMap[normalizedStatus] || 'warning';
+            const statusBadge = `<span class="badge badge-${statusClass}">${statusLabelMap[normalizedStatus] || p.status}</span>`;
+            const gatewayLabel = p.gateway || '-';
             rows += `
               <tr>
                 <td><span class="badge badge-dark">${p.id}</span></td>
-                <td><span class="badge badge-secondary">User #${p.userId}</span></td>
-                <td><code>${p.userEmail}</code></td>
-                <td><strong>${p.productId}</strong></td>
-                <td><code>${p.amount.toFixed(2)}</code></td>
-                <td><span class="badge badge-info">${p.currency}</span></td>
+                <td>${p.userId}</td>
+                <td><code>${p.userEmail || '-'}</code></td>
+                <td>${p.productId || '-'}</td>
+                <td>${Number(p.amount || 0).toFixed(2)}</td>
+                <td>${p.currency || '-'}</td>
+                <td>${gatewayLabel}</td>
                 <td>${statusBadge}</td>
-                <td><span class="text-secondary font-weight-bold small">${p.transactionId}</span></td>
-                <td><small class="text-muted"><i class="far fa-calendar-alt mr-1"></i> ${date}</small></td>
+                <td><span class="text-secondary small">${p.transactionId || '-'}</span></td>
+                <td><small class="text-muted">${date}</small></td>
+                <td class="text-center" style="white-space: nowrap;">
+                  <div class="d-inline-flex flex-wrap" style="gap: 4px;">
+                    <button class="btn btn-sm btn-dark" title="Receipt" aria-label="Receipt" onclick="viewPaymentReceipt(${p.id})"><i class="fas fa-receipt"></i></button>
+                    <button class="btn btn-sm btn-dark" title="Approve" aria-label="Approve" onclick="updatePaymentStatus(${p.id}, 'approved')"><i class="fas fa-check"></i></button>
+                    <button class="btn btn-sm btn-dark" title="Hold" aria-label="Hold" onclick="updatePaymentStatus(${p.id}, 'pending')"><i class="fas fa-pause"></i></button>
+                    <button class="btn btn-sm btn-dark" title="Block" aria-label="Block" onclick="updatePaymentStatus(${p.id}, 'blocked')"><i class="fas fa-ban"></i></button>
+                  </div>
+                </td>
               </tr>
             `;
           });
@@ -2640,6 +3732,130 @@
         },
         error: function(err) {
           console.error('Failed to load payments', err);
+        }
+      });
+    };
+
+    window.viewPaymentReceipt = function(id) {
+      $.ajax({
+        url: `/api/payments/${id}`,
+        type: 'GET',
+        success: function(payment) {
+          const date = new Date(payment.createdAt).toLocaleString(currentLang === 'tr' ? 'tr-TR' : 'en-US');
+          const currency = (payment.currency || '').toUpperCase();
+          const amount = Number(payment.amount || 0);
+          const formattedAmount = new Intl.NumberFormat(currentLang === 'tr' ? 'tr-TR' : 'en-US', {
+            style: 'currency',
+            currency: currency || 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }).format(Number.isFinite(amount) ? amount : 0);
+          const status = payment.status || '-';
+          const statusBadgeClass = status === 'approved' ? 'success' : status === 'blocked' ? 'danger' : 'warning';
+          const statusLabel = currentLang === 'tr'
+            ? (status === 'approved' ? 'Onaylandı' : status === 'blocked' ? 'Engellendi' : 'Beklemede')
+            : (status === 'approved' ? 'Approved' : status === 'blocked' ? 'Blocked' : 'Pending');
+          const gateway = payment.gateway || 'Stripe';
+          const receiptHtml = `
+            <div class="modal fade receipt-modal" id="paymentReceiptModal" tabindex="-1" role="dialog">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <div>
+                      <div class="receipt-titleline">
+                        <span class="receipt-logo-mark"><i class="fab fa-stripe"></i></span>
+                        <div>
+                          <h5 class="modal-title mb-0">${currentLang === 'tr' ? 'Ödeme Dekontu' : 'Payment Receipt'}</h5>
+                          <div class="receipt-subtitle">${currentLang === 'tr' ? 'Stripe-style preview' : 'Stripe-style preview'}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="close receipt-close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="receipt-summary">
+                      <div class="receipt-card">
+                        <div class="receipt-logo">
+                          <span class="receipt-logo-mark"><i class="fab fa-stripe"></i></span>
+                          <span>Stripe</span>
+                        </div>
+                        <div class="receipt-kicker">${currentLang === 'tr' ? 'Toplam Tutar' : 'Amount Due'}</div>
+                        <div class="receipt-amount">${formattedAmount}</div>
+                        <div class="receipt-meta-line">${payment.userEmail || '-'}</div>
+                        <div class="receipt-meta-line">${currentLang === 'tr' ? 'İşlem No:' : 'Transaction:'} ${payment.transactionId || '-'}</div>
+                        <div class="receipt-quick-row">
+                          <span class="receipt-quick-chip"><i class="fas fa-lock"></i> Secure</span>
+                          <span class="receipt-quick-chip"><i class="fas fa-bolt"></i> ${gateway}</span>
+                        </div>
+                      </div>
+                      <div class="receipt-side">
+                        <div class="receipt-side-card">
+                          <span class="receipt-side-label">${currentLang === 'tr' ? 'Durum' : 'Status'}</span>
+                          <span class="badge badge-${statusBadgeClass} px-3 py-2">${statusLabel}</span>
+                        </div>
+                        <div class="receipt-side-card">
+                          <span class="receipt-side-label">${currentLang === 'tr' ? 'Oluşturulma' : 'Created'}</span>
+                          <span class="receipt-side-value">${date}</span>
+                        </div>
+                        <div class="receipt-side-card">
+                          <span class="receipt-side-label">${currentLang === 'tr' ? 'Abonelik Bitişi' : 'Subscription End'}</span>
+                          <span class="receipt-side-value">${payment.subscriptionEndDate || '-'}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="receipt-details">
+                      <div class="receipt-details-grid">
+                        <div class="receipt-detail"><label>ID</label><strong>${payment.id}</strong></div>
+                        <div class="receipt-detail"><label>${currentLang === 'tr' ? 'Kullanıcı ID' : 'User ID'}</label><strong>${payment.userId}</strong></div>
+                        <div class="receipt-detail"><label>${currentLang === 'tr' ? 'E-posta' : 'Email'}</label><strong>${payment.userEmail || '-'}</strong></div>
+                        <div class="receipt-detail"><label>${currentLang === 'tr' ? 'Ürün' : 'Product'}</label><strong>${payment.productId}</strong></div>
+                        <div class="receipt-detail"><label>${currentLang === 'tr' ? 'Tutar' : 'Amount'}</label><strong>${formattedAmount}</strong></div>
+                        <div class="receipt-detail"><label>${currentLang === 'tr' ? 'Para Birimi' : 'Currency'}</label><strong>${currency || '-'}</strong></div>
+                        <div class="receipt-detail"><label>${currentLang === 'tr' ? 'İşlem ID' : 'Transaction ID'}</label><strong>${payment.transactionId || '-'}</strong></div>
+                        <div class="receipt-detail"><label>UUID</label><strong>${payment.uuid || '-'}</strong></div>
+                        <div class="receipt-detail"><label>IP</label><strong>${payment.ip || '-'}</strong></div>
+                        <div class="receipt-detail"><label>${currentLang === 'tr' ? 'Konum' : 'Location'}</label><strong>${payment.location || '-'}</strong></div>
+                        <div class="receipt-detail"><label>${currentLang === 'tr' ? 'Gateway' : 'Gateway'}</label><strong>${gateway}</strong></div>
+                        <div class="receipt-detail"><label>${currentLang === 'tr' ? 'Durum Kodu' : 'Status Code'}</label><strong>${status}</strong></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">${currentLang === 'tr' ? 'Kapat' : 'Close'}</button>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+
+          $('#paymentReceiptModal').remove();
+          $('body').append(receiptHtml);
+          $('#paymentReceiptModal').modal('show');
+        },
+        error: function(xhr) {
+          alert(xhr.responseJSON ? xhr.responseJSON.message : 'Unable to load receipt.');
+        }
+      });
+    };
+
+    window.updatePaymentStatus = function(id, status) {
+      const labels = {
+        approved: currentLang === 'tr' ? 'Bu ödemeyi onaylamak istediğinize emin misiniz?' : 'Approve this payment?',
+        blocked: currentLang === 'tr' ? 'Bu ödemeyi engellemek istediğinize emin misiniz?' : 'Block this payment?',
+        pending: currentLang === 'tr' ? 'Bu ödemeyi beklemeye almak istediğinize emin misiniz?' : 'Put this payment on hold?'
+      };
+      if (!confirm(labels[status] || 'Continue?')) return;
+
+      $.ajax({
+        url: `/api/payments/${id}/status`,
+        type: 'PATCH',
+        contentType: 'application/json',
+        data: JSON.stringify({ status }),
+        success: function() {
+          loadPayments();
+        },
+        error: function(xhr) {
+          alert(xhr.responseJSON ? xhr.responseJSON.message : 'Unable to update payment status.');
         }
       });
     };
@@ -2674,8 +3890,10 @@
                 <td>${typeBadge}</td>
                 <td><code>${n.sentTo}</code></td>
                 <td><small class="text-muted"><i class="far fa-calendar-alt mr-1"></i> ${date}</small></td>
-                <td class="text-center">
-                  <button class="btn btn-sm btn-danger" onclick="deleteNotification(${n.id})"><i class="fas fa-trash"></i> ${deleteLabel}</button>
+                <td class="text-center" style="white-space: nowrap;">
+                  <div class="d-inline-flex" style="gap: 4px;">
+                    <button class="btn btn-sm btn-danger" onclick="deleteNotification(${n.id})"><i class="fas fa-trash"></i> ${deleteLabel}</button>
+                  </div>
                 </td>
               </tr>
             `;
@@ -2759,381 +3977,602 @@
       $('#imagePreviewModal').modal('show');
     });
 
+    // Helper functions for Shadcn-like Offcanvas Sheets
+    window.openOffcanvas = function(id) {
+      if ($('#offcanvas-backdrop').length === 0) {
+        $('body').append('<div id="offcanvas-backdrop" class="offcanvas-backdrop-sheet"></div>');
+      }
+      // Force repaint to make sure transition executes smoothly
+      $('#offcanvas-backdrop').show().css('opacity');
+      $('#offcanvas-backdrop').addClass('show');
+      $(`#${id}`).addClass('show');
+      $('body').css('overflow', 'hidden');
+    };
+
+    window.closeOffcanvas = function(id) {
+      $(`#${id}`).removeClass('show');
+      if ($('.offcanvas-sheet.show').length === 0) {
+        $('#offcanvas-backdrop').removeClass('show');
+        setTimeout(() => {
+          if (!$('#offcanvas-backdrop').hasClass('show')) {
+            $('#offcanvas-backdrop').hide();
+          }
+        }, 200);
+        $('body').css('overflow', '');
+      }
+    };
+
+    // Close when clicking the backdrop
+    $(document).on('click', '#offcanvas-backdrop', function() {
+      $('.offcanvas-sheet.show').each(function() {
+        closeOffcanvas($(this).attr('id'));
+      });
+    });
+
+    // Close when clicking any element with data-dismiss="modal" inside an offcanvas
+    $(document).on('click', '[data-dismiss="modal"]', function() {
+      const $offcanvas = $(this).closest('.offcanvas-sheet');
+      if ($offcanvas.length > 0) {
+        closeOffcanvas($offcanvas.attr('id'));
+      }
+    });
+
+    // Intercept bootstrap modal calls for form modals to use our premium offcanvas sheets
+    const originalModal = $.fn.modal;
+    $.fn.modal = function(action, ...args) {
+      const id = this.attr('id');
+      if (['editUserModal', 'categoryModal', 'storyModal', 'audioItemModal', 'productModal', 'musicItemModal', 'videoModal'].includes(id)) {
+        if (action === 'show') {
+          openOffcanvas(id);
+        } else if (action === 'hide') {
+          closeOffcanvas(id);
+        }
+        return this;
+      }
+      return originalModal.apply(this, [action, ...args]);
+    };
+
   });
 </script>
 
 <!-- Edit User Modal -->
-<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-info">
-        <h5 class="modal-title text-white font-weight-bold" id="editUserModalLabel">Edit User</h5>
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form id="editUserForm">
-        <input type="hidden" id="editUserId">
-        <div class="modal-body">
-          <div id="edit-user-alert"></div>
-          <div class="form-group">
-            <label for="editFirstName" class="font-weight-bold" data-i18n="firstName">First Name</label>
-            <input type="text" class="form-control" id="editFirstName" required>
-          </div>
-          <div class="form-group">
-            <label for="editLastName" class="font-weight-bold" data-i18n="lastName">Last Name</label>
-            <input type="text" class="form-control" id="editLastName" required>
-          </div>
-          <div class="form-group">
-            <label for="editEmail" class="font-weight-bold" data-i18n="email">Email</label>
-            <input type="email" class="form-control" id="editEmail" required>
-          </div>
-          <div class="form-group">
-            <label for="editPhoneNumber" class="font-weight-bold" data-i18n="phoneNumber">Phone Number</label>
-            <input type="text" class="form-control" id="editPhoneNumber" required>
-          </div>
-          <div class="form-group">
-            <label for="editPassword" class="font-weight-bold" data-i18n="password">Password</label>
-            <input type="password" class="form-control" id="editPassword" placeholder="Leave blank to keep unchanged">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" data-i18n="close">Close</button>
-          <button type="submit" class="btn btn-info" data-i18n="saveChanges">Save Changes</button>
-        </div>
-      </form>
-    </div>
+<div class="offcanvas-sheet" id="editUserModal">
+  <div class="offcanvas-header-sheet bg-info text-white">
+    <h5 class="offcanvas-title font-weight-bold" id="editUserModalLabel">Edit User</h5>
+    <button type="button" class="close-btn text-white" onclick="closeOffcanvas('editUserModal')">&times;</button>
   </div>
+  <form id="editUserForm" class="h-100 d-flex flex-column m-0">
+    <input type="hidden" id="editUserId">
+    <div class="offcanvas-body-sheet">
+      <div id="edit-user-alert"></div>
+      <div class="form-group">
+        <label for="editFirstName" class="font-weight-bold" data-i18n="firstName">First Name</label>
+        <input type="text" class="form-control" id="editFirstName" required>
+      </div>
+      <div class="form-group">
+        <label for="editLastName" class="font-weight-bold" data-i18n="lastName">Last Name</label>
+        <input type="text" class="form-control" id="editLastName" required>
+      </div>
+      <div class="form-group">
+        <label for="editEmail" class="font-weight-bold" data-i18n="email">Email</label>
+        <input type="email" class="form-control" id="editEmail" required>
+      </div>
+      <div class="form-group">
+        <label for="editPhoneNumber" class="font-weight-bold" data-i18n="phoneNumber">Phone Number</label>
+        <input type="text" class="form-control" id="editPhoneNumber" required>
+      </div>
+      <div class="form-group">
+        <label for="editPassword" class="font-weight-bold" data-i18n="password">Password</label>
+        <input type="password" class="form-control" id="editPassword" placeholder="Leave blank to keep unchanged">
+      </div>
+    </div>
+    <div class="offcanvas-footer-sheet">
+      <button type="button" class="btn btn-secondary" onclick="closeOffcanvas('editUserModal')" data-i18n="close">Close</button>
+      <button type="submit" class="btn btn-info" data-i18n="saveChanges">Save Changes</button>
+    </div>
+  </form>
 </div>
 
 <!-- Category Modal -->
-<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-warning">
-        <h5 class="modal-title font-weight-bold text-dark" id="categoryModalLabel">Category Info</h5>
-        <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form id="categoryForm">
-        <input type="hidden" id="categoryId">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="catTitle" class="font-weight-bold">Title *</label>
-            <input type="text" class="form-control" id="catTitle" required>
-          </div>
-          <div class="form-group">
-            <label for="catSubtitle" class="font-weight-bold">Subtitle</label>
-            <input type="text" class="form-control" id="catSubtitle">
-          </div>
-          <div class="form-group">
-            <label for="catType" class="font-weight-bold">Type *</label>
-            <input type="text" class="form-control" id="catType" placeholder="story, audio, etc." required>
-          </div>
-          <div class="form-group">
-            <label for="catCount" class="font-weight-bold">Count</label>
-            <input type="number" class="form-control" id="catCount" value="0">
-          </div>
-          <div class="form-group">
-            <label for="catImageFile" class="font-weight-bold">Image File</label>
-            <input type="file" class="form-control-file" id="catImageFile" accept="image/*">
-            <input type="text" class="form-control mt-2" id="catImage" placeholder="Or enter Image URL (S3, CDN...) / Veya Görsel URL'si girin">
-            <div id="catImagePreviewContainer" class="mt-2" style="display:none;">
-              <small class="text-muted d-block mb-1">Current Image:</small>
-              <img id="catImagePreview" src="" style="max-height: 80px; border-radius: 4px;" class="border">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="catOrderIndex" class="font-weight-bold">Order Index</label>
-            <input type="number" class="form-control" id="catOrderIndex" value="0">
-          </div>
-          <div class="form-group">
-            <label for="catIsPublished" class="font-weight-bold">Is Published</label>
-            <select class="form-control" id="catIsPublished">
-              <option value="true" selected>Yes</option>
-              <option value="false">No</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-warning">Save Category</button>
-        </div>
-      </form>
-    </div>
+<div class="offcanvas-sheet" id="categoryModal">
+  <div class="offcanvas-header-sheet bg-warning">
+    <h5 class="offcanvas-title font-weight-bold text-dark" id="categoryModalLabel">Category Info</h5>
+    <button type="button" class="close-btn text-dark" onclick="closeOffcanvas('categoryModal')">&times;</button>
   </div>
+  <form id="categoryForm" class="h-100 d-flex flex-column m-0">
+    <input type="hidden" id="categoryId">
+    <div class="offcanvas-body-sheet">
+      <div class="form-group">
+        <label for="catTitle" class="font-weight-bold">Title *</label>
+        <input type="text" class="form-control" id="catTitle" required>
+      </div>
+      <div class="form-group">
+        <label for="catSubtitle" class="font-weight-bold">Subtitle</label>
+        <input type="text" class="form-control" id="catSubtitle">
+      </div>
+      <div class="form-group">
+        <label for="catType" class="font-weight-bold">Type *</label>
+        <input type="text" class="form-control" id="catType" placeholder="story, audio, etc." required>
+      </div>
+      <div class="form-group">
+        <label for="catCount" class="font-weight-bold">Count</label>
+        <input type="number" class="form-control" id="catCount" value="0">
+      </div>
+      <div class="form-group">
+        <label for="catImageFile" class="font-weight-bold">Image File</label>
+        <input type="file" class="form-control-file" id="catImageFile" accept="image/*">
+        <input type="text" class="form-control mt-2" id="catImage" placeholder="Or enter Image URL (S3, CDN...)">
+        <div id="catImagePreviewContainer" class="mt-2" style="display:none;">
+          <small class="text-muted d-block mb-1">Current Image:</small>
+          <img id="catImagePreview" src="" style="max-height: 80px; border-radius: 4px;" class="border">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="catOrderIndex" class="font-weight-bold">Order Index</label>
+        <input type="number" class="form-control" id="catOrderIndex" value="0">
+      </div>
+      <div class="form-group">
+        <label for="catIsPublished" class="font-weight-bold">Is Published</label>
+        <select class="form-control" id="catIsPublished">
+          <option value="true" selected>Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div class="offcanvas-footer-sheet">
+      <button type="button" class="btn btn-secondary" onclick="closeOffcanvas('categoryModal')">Close</button>
+      <button type="submit" class="btn btn-warning">Save Category</button>
+    </div>
+  </form>
 </div>
 
 <!-- Story Modal -->
-<div class="modal fade" id="storyModal" tabindex="-1" role="dialog" aria-labelledby="storyModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-success text-white">
-        <h5 class="modal-title font-weight-bold" id="storyModalLabel">Story Info</h5>
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form id="storyForm">
-        <input type="hidden" id="storyId">
-        <div class="modal-body">
+<div class="offcanvas-sheet" id="storyModal">
+  <div class="offcanvas-header-sheet bg-success text-white shadow-sm">
+    <h5 class="offcanvas-title font-weight-bold" id="storyModalLabel">
+      <i class="fas fa-book mr-2"></i>Story Info
+    </h5>
+    <button type="button" class="close-btn text-white" onclick="closeOffcanvas('storyModal')">&times;</button>
+  </div>
+  <form id="storyForm" class="h-100 d-flex flex-column m-0">
+    <input type="hidden" id="storyId">
+    <div class="offcanvas-body-sheet bg-light-gray p-3" style="background-color: #f8f9fa;">
+      
+      <!-- General Section Card -->
+      <div class="card mb-3 border-0 shadow-sm" style="border-radius: 8px;">
+        <div class="card-body p-3">
+          <h6 class="text-success font-weight-bold mb-3 border-bottom pb-2" style="font-size: 14px;">
+            <i class="fas fa-info-circle mr-1"></i> General Details
+          </h6>
+          <div class="form-group">
+            <label for="storyTitle" class="font-weight-bold text-secondary" style="font-size: 13px;">Title *</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text bg-white border-right-0"><i class="fas fa-font text-muted"></i></span>
+              </div>
+              <input type="text" class="form-control border-left-0" id="storyTitle" placeholder="Enter story title" required>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-6">
-              <div class="form-group">
-                <label for="storyTitle" class="font-weight-bold">Title *</label>
-                <input type="text" class="form-control" id="storyTitle" required>
-              </div>
-              <div class="form-group">
-                <label for="storySlug" class="font-weight-bold">Slug *</label>
-                <input type="text" class="form-control" id="storySlug" required>
-              </div>
-              <div class="form-group">
-                <label for="storyType" class="font-weight-bold">Type *</label>
+          <input type="hidden" id="storySlug">
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-2">
+                <label for="storyType" class="font-weight-bold text-secondary" style="font-size: 13px;">Type *</label>
                 <input type="text" class="form-control" id="storyType" value="story" required>
               </div>
-              <div class="form-group">
-                <label for="storyCategoryId" class="font-weight-bold">Category ID</label>
-                <input type="number" class="form-control" id="storyCategoryId">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-0">
+                <label for="storyCategoryId" class="font-weight-bold text-secondary" style="font-size: 13px;">Category ID</label>
+                <input type="number" class="form-control" id="storyCategoryId" placeholder="e.g. 1">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group">
-                <label for="storyDuration" class="font-weight-bold">Duration String (e.g. 05:30)</label>
-                <input type="text" class="form-control" id="storyDuration">
-              </div>
-              <div class="form-group">
-                <label for="storyDurationSeconds" class="font-weight-bold">Duration Seconds</label>
-                <input type="number" class="form-control" id="storyDurationSeconds" value="0">
-              </div>
-              <div class="form-group">
-                <label for="storyImageFile" class="font-weight-bold">Image File</label>
-                <input type="file" class="form-control-file" id="storyImageFile" accept="image/*">
-                <input type="text" class="form-control mt-2" id="storyImage" placeholder="Or enter Image URL (S3, CDN...) / Veya Görsel URL'si girin">
-                <div id="storyImagePreviewContainer" class="mt-2" style="display:none;">
-                  <small class="text-muted d-block mb-1">Current Image:</small>
-                  <img id="storyImagePreview" src="" style="max-height: 80px; border-radius: 4px;" class="border">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="storyAudioUrl" class="font-weight-bold">Audio URL</label>
-                <input type="text" class="form-control" id="storyAudioUrl" placeholder="https://...">
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="storyContentText" class="font-weight-bold">Story Text Content</label>
-                <textarea class="form-control" id="storyContentText" rows="4"></textarea>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="storyIsLocked" class="font-weight-bold">Locked (Premium)</label>
-                <select class="form-control" id="storyIsLocked">
-                  <option value="false" selected>Free</option>
-                  <option value="true">Locked</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="storyIsPublished" class="font-weight-bold">Published</label>
-                <select class="form-control" id="storyIsPublished">
-                  <option value="true" selected>Published</option>
-                  <option value="false">Draft</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="storyOrderIndex" class="font-weight-bold">Order Index</label>
+              <div class="form-group mb-0">
+                <label for="storyOrderIndex" class="font-weight-bold text-secondary" style="font-size: 13px;">Order Index</label>
                 <input type="number" class="form-control" id="storyOrderIndex" value="0">
               </div>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success">Save Story</button>
+      </div>
+
+      <!-- Media Files Section Card -->
+      <div class="card mb-3 border-0 shadow-sm" style="border-radius: 8px;">
+        <div class="card-body p-3">
+          <h6 class="text-success font-weight-bold mb-3 border-bottom pb-2" style="font-size: 14px;">
+            <i class="fas fa-photo-video mr-1"></i> Media Assets
+          </h6>
+          
+          <!-- Image Input & Preview -->
+          <div class="form-group">
+            <label for="storyImageFile" class="font-weight-bold text-secondary d-block mb-1" style="font-size: 13px;">Story Thumbnail Cover</label>
+            <input type="file" class="form-control-file mb-2" id="storyImageFile" accept="image/*">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text bg-white border-right-0"><i class="fas fa-link text-muted"></i></span>
+              </div>
+              <input type="text" class="form-control border-left-0" id="storyImage" placeholder="Or enter external Image URL">
+            </div>
+            <div id="storyImagePreviewContainer" class="mt-2 text-center p-2 border rounded bg-light" style="display:none;">
+              <small class="text-muted d-block mb-1">Cover Preview:</small>
+              <img id="storyImagePreview" src="" style="max-height: 100px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" class="border">
+            </div>
+          </div>
+
+          <!-- Audio Input -->
+          <div class="form-group mb-0">
+            <label for="storyAudioFile" class="font-weight-bold text-secondary d-block mb-1" style="font-size: 13px;">Audio Soundtrack</label>
+            <input type="file" class="form-control-file mb-2" id="storyAudioFile" accept="audio/*">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text bg-white border-right-0"><i class="fas fa-volume-up text-muted"></i></span>
+              </div>
+              <input type="text" class="form-control border-left-0" id="storyAudioUrl" placeholder="Or paste external Audio URL">
+            </div>
+          </div>
         </div>
-      </form>
+      </div>
+
+      <!-- Playback & Visibility Settings Card -->
+      <div class="card mb-3 border-0 shadow-sm" style="border-radius: 8px;">
+        <div class="card-body p-3">
+          <h6 class="text-success font-weight-bold mb-3 border-bottom pb-2" style="font-size: 14px;">
+            <i class="fas fa-sliders-h mr-1"></i> Playback & Visibility
+          </h6>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-2">
+                <label for="storyDuration" class="font-weight-bold text-secondary" style="font-size: 13px;">Duration (e.g. 05:30)</label>
+                <input type="text" class="form-control" id="storyDuration" placeholder="MM:SS">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-2">
+                <label for="storyDurationSeconds" class="font-weight-bold text-secondary" style="font-size: 13px;">Duration (Seconds)</label>
+                <input type="number" class="form-control" id="storyDurationSeconds" value="0">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-0">
+                <label for="storyIsLocked" class="font-weight-bold text-secondary" style="font-size: 13px;">Access Level</label>
+                <select class="form-control custom-select" id="storyIsLocked">
+                  <option value="false" selected>🔓 Free Access</option>
+                  <option value="true">🔒 Locked (Premium)</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-0">
+                <label for="storyIsPublished" class="font-weight-bold text-secondary" style="font-size: 13px;">Status</label>
+                <select class="form-control custom-select" id="storyIsPublished">
+                  <option value="true" selected>🟢 Published</option>
+                  <option value="false">Draft</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Text Card -->
+      <div class="card mb-2 border-0 shadow-sm" style="border-radius: 8px;">
+        <div class="card-body p-3">
+          <h6 class="text-success font-weight-bold mb-3 border-bottom pb-2" style="font-size: 14px;">
+            <i class="fas fa-file-alt mr-1"></i> Story Text / Transcript
+          </h6>
+          <div class="form-group mb-0">
+            <textarea class="form-control" id="storyContentText" rows="5" placeholder="Type or paste the story transcript text here..." style="font-size: 13px; line-height: 1.5;"></textarea>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </div>
+    <div class="offcanvas-footer-sheet bg-white border-top shadow-sm p-3 d-flex justify-content-end" style="gap: 8px;">
+      <button type="button" class="btn btn-secondary" onclick="closeOffcanvas('storyModal')">
+        <i class="fas fa-times mr-1"></i> Cancel
+      </button>
+      <button type="submit" class="btn btn-success">
+        <i class="fas fa-save mr-1"></i> Save & Publish
+      </button>
+    </div>
+  </form>
 </div>
 
 <!-- Audio Item Modal -->
-<div class="modal fade" id="audioItemModal" tabindex="-1" role="dialog" aria-labelledby="audioItemModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title font-weight-bold" id="audioItemModalLabel">Audio Item Info</h5>
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form id="audioItemForm">
-        <input type="hidden" id="audioItemId">
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="audioTitle" class="font-weight-bold">Title *</label>
-                <input type="text" class="form-control" id="audioTitle" required>
-              </div>
-              <div class="form-group">
-                <label for="audioSlug" class="font-weight-bold">Slug *</label>
-                <input type="text" class="form-control" id="audioSlug" required>
-              </div>
-              <div class="form-group">
-                <label for="audioCategory" class="font-weight-bold">Category Name *</label>
-                <input type="text" class="form-control" id="audioCategory" required>
-              </div>
-              <div class="form-group">
-                <label for="audioCategoryId" class="font-weight-bold">Category ID</label>
-                <input type="number" class="form-control" id="audioCategoryId">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="audioDuration" class="font-weight-bold">Duration String (e.g. 03:45)</label>
-                <input type="text" class="form-control" id="audioDuration">
-              </div>
-              <div class="form-group">
-                <label for="audioDurationSeconds" class="font-weight-bold">Duration Seconds</label>
-                <input type="number" class="form-control" id="audioDurationSeconds" value="0">
-              </div>
-              <div class="form-group">
-                <label for="audioImageFile" class="font-weight-bold">Image File</label>
-                <input type="file" class="form-control-file" id="audioImageFile" accept="image/*">
-                <input type="text" class="form-control mt-2" id="audioImage" placeholder="Or enter Image URL (S3, CDN...) / Veya Görsel URL'si girin">
-                <div id="audioImagePreviewContainer" class="mt-2" style="display:none;">
-                  <small class="text-muted d-block mb-1">Current Image:</small>
-                  <img id="audioImagePreview" src="" style="max-height: 80px; border-radius: 4px;" class="border">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="audioUrlField" class="font-weight-bold">Audio URL *</label>
-                <input type="text" class="form-control" id="audioUrlField" placeholder="https://..." required>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="audioBadgeColor" class="font-weight-bold">Badge Color</label>
-                <input type="text" class="form-control" id="audioBadgeColor" placeholder="#007bff">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="audioIsLocked" class="font-weight-bold">Locked (Premium)</label>
-                <select class="form-control" id="audioIsLocked">
-                  <option value="false" selected>Free</option>
-                  <option value="true">Locked</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="audioIsPublished" class="font-weight-bold">Published</label>
-                <select class="form-control" id="audioIsPublished">
-                  <option value="true" selected>Published</option>
-                  <option value="false">Draft</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="audioOrderIndex" class="font-weight-bold">Order Index</label>
-                <input type="number" class="form-control" id="audioOrderIndex" value="0">
-              </div>
+<div class="offcanvas-sheet" id="audioItemModal">
+  <div class="offcanvas-header-sheet bg-primary text-white">
+    <h5 class="offcanvas-title font-weight-bold" id="audioItemModalLabel">Audio Item Info</h5>
+    <button type="button" class="close-btn text-white" onclick="closeOffcanvas('audioItemModal')">&times;</button>
+  </div>
+  <form id="audioItemForm" class="h-100 d-flex flex-column m-0">
+    <input type="hidden" id="audioItemId">
+    <div class="offcanvas-body-sheet">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="audioTitle" class="font-weight-bold">Title *</label>
+            <input type="text" class="form-control" id="audioTitle" required>
+          </div>
+          <input type="hidden" id="audioSlug">
+          <div class="form-group">
+            <label for="audioCategory" class="font-weight-bold">Category Name *</label>
+            <input type="text" class="form-control" id="audioCategory" required>
+          </div>
+          <div class="form-group">
+            <label for="audioCategoryId" class="font-weight-bold">Category ID</label>
+            <input type="number" class="form-control" id="audioCategoryId">
+          </div>
+          <div class="form-group">
+            <label for="audioDuration" class="font-weight-bold">Duration String (e.g. 03:45)</label>
+            <input type="text" class="form-control" id="audioDuration">
+          </div>
+          <div class="form-group">
+            <label for="audioDurationSeconds" class="font-weight-bold">Duration Seconds</label>
+            <input type="number" class="form-control" id="audioDurationSeconds" value="0">
+          </div>
+          <div class="form-group">
+            <label for="audioImageFile" class="font-weight-bold">Image File</label>
+            <input type="file" class="form-control-file" id="audioImageFile" accept="image/*">
+            <input type="text" class="form-control mt-2" id="audioImage" placeholder="Or enter Image URL (S3, CDN...)">
+            <div id="audioImagePreviewContainer" class="mt-2" style="display:none;">
+              <small class="text-muted d-block mb-1">Current Image:</small>
+              <img id="audioImagePreview" src="" style="max-height: 80px; border-radius: 4px;" class="border">
             </div>
           </div>
+          <div class="form-group">
+            <label for="audioUrlField" class="font-weight-bold">Audio URL</label>
+            <input type="text" class="form-control" id="audioUrlField" placeholder="https://...">
+          </div>
+          <div class="form-group">
+            <label for="audioAudioFile" class="font-weight-bold">Or Upload Audio File</label>
+            <input type="file" class="form-control-file" id="audioAudioFile" accept="audio/*">
+          </div>
+          <div class="form-group">
+            <label for="audioBadgeColor" class="font-weight-bold">Badge Color</label>
+            <input type="text" class="form-control" id="audioBadgeColor" placeholder="#007bff">
+          </div>
+          <div class="form-group">
+            <label for="audioIsLocked" class="font-weight-bold">Locked (Premium)</label>
+            <select class="form-control" id="audioIsLocked">
+              <option value="false" selected>Free</option>
+              <option value="true">Locked</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="audioIsPublished" class="font-weight-bold">Published</label>
+            <select class="form-control" id="audioIsPublished">
+              <option value="true" selected>Published</option>
+              <option value="false">Draft</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="audioOrderIndex" class="font-weight-bold">Order Index</label>
+            <input type="number" class="form-control" id="audioOrderIndex" value="0">
+          </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save Audio Item</button>
-        </div>
-      </form>
+      </div>
     </div>
-  </div>
+    <div class="offcanvas-footer-sheet">
+      <button type="button" class="btn btn-secondary" onclick="closeOffcanvas('audioItemModal')">Close</button>
+      <button type="submit" class="btn btn-primary">Save & Publish</button>
+    </div>
+  </form>
 </div>
 
 <!-- Product Modal -->
-<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-info text-white">
-        <h5 class="modal-title font-weight-bold" id="productModalLabel">Product Info</h5>
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<div class="offcanvas-sheet" id="productModal">
+  <div class="offcanvas-header-sheet bg-info text-white">
+    <h5 class="offcanvas-title font-weight-bold" id="productModalLabel">Product Info</h5>
+    <button type="button" class="close-btn text-white" onclick="closeOffcanvas('productModal')">&times;</button>
+  </div>
+  <form id="productForm" class="h-100 d-flex flex-column m-0">
+    <input type="hidden" id="productId">
+    <div class="offcanvas-body-sheet">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="prodTitle" class="font-weight-bold">Title *</label>
+            <input type="text" class="form-control" id="prodTitle" required>
+          </div>
+          <div class="form-group">
+            <label for="prodPrice" class="font-weight-bold">Price ($) *</label>
+            <input type="number" step="0.01" class="form-control" id="prodPrice" required>
+          </div>
+          <div class="form-group">
+            <label for="prodPriceString" class="font-weight-bold">Price Display String (e.g. $4.99)</label>
+            <input type="text" class="form-control" id="prodPriceString">
+          </div>
+          <div class="form-group">
+            <label for="prodImageFile" class="font-weight-bold">Image File</label>
+            <input type="file" class="form-control-file" id="prodImageFile" accept="image/*">
+            <input type="text" class="form-control mt-2" id="prodImage" placeholder="Or enter Image URL (S3, CDN...)">
+            <div id="prodImagePreviewContainer" class="mt-2" style="display:none;">
+              <small class="text-muted d-block mb-1">Current Image:</small>
+              <img id="prodImagePreview" src="" style="max-height: 80px; border-radius: 4px;" class="border">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="prodDuration" class="font-weight-bold">Duration String (e.g. 1 Month)</label>
+            <input type="text" class="form-control" id="prodDuration">
+          </div>
+          <div class="form-group">
+            <label for="prodDurationSeconds" class="font-weight-bold">Duration Seconds</label>
+            <input type="number" class="form-control" id="prodDurationSeconds" value="0">
+          </div>
+          <div class="form-group">
+            <label for="prodDescription" class="font-weight-bold">Description</label>
+            <textarea class="form-control" id="prodDescription" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="prodOrderIndex" class="font-weight-bold">Order Index</label>
+            <input type="number" class="form-control" id="prodOrderIndex" value="0">
+          </div>
+          <div class="form-group">
+            <label for="prodIsPublished" class="font-weight-bold">Published</label>
+            <select class="form-control" id="prodIsPublished">
+              <option value="true" selected>Published</option>
+              <option value="false">Draft</option>
+            </select>
+          </div>
+        </div>
       </div>
-      <form id="productForm">
-        <input type="hidden" id="productId">
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="prodTitle" class="font-weight-bold">Title *</label>
-                <input type="text" class="form-control" id="prodTitle" required>
-              </div>
-              <div class="form-group">
-                <label for="prodPrice" class="font-weight-bold">Price ($) *</label>
-                <input type="number" step="0.01" class="form-control" id="prodPrice" required>
-              </div>
-              <div class="form-group">
-                <label for="prodPriceString" class="font-weight-bold">Price Display String (e.g. $4.99)</label>
-                <input type="text" class="form-control" id="prodPriceString">
-              </div>
+    </div>
+    <div class="offcanvas-footer-sheet">
+      <button type="button" class="btn btn-secondary" onclick="closeOffcanvas('productModal')">Close</button>
+      <button type="submit" class="btn btn-info">Save Product</button>
+    </div>
+  </form>
+</div>
+
+<!-- Music Item Modal -->
+<div class="offcanvas-sheet" id="musicItemModal">
+  <div class="offcanvas-header-sheet text-white" style="background-color: #6f42c1 !important;">
+    <h5 class="offcanvas-title font-weight-bold" id="musicItemModalLabel">Music Item Info</h5>
+    <button type="button" class="close-btn text-white" onclick="closeOffcanvas('musicItemModal')">&times;</button>
+  </div>
+  <form id="musicItemForm" class="h-100 d-flex flex-column m-0">
+    <input type="hidden" id="musicItemId">
+    <div class="offcanvas-body-sheet">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="musicTitle" class="font-weight-bold">Title *</label>
+            <input type="text" class="form-control" id="musicTitle" required placeholder="e.g. Joyful Praise">
+          </div>
+          <div class="form-group">
+            <label for="musicType" class="font-weight-bold">Type *</label>
+            <select class="form-control" id="musicType" required>
+              <option value="Background">Background</option>
+              <option value="Instrumental">Instrumental</option>
+              <option value="Meditation">Meditation</option>
+              <option value="Vocal">Vocal</option>
+              <option value="Christian Music">Christian Music</option>
+              <option value="Hebrew Biblical Music">Hebrew Biblical Music</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="musicCategory" class="font-weight-bold">Category Name</label>
+            <input type="text" class="form-control" id="musicCategory" placeholder="e.g. Nursery Rhymes">
+          </div>
+          <div class="form-group">
+            <label for="musicCategoryId" class="font-weight-bold">Category ID</label>
+            <input type="number" class="form-control" id="musicCategoryId" placeholder="e.g. 5">
+          </div>
+          <div class="form-group">
+            <label for="musicImageFile" class="font-weight-bold">Image File *</label>
+            <input type="file" class="form-control-file" id="musicImageFile" accept="image/*">
+            <input type="text" class="form-control mt-2" id="musicImage" placeholder="Or enter Image URL">
+            <div id="musicImagePreviewContainer" class="mt-2" style="display:none;">
+              <small class="text-muted d-block mb-1">Current Image:</small>
+              <img id="musicImagePreview" src="" style="max-height: 80px; border-radius: 4px;" class="border">
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="prodImageFile" class="font-weight-bold">Image File</label>
-                <input type="file" class="form-control-file" id="prodImageFile" accept="image/*">
-                <input type="text" class="form-control mt-2" id="prodImage" placeholder="Or enter Image URL (S3, CDN...) / Veya Görsel URL'si girin">
-                <div id="prodImagePreviewContainer" class="mt-2" style="display:none;">
-                  <small class="text-muted d-block mb-1">Current Image:</small>
-                  <img id="prodImagePreview" src="" style="max-height: 80px; border-radius: 4px;" class="border">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="prodDuration" class="font-weight-bold">Duration String (e.g. 1 Month)</label>
-                <input type="text" class="form-control" id="prodDuration">
-              </div>
-              <div class="form-group">
-                <label for="prodDurationSeconds" class="font-weight-bold">Duration Seconds</label>
-                <input type="number" class="form-control" id="prodDurationSeconds" value="0">
-              </div>
+          </div>
+          <div class="form-group">
+            <label for="musicAudioFile" class="font-weight-bold">Audio File *</label>
+            <input type="file" class="form-control-file" id="musicAudioFile" accept="audio/*">
+            <input type="text" class="form-control mt-2" id="musicUrlField" placeholder="Or enter Audio URL">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="offcanvas-footer-sheet">
+      <button type="button" class="btn btn-secondary" onclick="closeOffcanvas('musicItemModal')">Close</button>
+      <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane mr-1"></i> Add & Publish</button>
+    </div>
+  </form>
+</div>
+
+<!-- Video Modal -->
+<div class="offcanvas-sheet" id="videoModal">
+  <div class="offcanvas-header-sheet bg-danger text-white">
+    <h5 class="offcanvas-title font-weight-bold" id="videoModalLabel">Video Info</h5>
+    <div class="offcanvas-header-actions">
+      <button type="submit" form="videoForm" class="btn btn-light text-danger header-save-btn">
+        <i class="fas fa-save mr-1"></i> Save &amp; Publish
+      </button>
+      <button type="button" class="close-btn text-white" onclick="closeOffcanvas('videoModal')">&times;</button>
+    </div>
+  </div>
+  <form id="videoForm" class="h-100 d-flex flex-column m-0">
+    <input type="hidden" id="videoId">
+    <div class="offcanvas-body-sheet">
+      <div class="upload-progress-wrap" id="videoUploadProgressWrap">
+        <div class="upload-progress-label">
+          <span>Uploading video</span>
+          <span id="videoUploadProgressText">0%</span>
+        </div>
+        <div class="upload-progress-bar"><span id="videoUploadProgressBar"></span></div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="alert alert-light border mb-3" style="font-size: 13px; line-height: 1.45;">
+            <strong>Quick use:</strong> Select a file and save. URL fields are only needed if you want to use an external link.
+          </div>
+          <div class="form-group">
+            <label for="videoTitle" class="font-weight-bold">Title *</label>
+            <input type="text" class="form-control" id="videoTitle" required placeholder="e.g. Bible Stories for Kids">
+          </div>
+          <input type="hidden" id="videoSlug">
+          <div class="form-group">
+            <label for="videoCategory" class="font-weight-bold">Category Name *</label>
+            <input type="text" class="form-control" id="videoCategory" required placeholder="e.g. Kids Videos">
+          </div>
+          <div class="form-group">
+            <label for="videoCategoryId" class="font-weight-bold">Category ID</label>
+            <input type="number" class="form-control" id="videoCategoryId" placeholder="e.g. 1">
+          </div>
+          <div class="form-group">
+            <label for="videoVerticalBannerFile" class="font-weight-bold">Vertical Banner <span class="text-muted">(preferred)</span></label>
+            <input type="file" class="form-control-file" id="videoVerticalBannerFile" accept="image/*">
+            <input type="text" class="form-control mt-2" id="videoVerticalBannerUrl" placeholder="Optional: paste banner URL">
+            <small class="text-muted d-block mt-1">Selecting a file is the fastest option for the cover image.</small>
+          </div>
+          <div class="form-group">
+            <label for="videoFile" class="font-weight-bold">Video File <span class="text-muted">(preferred)</span></label>
+            <input type="file" class="form-control-file" id="videoFile" accept="video/*">
+            <input type="text" class="form-control mt-2" id="videoUrl" placeholder="Optional: paste video URL">
+            <small class="text-muted d-block mt-1">Direct file upload is recommended for large files.</small>
+          </div>
+          <div class="form-group">
+            <label for="videoSrtFile" class="font-weight-bold">Subtitle File <span class="text-muted">(optional)</span></label>
+            <input type="file" class="form-control-file" id="videoSrtFile" accept=".srt,.vtt,text/plain,text/vtt">
+            <input type="text" class="form-control mt-2" id="videoSrtUrl" placeholder="Optional: paste subtitle URL">
+          </div>
+          <div class="video-form-card">
+            <div class="form-group">
+              <label for="videoIsPublished" class="font-weight-bold">Status</label>
+              <select class="form-control" id="videoIsPublished">
+                <option value="true" selected>Published</option>
+                <option value="false">Draft</option>
+              </select>
             </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="prodDescription" class="font-weight-bold">Description</label>
-                <textarea class="form-control" id="prodDescription" rows="3"></textarea>
-              </div>
+            <div class="form-group">
+              <label for="videoIsLocked" class="font-weight-bold">Access</label>
+              <select class="form-control" id="videoIsLocked">
+                <option value="false" selected>Free</option>
+                <option value="true">Locked</option>
+              </select>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="prodOrderIndex" class="font-weight-bold">Order Index</label>
-                <input type="number" class="form-control" id="prodOrderIndex" value="0">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="prodIsPublished" class="font-weight-bold">Published</label>
-                <select class="form-control" id="prodIsPublished">
-                  <option value="true" selected>Published</option>
-                  <option value="false">Draft</option>
-                </select>
-              </div>
+            <div class="form-group mb-0">
+              <label for="videoOrderIndex" class="font-weight-bold">Order Index</label>
+              <input type="number" class="form-control" id="videoOrderIndex" value="0">
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-info">Save Product</button>
-        </div>
-      </form>
+      </div>
     </div>
-  </div>
+    <div class="offcanvas-footer-sheet">
+      <button type="button" class="btn btn-secondary" onclick="closeOffcanvas('videoModal')"><i class="fas fa-times mr-1"></i> Close</button>
+      <button type="submit" class="btn btn-danger"><i class="fas fa-save mr-1"></i> Save & Publish</button>
+    </div>
+  </form>
 </div>
 
 <!-- Image Preview Modal -->

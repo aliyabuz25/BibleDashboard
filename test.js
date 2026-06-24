@@ -55,33 +55,9 @@ async function runTests() {
     });
   console.log('Geçersiz User-Agent Durum Kodu:', badAgentRes.status);
 
-  // Test 2.5: E-posta onaysız giriş denemesi (400 Hatası almalı)
-  console.log('\nTest 2.5: E-posta onaysız giriş denemesi...');
-  const unverifiedLoginRes = await request(app)
-    .post('/api/login')
-    .set('User-Agent', 'bible-appclient')
-    .send({
-      email: 'ahmetxss@example.com',
-      password: 'sifre123'
-    });
-  console.log('Onaysız Giriş Durum Kodu (400 bekleniyor):', unverifiedLoginRes.status);
-  console.log('Onaysız Giriş Mesajı:', unverifiedLoginRes.body.message);
-
-  // E-posta adresini onaylamak için veri tabanından token'ı çekelim
-  const db = require('./database');
-  const userRow = await db.get("SELECT verificationToken FROM users WHERE email = ?", ['ahmetxss@example.com']);
-  const token = userRow.verificationToken;
-  console.log('Veritabanından Alınan Onay Tokenı:', token);
-
-  // E-posta onaylama isteği gönderelim (GET /api/auth/verify)
-  console.log('\nTest 2.6: E-posta onaylama (verify) işlemi...');
-  const verifyRes = await request(app)
-    .get(`/api/auth/verify?token=${token}`)
-    .set('User-Agent', 'bible-appclient');
-  console.log('E-posta Onaylama Durum Kodu (200 bekleniyor):', verifyRes.status);
-
-  // Test 3: Başarılı Giriş (E-posta onaylandığı için artık başarılı olmalı)
-  console.log('\nTest 3: Onay sonrası başarılı Giriş...');
+  // E-posta onaysız giriş denemesi yapılmıyor çünkü artık onay zorunlu değil.
+  // Test 3: Başarılı Giriş
+  console.log('\nTest 3: Başarılı Giriş...');
   const loginRes = await request(app)
     .post('/api/login')
     .set('User-Agent', 'bible-appclient')
@@ -184,7 +160,6 @@ async function runTests() {
     .post('/api/notifications')
     .set('User-Agent', 'bible-appclient')
     .send({
-      title: 'Yükleme Tamamlandı',
       message: 'Yeni görsel kitap yüklendi.',
       type: 'success',
       sentTo: 'all'
@@ -213,6 +188,38 @@ async function runTests() {
     .delete(`/api/users/${registeredUserId}`)
     .set('User-Agent', 'bible-appclient');
   console.log('Kullanıcı Silme Durum Kodu:', deleteUserRes.status);
+
+  // Test 18: Terms and Conditions static page
+  console.log('\nTest 18: Terms and Conditions static page access...');
+  const termsRes = await request(app)
+    .get('/terms.html')
+    .set('User-Agent', 'bible-appclient');
+  console.log('Terms.html Status Code:', termsRes.status);
+  console.log('Terms.html contains "Terms and Conditions":', termsRes.text.includes('Terms and Conditions'));
+
+  // Test 18.5: Terms and Conditions static page under /public prefix
+  console.log('\nTest 18.5: Terms and Conditions static page access under /public...');
+  const publicTermsRes = await request(app)
+    .get('/public/terms.html')
+    .set('User-Agent', 'bible-appclient');
+  console.log('public/terms.html Status Code:', publicTermsRes.status);
+  console.log('public/terms.html contains "Terms and Conditions":', publicTermsRes.text.includes('Terms and Conditions'));
+
+  // Test 19: Privacy Policy static page
+  console.log('\nTest 19: Privacy Policy static page access...');
+  const privacyRes = await request(app)
+    .get('/privacy.html')
+    .set('User-Agent', 'bible-appclient');
+  console.log('Privacy.html Status Code:', privacyRes.status);
+  console.log('Privacy.html contains "Privacy Policy":', privacyRes.text.includes('Privacy Policy'));
+
+  // Test 19.5: Privacy Policy static page under /public prefix
+  console.log('\nTest 19.5: Privacy Policy static page access under /public...');
+  const publicPrivacyRes = await request(app)
+    .get('/public/privacy.html')
+    .set('User-Agent', 'bible-appclient');
+  console.log('public/privacy.html Status Code:', publicPrivacyRes.status);
+  console.log('public/privacy.html contains "Privacy Policy":', publicPrivacyRes.text.includes('Privacy Policy'));
   
   console.log('\n--- TÜM ENTEGRASYON TESTLERİ TAMAMLANDI ---');
   process.exit(0);

@@ -60,7 +60,8 @@ async function initDb() {
             trialStartedAt TEXT DEFAULT NULL,
             trialEndsAt TEXT DEFAULT NULL,
             revenueCatUserId TEXT DEFAULT NULL,
-            fcmToken TEXT DEFAULT NULL
+            fcmToken TEXT DEFAULT NULL,
+            role TEXT DEFAULT 'user'
           )
         `);
 
@@ -76,7 +77,8 @@ async function initDb() {
           "trialStartedAt TEXT DEFAULT NULL",
           "trialEndsAt TEXT DEFAULT NULL",
           "revenueCatUserId TEXT DEFAULT NULL",
-          "fcmToken TEXT DEFAULT NULL"
+          "fcmToken TEXT DEFAULT NULL",
+          "role TEXT DEFAULT 'user'"
         ];
 
         for (const col of alterColumns) {
@@ -209,9 +211,20 @@ async function initDb() {
             type TEXT NOT NULL,
             image TEXT NOT NULL,
             audioUrl TEXT,
+            categoryId INTEGER,
+            category TEXT,
             createdAt TEXT NOT NULL
           )
         `);
+
+        // Safely alter existing music_items table if columns are missing
+        const alterMusicColumns = [
+          "categoryId INTEGER DEFAULT NULL",
+          "category TEXT DEFAULT NULL"
+        ];
+        for (const col of alterMusicColumns) {
+          db.run(`ALTER TABLE music_items ADD COLUMN ${col}`, [], () => {});
+        }
 
         db.run(`
           CREATE TABLE IF NOT EXISTS products (
@@ -256,6 +269,33 @@ async function initDb() {
         }
 
         db.run(`
+          CREATE TABLE IF NOT EXISTS videos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            slug TEXT UNIQUE NOT NULL,
+            categoryId INTEGER,
+            category TEXT,
+            videoUrl TEXT NOT NULL,
+            verticalBannerUrl TEXT NOT NULL,
+            subtitleUrl TEXT DEFAULT '',
+            isLocked INTEGER DEFAULT 0,
+            isPublished INTEGER DEFAULT 0,
+            orderIndex INTEGER DEFAULT 0,
+            createdAt TEXT NOT NULL,
+            FOREIGN KEY (categoryId) REFERENCES categories(id)
+          )
+        `);
+
+        db.get("PRAGMA table_info(videos)", [], (err, rows) => {
+          if (!err && Array.isArray(rows)) {
+            const hasSubtitleUrl = rows.some((row) => row.name === 'subtitleUrl');
+            if (!hasSubtitleUrl) {
+              db.run("ALTER TABLE videos ADD COLUMN subtitleUrl TEXT DEFAULT ''", [], () => {});
+            }
+          }
+        });
+
+        db.run(`
           CREATE TABLE IF NOT EXISTS favorites (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             userId INTEGER NOT NULL,
@@ -291,15 +331,149 @@ async function initDb() {
                 if (!err && !userRow) {
                   const hash = await bcrypt.hash('Initial_123!', 10);
                   db.run(
-                    "INSERT INTO users (firstName, lastName, email, phoneNumber, password, createdAt, isVerified, avatarId, subscriptionStatus) VALUES (?, ?, ?, ?, ?, ?, 1, 'avatar_05', 'active')",
+                    "INSERT INTO users (firstName, lastName, email, phoneNumber, password, createdAt, isVerified, avatarId, subscriptionStatus, role) VALUES (?, ?, ?, ?, ?, ?, 1, 'avatar_05', 'active', 'admin')",
                     ['Ali', 'Valizada', 'ali.valizada@octotech.az', '5550000001', hash, new Date().toISOString()],
-                    (err) => {
+                    async (err) => {
                       if (!err) console.log('--- SEEDED SPECIFIC USER ali.valizada@octotech.az ---');
+                      await ensureOrnaAdmin();
                       resUser();
                     }
                   );
                 } else {
-                  resUser();
+                  // Ensure existing ali has role = admin
+                  db.run("UPDATE users SET role = 'admin' WHERE email = 'ali.valizada@octotech.az'", [], async () => {
+                    await ensureOrnaAdmin();
+                    resUser();
+                  });
+                }
+              });
+            });
+          };
+
+          // Helper to ensure Orna's admin user exists
+          const ensureOrnaAdmin = async () => {
+            return new Promise((resOrna) => {
+              db.get("SELECT * FROM users WHERE email = 'orna@thekidsbiblestories.com'", async (err, userRow) => {
+                if (!err && !userRow) {
+                  const hash = await bcrypt.hash('OrnaAdmin123!', 10);
+                  db.run(
+                    "INSERT INTO users (firstName, lastName, email, phoneNumber, password, createdAt, isVerified, avatarId, subscriptionStatus, role) VALUES (?, ?, ?, ?, ?, ?, 1, 'avatar_01', 'active', 'admin')",
+                    ['Orna', 'Client', 'orna@thekidsbiblestories.com', '5551112233', hash, new Date().toISOString()],
+                    (err) => {
+                      if (!err) console.log('--- SEEDED ORNA ADMIN USER ---');
+                      resOrna();
+                    }
+                  );
+                } else {
+                  // Ensure Orna has admin role
+                  db.run("UPDATE users SET role = 'admin' WHERE email = 'orna@thekidsbiblestories.com'", [], () => {
+                    resOrna();
+                  });
+                }
+              });
+            });
+          };
+
+          // Helper to ensure 5 sample videos are seeded
+          const ensureVideos = async () => {
+            return new Promise((resVideos) => {
+              db.get("SELECT COUNT(*) as count FROM videos", (err, videoCountRow) => {
+                if (!err && videoCountRow && videoCountRow.count === 0) {
+                  console.log('--- SEEDING SAMPLE VIDEOS ---');
+                  db.get("SELECT id FROM categories WHERE type = 'video' LIMIT 1", (err, catRow) => {
+                    const insertVideos = (finalCatId) => {
+                      const sampleVideos = [
+                        {
+                          title: 'The Story of David & Goliath',
+                          slug: 'david-goliath-video',
+                          categoryId: finalCatId,
+                          category: 'Bible Videos',
+                          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                          verticalBannerUrl: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&auto=format&fit=crop',
+                          isLocked: 0,
+                          isPublished: 1,
+                          orderIndex: 1
+                        },
+                        {
+                          title: "Noah's Ark & The Great Flood",
+                          slug: 'noah-ark-video',
+                          categoryId: finalCatId,
+                          category: 'Bible Videos',
+                          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+                          verticalBannerUrl: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&auto=format&fit=crop',
+                          isLocked: 0,
+                          isPublished: 1,
+                          orderIndex: 2
+                        },
+                        {
+                          title: 'The Birth of Jesus',
+                          slug: 'birth-jesus-video',
+                          categoryId: finalCatId,
+                          category: 'Bible Videos',
+                          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                          verticalBannerUrl: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=800&auto=format&fit=crop',
+                          isLocked: 0,
+                          isPublished: 1,
+                          orderIndex: 3
+                        },
+                        {
+                          title: 'The Creation of the World',
+                          slug: 'creation-world-video',
+                          categoryId: finalCatId,
+                          category: 'Bible Videos',
+                          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+                          verticalBannerUrl: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=800&auto=format&fit=crop',
+                          isLocked: 1,
+                          isPublished: 1,
+                          orderIndex: 4
+                        },
+                        {
+                          title: "Daniel and the Lions' Den",
+                          slug: 'daniel-lions-den-video',
+                          categoryId: finalCatId,
+                          category: 'Bible Videos',
+                          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+                          verticalBannerUrl: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&auto=format&fit=crop',
+                          isLocked: 1,
+                          isPublished: 1,
+                          orderIndex: 5
+                        }
+                      ];
+
+                      let inserted = 0;
+                      for (const v of sampleVideos) {
+                        db.run(
+                          "INSERT OR IGNORE INTO videos (title, slug, categoryId, category, videoUrl, verticalBannerUrl, subtitleUrl, isLocked, isPublished, orderIndex, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                          [v.title, v.slug, v.categoryId, v.category, v.videoUrl, v.verticalBannerUrl, v.subtitleUrl || '', v.isLocked, v.isPublished, v.orderIndex, new Date().toISOString()],
+                          () => {
+                            inserted++;
+                            if (inserted === sampleVideos.length) {
+                              console.log('--- SEEDED 5 SAMPLE VIDEOS ---');
+                              resVideos();
+                            }
+                          }
+                        );
+                      }
+                    };
+
+                    if (!err && catRow) {
+                      insertVideos(catRow.id);
+                    } else {
+                      db.run(
+                        "INSERT INTO categories (title, subtitle, count, image, type, orderIndex, isPublished, createdAt) VALUES (?, ?, ?, ?, ?, ?, 1, ?)",
+                        ['Bible Videos', '5 videos', 5, 'https://cdn.kidsbiblestories.com/categories/cat-videos.jpg', 'video', 7, new Date().toISOString()],
+                        function(err) {
+                          if (!err) {
+                            insertVideos(this.lastID);
+                          } else {
+                            insertVideos(null);
+                          }
+                        }
+                      );
+                    }
+                  });
+                } else {
+                  resVideos();
                 }
               });
             });
@@ -314,8 +488,8 @@ async function initDb() {
             const user3Hash = await bcrypt.hash('ayse123', 10);
             const user4Hash = await bcrypt.hash('ahmet123', 10);
 
-            db.run("INSERT INTO users (firstName, lastName, email, phoneNumber, password, createdAt, isVerified, avatarId, subscriptionStatus) VALUES (?, ?, ?, ?, ?, ?, 1, 'avatar_05', 'active')",
-              ['Admin', 'User', 'admin@biblecms.com', '5550000000', adminHash, new Date().toISOString()]);
+            db.run("INSERT INTO users (firstName, lastName, email, phoneNumber, password, createdAt, isVerified, avatarId, subscriptionStatus, role) VALUES (?, ?, ?, ?, ?, ?, 1, 'avatar_05', 'active', 'admin')",
+              ['Admin', 'User', 'admin@cms.com', '5550000000', adminHash, new Date().toISOString()]);
 
             db.run("INSERT INTO users (firstName, lastName, email, phoneNumber, password, createdAt, isVerified, avatarId, subscriptionStatus) VALUES (?, ?, ?, ?, ?, ?, 1, 'avatar_01', 'active')",
               ['Veli', 'Kaya', 'veli@example.com', '5552345678', user2Hash, new Date().toISOString()]);
@@ -338,14 +512,14 @@ async function initDb() {
 
             // Seed Notifications
             db.run("INSERT INTO notifications (title, message, type, sentTo, createdAt, read, status) VALUES (?, ?, ?, ?, ?, 0, 'pending')",
-              ['Welcome to BibleCMS', 'Thank you for downloading and registering in the app.', 'success', 'all', new Date().toISOString()]);
+              ['Welcome to CMS Dashboard', 'Thank you for downloading and registering in the app.', 'success', 'all', new Date().toISOString()]);
 
             db.run("INSERT INTO notifications (title, message, type, sentTo, createdAt, read, status) VALUES (?, ?, ?, ?, ?, 0, 'pending')",
               ['Premium Catalog Unlocked', 'Your yearly subscription has successfully activated.', 'info', 'veli@example.com', new Date().toISOString()]);
 
             // Seed Catalogs
             db.run("INSERT INTO catalogs (name, description, thumbnailVertical, thumbnailHorizontal, createdAt) VALUES (?, ?, ?, ?, ?)",
-              ['Visual Bible Catalog v1', 'Holy Bible visual catalog containing illustrations and text guides.', 'https://cdn.biblecms.com/images/bible_vertical.jpg', 'https://cdn.biblecms.com/images/bible_horizontal.jpg', new Date().toISOString()]);
+              ['Visual Catalog v1', 'Visual publication catalog containing illustrations and text guides.', '/uploads/sample_vertical.jpg', '/uploads/sample_horizontal.jpg', new Date().toISOString()]);
 
             db.run("INSERT INTO catalogs (name, description, thumbnailVertical, thumbnailHorizontal, createdAt) VALUES (?, ?, ?, ?, ?)",
               ['Sample Visual Publication', 'A pre-loaded sample publication showcasing local vertical and horizontal covers.', '/uploads/sample_vertical.jpg', '/uploads/sample_horizontal.jpg', new Date().toISOString()]);
@@ -410,12 +584,14 @@ async function initDb() {
               async (err) => {
                 if (err) return reject(err);
                 await ensureSpecificUser();
+                await ensureVideos();
                 console.log('--- SQLITE DATABASE SEED COMPLETE ---');
                 resolve();
               }
             );
           } else {
             await ensureSpecificUser();
+            await ensureVideos();
             resolve();
           }
         });

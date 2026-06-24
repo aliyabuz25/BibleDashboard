@@ -37,7 +37,7 @@ class User {
       const hashedPassword = await bcrypt.hash(password, 10);
       const createdAt = new Date().toISOString();
       const result = await db.run(
-        "INSERT INTO users (firstName, lastName, email, phoneNumber, password, createdAt, isVerified, verificationToken) VALUES (?, ?, ?, ?, ?, ?, 0, ?)",
+        "INSERT INTO users (firstName, lastName, email, phoneNumber, password, createdAt, isVerified, verificationToken) VALUES (?, ?, ?, ?, ?, ?, 1, ?)",
         [firstName, lastName, email.toLowerCase(), phoneNumber, hashedPassword, createdAt, verificationToken]
       );
       return {
@@ -47,7 +47,7 @@ class User {
         email: email.toLowerCase(),
         phoneNumber,
         createdAt,
-        isVerified: 0,
+        isVerified: 1,
         verificationToken
       };
     } catch (err) {

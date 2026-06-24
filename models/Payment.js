@@ -51,6 +51,24 @@ class Payment {
       throw err;
     }
   }
+
+  async updateStatus(id, status) {
+    try {
+      const paymentId = parseInt(id);
+      if (!paymentId) return null;
+      const newStatus = String(status || '').trim();
+      if (!newStatus) return null;
+
+      const existing = await db.get("SELECT * FROM payments WHERE id = ?", [paymentId]);
+      if (!existing) return null;
+
+      await db.run("UPDATE payments SET status = ? WHERE id = ?", [newStatus, paymentId]);
+      return { ...existing, status: newStatus };
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
 }
 
 module.exports = new Payment();

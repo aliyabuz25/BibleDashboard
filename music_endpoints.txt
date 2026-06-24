@@ -1,0 +1,142 @@
+================================================================================
+KID BIBLE SERVICE - MÜZİK APİ ENDPOİNT KULLANIM REHBERİ (MUSIC ENDPOINTS GUIDE)
+================================================================================
+
+Tüm API isteklerinin başarılı olabilmesi için aşağıdaki HTTP Header'ının gönderilmesi ZORUNLUDUR:
+User-Agent: bible-appclient
+
+Base URL (Yerel Geliştirme): http://localhost:3000
+Base URL (Canlı Sunucu): https://app.thekidsbiblestories.com
+
+--------------------------------------------------------------------------------
+1. TÜM MÜZİKLERİ LİSTELEME ENDPOINT'İ (GET ALL MUSIC ITEMS)
+--------------------------------------------------------------------------------
+Metot: GET
+Endpoint: /api/music-items
+Açıklama: Sistemde kayıtlı olan tüm müziklerin listesini döner.
+
+Kullanılabilir Sorgu Parametreleri (Query Parameters):
+  - type: (İsteğe bağlı) Belirli bir müzik türüne göre filtreleme yapmak için kullanılır. 
+          Örn: /api/music-items?type=Christian Music veya /api/music-items?type=Hebrew Biblical Music
+  - categoryId: (İsteğe bağlı) Belirli bir kategori ID'sine göre filtreleme yapmak için kullanılır.
+          Örn: /api/music-items?categoryId=5
+
+İstek Header Bilgileri (Headers):
+  User-Agent: bible-appclient
+
+Örnek curl İsteyi:
+curl -H "User-Agent: bible-appclient" \
+     https://app.thekidsbiblestories.com/api/music-items
+
+Örnek JSON Yanıtı (Response):
+[
+  {
+    "id": 1,
+    "title": "Hebrew Lullaby",
+    "type": "Hebrew Biblical Music",
+    "category": "Lullabies",
+    "categoryId": 2,
+    "image": "/uploads/hebrew-lullaby.jpg",
+    "audioUrl": "/uploads/hebrew-lullaby.mp3",
+    "createdAt": "2026-06-17T15:00:37.527Z"
+  },
+  {
+    "id": 2,
+    "title": "Joyful Praise",
+    "type": "Christian Music",
+    "category": "Praise",
+    "categoryId": 5,
+    "image": "/uploads/joyful-praise.jpg",
+    "audioUrl": "/uploads/joyful-praise.mp3",
+    "createdAt": "2026-06-17T15:00:37.527Z"
+  }
+]
+
+--------------------------------------------------------------------------------
+2. DETAYLI MÜZİK SORGULAMA (GET MUSIC ITEM BY ID)
+--------------------------------------------------------------------------------
+Metot: GET
+Endpoint: /api/music-items/:id
+Açıklama: Belirli bir ID'ye sahip müziğin detaylarını döner.
+
+İstek Header Bilgileri (Headers):
+  User-Agent: bible-appclient
+
+Örnek curl İsteyi:
+curl -H "User-Agent: bible-appclient" \
+     https://app.thekidsbiblestories.com/api/music-items/1
+
+Örnek JSON Yanıtı (Response):
+{
+  "id": 1,
+  "title": "Hebrew Lullaby",
+  "type": "Hebrew Biblical Music",
+  "image": "https://cdn.kidsbiblestories.com/music/covers/hebrew-lullaby.jpg",
+  "audioUrl": "https://cdn.kidsbiblestories.com/music/files/hebrew-lullaby.mp3",
+  "createdAt": "2026-06-17T15:00:37.527Z"
+}
+
+--------------------------------------------------------------------------------
+3. YENİ MÜZİK EKLEME ENDPOINT'İ (CREATE MUSIC ITEM)
+--------------------------------------------------------------------------------
+Metot: POST
+Endpoint: /api/music-items
+Açıklama: Sisteme yeni bir müzik eklemek için kullanılır. Multer (multipart/form-data) kullanarak resim ve ses dosyası yüklemeyi destekler.
+
+İstek Header Bilgileri (Headers):
+  User-Agent: bible-appclient
+
+İstek Gövdesi (Multipart / FormData):
+  - title: "Müzik Başlığı" (Zorunlu)
+  - type: "Müzik Türü" (Zorunlu)
+  - category: "Kategori Adı" (İsteğe bağlı)
+  - categoryId: "Kategori ID'si" (İsteğe bağlı)
+  - image: <Görsel Dosyası - File Upload> (Zorunlu)
+  - audio: <Ses Dosyası (MP3 vb.) - File Upload> (Zorunlu)
+
+Örnek curl İsteyi:
+curl -X POST \
+     -H "User-Agent: bible-appclient" \
+     -F "title=New Lullaby" \
+     -F "type=Hebrew Biblical Music" \
+     -F "category=Hebrew" \
+     -F "categoryId=3" \
+     -F "image=@/path/to/cover.jpg" \
+     -F "audio=@/path/to/music.mp3" \
+     https://app.thekidsbiblestories.com/api/music-items
+
+Örnek JSON Yanıtı (Response):
+{
+  "message": "Müzik başarıyla eklendi.",
+  "musicItem": {
+    "id": 3,
+    "title": "New Lullaby",
+    "type": "Hebrew Biblical Music",
+    "category": "Hebrew",
+    "categoryId": 3,
+    "image": "/uploads/1781516546526-cover.jpg",
+    "audioUrl": "/uploads/1781516546527-music.mp3",
+    "createdAt": "2026-06-17T22:30:00.000Z"
+  }
+}
+
+--------------------------------------------------------------------------------
+4. MÜZİK SİLME ENDPOINT'İ (DELETE MUSIC ITEM)
+--------------------------------------------------------------------------------
+Metot: DELETE
+Endpoint: /api/music-items/:id
+Açıklama: ID'si verilen müziği veritabanından siler.
+
+İstek Header Bilgileri (Headers):
+  User-Agent: bible-appclient
+
+Örnek curl İsteyi:
+curl -X DELETE \
+     -H "User-Agent: bible-appclient" \
+     https://app.thekidsbiblestories.com/api/music-items/3
+
+Örnek JSON Yanıtı (Response):
+{
+  "message": "Müzik başarıyla silindi."
+}
+================================================================================

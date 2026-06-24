@@ -19,9 +19,19 @@ class AudioItemController {
   async create(req, res) {
     try {
       let { title, slug, category, categoryId, duration, durationSeconds, image, audioUrl, badgeColor, isLocked, isPublished, orderIndex } = req.body;
+      
+      if (req.files) {
+        if (req.files['image'] && req.files['image'][0]) {
+          image = `https://cdn.biblecms.com/images/${req.files['image'][0].filename}`;
+        }
+        if (req.files['audio'] && req.files['audio'][0]) {
+          audioUrl = `https://cdn.biblecms.com/audio/${req.files['audio'][0].filename}`;
+        }
+      }
       if (req.file) {
         image = `https://cdn.biblecms.com/images/${req.file.filename}`;
       }
+
       if (!title || !slug || !category || !image || !audioUrl) {
         return res.status(400).json({ message: 'Lütfen tüm zorunlu alanları doldurun (title, slug, category, image, audioUrl).' });
       }
@@ -54,9 +64,19 @@ class AudioItemController {
   async update(req, res) {
     try {
       let { title, slug, category, categoryId, duration, durationSeconds, image, audioUrl, badgeColor, isLocked, isPublished, orderIndex } = req.body;
+      
+      if (req.files) {
+        if (req.files['image'] && req.files['image'][0]) {
+          image = `https://cdn.biblecms.com/images/${req.files['image'][0].filename}`;
+        }
+        if (req.files['audio'] && req.files['audio'][0]) {
+          audioUrl = `https://cdn.biblecms.com/audio/${req.files['audio'][0].filename}`;
+        }
+      }
       if (req.file) {
         image = `https://cdn.biblecms.com/images/${req.file.filename}`;
       }
+
       const updated = await audioItemModel.update(req.params.id, {
         title,
         slug,

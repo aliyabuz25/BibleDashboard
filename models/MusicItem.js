@@ -11,6 +11,11 @@ class MusicItem {
         params.push(filters.type);
       }
 
+      if (filters.categoryId) {
+        query += " AND categoryId = ?";
+        params.push(parseInt(filters.categoryId));
+      }
+
       const rows = await db.all(query, params);
       return rows;
     } catch (err) {
@@ -29,12 +34,12 @@ class MusicItem {
     }
   }
 
-  async create({ title, type, image, audioUrl }) {
+  async create({ title, type, image, audioUrl, categoryId, category }) {
     try {
       const createdAt = new Date().toISOString();
       const result = await db.run(
-        "INSERT INTO music_items (title, type, image, audioUrl, createdAt) VALUES (?, ?, ?, ?, ?)",
-        [title, type, image, audioUrl, createdAt]
+        "INSERT INTO music_items (title, type, image, audioUrl, categoryId, category, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [title, type, image, audioUrl, categoryId || null, category || null, createdAt]
       );
       return {
         id: result.lastID,
@@ -42,6 +47,8 @@ class MusicItem {
         type,
         image,
         audioUrl,
+        categoryId: categoryId || null,
+        category: category || null,
         createdAt
       };
     } catch (err) {

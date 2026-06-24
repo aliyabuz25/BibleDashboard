@@ -1,0 +1,516 @@
+BibleCMS Frontend Usage Guide
+Last updated: 2026-06-19
+
+This file is written for the frontend developer working on the dashboard UI.
+It explains which backend endpoints exist, what they return, how they are used
+in the dashboard, and what to watch out for when wiring new screens.
+
+Base URL
+--------
+- `https://16-171-22-191.sslip.io`
+
+Important notes
+---------------
+1. The current runtime routes in `index.js` are the source of truth.
+2. `openapi.json` contains some older route names for auth:
+   - documented there: `/api/auth/register`, `/api/auth/login`
+   - actual code routes: `/api/register`, `/api/login`
+3. Most admin list endpoints are public in the current code.
+4. `User-Agent` filtering is not enforced in the current runtime, even though
+   some docs still mention it.
+5. File uploads use `multipart/form-data` and are handled with Multer.
+6. Dashboard tables are reloaded with jQuery AJAX and DataTables.
+
+Base app routes
+---------------
+- `GET /`
+  - Redirects to `/login`
+- `GET /login`
+  - Renders the login page
+- `GET /dashboard`
+  - Renders the dashboard page
+- `GET /register`
+  - Redirects to `/login`
+
+Global API behavior
+-------------------
+- JSON requests use `express.json()`
+- Uploaded files are served from `/uploads`
+- CORS is open
+- Helmet is enabled, but CSP is relaxed for CDN assets
+- Body strings are sanitized before controller logic runs
+
+Frontend dashboard map
+----------------------
+The sidebar and sections in `views/dashboard.ejs` are wired like this:
+
+- `Products`
+  - Section: `products-section`
+  - Loader: `loadProducts()`
+  - API: `GET /api/products`
+  - Create: `POST /api/products`
+  - Update: `PUT /api/products/:id`
+  - Delete: `DELETE /api/products/:id`
+
+- `Videos`
+  - Section: `videos-section`
+  - Loader: `loadVideos()`
+  - API: `GET /api/videos`
+  - Detail API: `GET /api/videos/:id`
+  - Create: `POST /api/videos`
+  - Update: `PUT /api/videos/:id`
+  - Delete: `DELETE /api/videos/:id`
+
+- `Categories`
+  - Section: `categories-section`
+  - Loader: `loadCategories()`
+  - API: `GET /api/categories`
+  - Create: `POST /api/categories`
+  - Update: `PUT /api/categories/:id`
+  - Delete: `DELETE /api/categories/:id`
+
+- `Stories`
+  - Section: `stories-section`
+  - Loader: `loadStories()`
+  - API: `GET /api/stories`
+  - Create: `POST /api/stories`
+  - Update: `PUT /api/stories/:id`
+  - Delete: `DELETE /api/stories/:id`
+
+- `Music Items`
+  - Section: `music-items-section`
+  - Loader: `loadMusicItems()`
+  - API: `GET /api/music-items`
+  - Detail API: `GET /api/music-items/:id`
+  - Create: `POST /api/music-items`
+  - Delete: `DELETE /api/music-items/:id`
+
+- `Audio Items`
+  - Section: `audio-items-section`
+  - Loader: `loadAudioItems()`
+  - API: `GET /api/audio-items`
+  - Create: `POST /api/audio-items`
+  - Update: `PUT /api/audio-items/:id`
+  - Delete: `DELETE /api/audio-items/:id`
+
+- `Users`
+  - Section: `users-section`
+  - Loader: `loadUsers()`
+  - API: `GET /api/users`
+  - Create: `POST /api/users`
+  - Update: `PUT /api/users/:id`
+  - Delete: `DELETE /api/users/:id`
+
+- `Payments`
+  - Section: `payments-section`
+  - Loader: `loadPayments()`
+  - API: `GET /api/payments`
+  - Create: `POST /api/payments`
+
+- `Notifications`
+  - Section: `notifications-section`
+  - Loader: `loadNotifications()`
+  - API: `GET /api/notifications`
+  - Create: `POST /api/notifications`
+  - Delete: `DELETE /api/notifications/:id`
+
+- `Catalog`
+  - Section: `catalogs-list` / catalog-related section in the dashboard
+  - Loader: `loadCatalogs()`
+  - API: `GET /api/catalogs`
+  - Create: `POST /api/catalogs`
+
+- `AWS Upload`
+  - Section: upload panel in dashboard
+  - API: `POST /api/aws/upload`
+  - Requires JWT in `Authorization: Bearer <token>`
+
+- `Locales`
+  - API: `GET /api/locales`
+  - Used at startup to populate UI labels
+  - Example: `https://16-171-22-191.sslip.io/api/locales`
+
+Auth endpoints
+--------------
+- `POST /api/register`
+  - Used for user registration
+  - Body fields:
+    - `firstName`
+    - `lastName`
+    - `email`
+    - `phoneNumber`
+    - `password`
+  - Response includes created user
+
+- `POST /api/login`
+  - Used for authentication
+  - Body fields:
+    - `email`
+    - `password`
+  - Response includes `token` and `user`
+
+- `GET /api/auth/verify`
+  - Verifies the current token via controller logic
+
+Catalog API usage
+------------------
+List catalogs:
+```http
+GET /api/catalogs
+```
+
+Create catalog:
+```http
+POST /api/catalogs
+Content-Type: multipart/form-data
+```
+
+Expected form fields:
+- `name` string
+- `description` string
+- `verticalImage` file
+- `horizontalImage` file
+
+Dashboard behavior:
+- `loadCatalogs()` fetches the list
+- After create success, the UI reloads catalogs
+- The create form relies on two file inputs
+
+Products API usage
+-------------------
+List products:
+```http
+GET /api/products
+```
+
+Create product:
+```http
+POST /api/products
+Content-Type: multipart/form-data
+```
+
+Update product:
+```http
+PUT /api/products/:id
+Content-Type: multipart/form-data
+```
+
+Delete product:
+```http
+DELETE /api/products/:id
+```
+
+Expected product form fields used by the dashboard:
+- `title`
+- `description`
+- `price`
+- `priceString`
+- `duration`
+- `durationSeconds`
+- `orderIndex`
+- `isPublished`
+- `image` file or image URL
+
+Dashboard notes:
+- `loadProducts()` destroys existing DataTable before refilling rows
+- Edit uses inline button handlers with escaped values
+- Add requires an image file
+- Edit can reuse the existing image URL
+
+Videos API usage
+----------------
+List videos:
+```http
+GET /api/videos
+```
+
+Fetch one video:
+```http
+GET /api/videos/:id
+```
+
+Create video:
+```http
+POST /api/videos
+Content-Type: multipart/form-data
+```
+
+Update video:
+```http
+PUT /api/videos/:id
+Content-Type: multipart/form-data
+```
+
+Delete video:
+```http
+DELETE /api/videos/:id
+```
+
+Expected dashboard fields:
+- `title`
+- `slug`
+- `category`
+- `categoryId`
+- `verticalBanner` file or URL
+- `video` file or URL
+- `isLocked`
+- `isPublished`
+- `orderIndex`
+
+Dashboard notes:
+- New videos require both banner and video source
+- Edit mode allows reuse of existing URLs
+- List shows published/locked badges
+
+Categories API usage
+--------------------
+- `GET /api/categories`
+- `POST /api/categories`
+- `PUT /api/categories/:id`
+- `DELETE /api/categories/:id`
+
+Typical fields:
+- `name`
+- `description`
+- `image`
+
+Dashboard notes:
+- `loadCategories()` fills the categories table
+- The modal is image-aware and uses previews
+
+Stories API usage
+-----------------
+- `GET /api/stories`
+- `POST /api/stories`
+- `PUT /api/stories/:id`
+- `DELETE /api/stories/:id`
+
+Typical fields:
+- `title`
+- `description`
+- `image`
+- `audio`
+- `category`
+- `categoryId`
+
+Dashboard notes:
+- Uses multipart upload for both image and audio
+- Edit form reloads after save
+
+Audio Items API usage
+---------------------
+- `GET /api/audio-items`
+- `POST /api/audio-items`
+- `PUT /api/audio-items/:id`
+- `DELETE /api/audio-items/:id`
+
+Typical fields:
+- `title`
+- `type`
+- `category`
+- `categoryId`
+- `image`
+- `audio`
+
+Dashboard notes:
+- Uses file upload fields named `image` and `audio`
+- List displays both media references and ID columns
+
+Music Items API usage
+---------------------
+- `GET /api/music-items`
+- `GET /api/music-items/:id`
+- `POST /api/music-items`
+- `DELETE /api/music-items/:id`
+
+Typical fields:
+- `title`
+- `type`
+- `category`
+- `categoryId`
+- `image`
+- `audio`
+
+Dashboard notes:
+- The dashboard currently has list/add/delete behavior
+- It prefers file upload, but also supports URL fallback
+
+Users API usage
+---------------
+- `GET /api/users`
+- `POST /api/users`
+- `PUT /api/users/:id`
+- `DELETE /api/users/:id`
+
+Expected fields:
+- `firstName`
+- `lastName`
+- `email`
+- `phoneNumber`
+- `password`
+
+Dashboard notes:
+- Admins are excluded from `GET /api/users`
+- List is rendered into `#usersTable`
+- The edit modal allows optional password change
+
+Admins API usage
+----------------
+- `GET /api/admins`
+- `POST /api/admins`
+- `PUT /api/admins/:id`
+- `DELETE /api/admins/:id`
+
+Use case:
+- Same user model, but filtered to `role === 'admin'`
+
+Payments API usage
+------------------
+- `GET /api/payments`
+- `POST /api/payments`
+- `POST /api/payments/stripe-checkout`
+  - Example: `https://16-171-22-191.sslip.io/api/payments/stripe-checkout`
+
+Expected fields for create:
+- `uid` or `userId` or `uuid`
+- `userEmail`
+- `productId`
+- `amount`
+- `currency`
+- `status`
+- `transactionId`
+- `uuid`
+- `subscriptionEndDate`
+- `ip`
+- `location`
+
+Important behavior:
+- `uid` is required by the runtime logic
+- If `subscriptionEndDate` exists, subscription checks use it first
+- Dashboard list shows:
+  - payment id
+  - user id
+  - user email
+  - product id
+  - amount
+  - currency
+  - status
+  - transaction id
+  - created date
+
+Stripe checkout behavior:
+- Send `provider: "stripe"` or call `/api/payments/stripe-checkout`
+- The backend returns:
+  - `checkoutUrl`
+  - `checkoutSessionId`
+- Frontend should redirect the user to `checkoutUrl`
+- Typical flow:
+  1. Collect payment intent data on the frontend
+  2. POST it to the backend
+  3. Receive `checkoutUrl`
+  4. Redirect with `window.location.href = checkoutUrl`
+
+Subscription API usage
+----------------------
+- `GET /api/subscription/check`
+- `POST /api/subscription/check`
+
+Accepted identifiers:
+- `uid`
+- `userId`
+- `uuid`
+
+Response behavior:
+- Returns `active` if subscription is valid
+- Returns `exhausted` if missing, expired, or inactive
+
+Dashboard note:
+- This is not currently a sidebar section, but it is useful for app-side entitlement checks
+
+Notifications API usage
+-----------------------
+- `GET /api/notifications`
+- `POST /api/notifications`
+- `DELETE /api/notifications/:id`
+
+Expected fields:
+- `title`
+- `message`
+- `type`
+- `sentTo`
+
+Dashboard notes:
+- List is reloaded after create and delete
+- Type is shown as a colored badge
+
+AWS upload API usage
+--------------------
+- `POST /api/aws/upload`
+- Protected by JWT
+- Requires:
+  - `Authorization: Bearer <token>`
+  - `file` in multipart form
+
+Response:
+- Controller returns uploaded file information
+
+Locale API usage
+----------------
+- `GET /api/locales`
+
+Used by dashboard:
+- `initLocalization()` loads labels at startup
+- Sidebar labels and page labels are localized from this payload
+
+DataTables behavior
+-------------------
+The dashboard uses DataTables for list-heavy sections.
+
+Implementation pattern:
+- Destroy existing table if already initialized
+- Replace `<tbody>` rows
+- Recreate DataTable
+
+Typical pattern used in code:
+1. `if ($.fn.DataTable.isDataTable('#tableId')) { $('#tableId').DataTable().destroy(); }`
+2. Fetch fresh data with AJAX
+3. Build HTML rows
+4. Set `$('#tableBody').html(rows)`
+5. Reinitialize DataTable
+
+Frontend integration advice
+---------------------------
+1. Keep route names aligned with `index.js`, not with stale docs.
+2. If you add a new section, add:
+   - sidebar item
+   - `showSection(...)` handler
+   - loader function
+   - table body target
+   - create/edit/delete handlers as needed
+3. Prefer `FormData` for any endpoint that accepts files.
+4. After create/update/delete, reload the active section to keep the UI in sync.
+5. Escape any values inserted into inline `onclick` handlers.
+6. If a route uses `multipart/form-data`, do not set `contentType` manually in jQuery.
+7. Use `Authorization: Bearer <token>` only for `/api/aws/upload` in the current codebase.
+
+Quick endpoint summary
+----------------------
+- Auth: `/api/register`, `/api/login`, `/api/auth/verify`
+- Catalogs: `/api/catalogs`
+- Categories: `/api/categories`
+- Stories: `/api/stories`
+- Audio items: `/api/audio-items`
+- Music items: `/api/music-items`
+- Products: `/api/products`
+- Videos: `/api/videos`
+- Users: `/api/users`
+- Admins: `/api/admins`
+- Payments: `/api/payments`
+- Stripe checkout: `/api/payments/stripe-checkout`
+- Notifications: `/api/notifications`
+- Subscription: `/api/subscription/check`
+- Locales: `/api/locales`
+- AWS upload: `/api/aws/upload`
+
+If you need the exact request payload or response shape for a single endpoint,
+read the controller and model for that resource before wiring the UI.

@@ -13,7 +13,7 @@ class Notification {
 
   async create({ title, message, type, sentTo }) {
     try {
-      const notifTitle = title || 'System Update';
+      const notifTitle = 'KidsBibleApp';
       const notifMessage = message || '';
       const notifType = type || 'info';
       const notifSentTo = sentTo || 'all';

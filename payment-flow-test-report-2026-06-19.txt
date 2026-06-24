@@ -1,0 +1,119 @@
+BibleCMS Payment Flow Test Report
+Date: 2026-06-19
+Environment: Live deployment
+Base URL: https://16-171-22-191.sslip.io
+
+Test scope
+----------
+Verified end-to-end flow for:
+1. User registration
+2. User login
+3. Payment creation
+4. Subscription status check
+
+Test user
+---------
+Email: codex.flow.20260619@example.com
+Name: Test User
+Phone: 5551112233
+
+Step 1: User registration
+-------------------------
+Endpoint: POST /api/register
+Request:
+{
+  "firstName": "Test",
+  "lastName": "User",
+  "email": "codex.flow.20260619@example.com",
+  "phoneNumber": "5551112233",
+  "password": "Test1234!"
+}
+
+Result:
+- HTTP 201 Created
+- User created successfully
+- User ID: 12
+
+Step 2: User login
+------------------
+Endpoint: POST /api/login
+Request:
+{
+  "email": "codex.flow.20260619@example.com",
+  "password": "Test1234!"
+}
+
+Result:
+- HTTP 200 OK
+- Login successful
+- JWT token returned
+- User ID: 12
+
+Step 3: Subscription check before payment
+-----------------------------------------
+Endpoint: GET /api/subscription/check?uid=12
+
+Result:
+- HTTP 200 OK
+- Status: exhausted
+- Message: Subscription not found.
+
+Interpretation:
+- This is expected before any payment exists for the user.
+
+Step 4: Payment creation
+------------------------
+Endpoint: POST /api/payments
+Request:
+{
+  "uid": 12,
+  "userEmail": "codex.flow.20260619@example.com",
+  "productId": "premium_access_monthly",
+  "amount": 9.99,
+  "currency": "USD",
+  "status": "completed",
+  "transactionId": "FLOW-TXN-20260619",
+  "subscriptionEndDate": "2026-07-19T00:00:00.000Z",
+  "location": "Istanbul"
+}
+
+Result:
+- HTTP 201 Created
+- Payment created successfully
+- Payment ID: 5
+
+Created payment summary:
+- userId: 12
+- userEmail: codex.flow.20260619@example.com
+- productId: premium_access_monthly
+- amount: 9.99
+- currency: USD
+- status: completed
+- transactionId: FLOW-TXN-20260619
+- subscriptionEndDate: 2026-07-19T00:00:00.000Z
+
+Step 5: Subscription check after payment
+----------------------------------------
+Endpoint: GET /api/subscription/check?uid=12
+
+Result:
+- HTTP 200 OK
+- Status: active
+- subscriptionEndDate: 2026-07-19T00:00:00.000Z
+- Payment reference:
+  - id: 5
+  - productId: premium_access_monthly
+  - transactionId: FLOW-TXN-20260619
+
+Final outcome
+-------------
+- Registration: PASS
+- Login: PASS
+- Payment creation: PASS
+- Subscription verification after payment: PASS
+
+Notes
+-----
+- The first subscription check returned `exhausted` because no payment existed yet.
+- After payment creation, the subscription check returned `active` as expected.
+- The test was performed against the live deployment, not only local sandbox data.

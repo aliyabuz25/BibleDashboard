@@ -1,0 +1,52 @@
+================================================================================
+DNS CONFIGURATION GUIDE FOR THEKIDSBIBLESTORIES.COM
+================================================================================
+
+To connect your application domain (app.thekidsbiblestories.com) to the Kid Bible Service backend, please configure the following DNS record in your domain registrar's DNS management panel (e.g., GoDaddy, Cloudflare, Namecheap, Route 53, etc.).
+
+--------------------------------------------------------------------------------
+1. DNS Record Details
+--------------------------------------------------------------------------------
+
+Add a new DNS record with the following details:
+
+- Record Type: A
+- Host / Name: app (or app.thekidsbiblestories.com depending on your provider)
+- Value / Points to (IP Address): 16.171.22.191
+- TTL: Automatic or 1 Hour (3600 seconds)
+
+--------------------------------------------------------------------------------
+2. How to Apply this in Common DNS Providers
+--------------------------------------------------------------------------------
+
+- Cloudflare:
+  1. Go to your Cloudflare Dashboard and select the domain thekidsbiblestories.com.
+  2. Click on "DNS" -> "Records".
+  3. Click "Add Record".
+  4. Select Type: "A", Name: "app", IPv4 address: "16.171.22.191".
+  5. Toggle Proxy status to "DNS only" (grey cloud) to allow direct certbot/SSL generation on the server, or leave it "Proxied" if using Cloudflare's SSL.
+  6. Click "Save".
+
+- GoDaddy:
+  1. Log in to your GoDaddy Domain Portfolio.
+  2. Select your domain to access the Domain Settings page.
+  3. Under "Additional Settings", select "Manage DNS".
+  4. Select "Add" to add a new record.
+  5. Select Type: "A", Name: "app", Value: "16.171.22.191", TTL: "1 Hour".
+  6. Click "Save".
+
+- Namecheap:
+  1. Log in to your Namecheap dashboard.
+  2. Go to "Domain List" and click "Manage" next to thekidsbiblestories.com.
+  3. Click the "Advanced DNS" tab.
+  4. In the Host Records section, click "Add New Record".
+  5. Choose Type: "A Record", Host: "app", Value: "16.171.22.191", TTL: "Automatic".
+  6. Click the green checkmark to save.
+
+--------------------------------------------------------------------------------
+3. Verification
+--------------------------------------------------------------------------------
+DNS propagation usually takes from a few minutes up to 24-48 hours. You can verify it by running:
+ping app.thekidsbiblestories.com
+Or checking DNS lookup tools like dnschecker.org.
+================================================================================
