@@ -19,6 +19,8 @@ fi
 echo "📦 Uploading backend files and views..."
 scp -i "$KEY_PATH" -o StrictHostKeyChecking=no index.js "$REMOTE_USER@$REMOTE_IP:$REMOTE_DIR/index.js"
 scp -i "$KEY_PATH" -o StrictHostKeyChecking=no database.js "$REMOTE_USER@$REMOTE_IP:$REMOTE_DIR/database.js"
+scp -i "$KEY_PATH" -o StrictHostKeyChecking=no package.json "$REMOTE_USER@$REMOTE_IP:$REMOTE_DIR/package.json"
+scp -i "$KEY_PATH" -o StrictHostKeyChecking=no package-lock.json "$REMOTE_USER@$REMOTE_IP:$REMOTE_DIR/package-lock.json"
 scp -i "$KEY_PATH" -o StrictHostKeyChecking=no -r lib "$REMOTE_USER@$REMOTE_IP:$REMOTE_DIR/"
 scp -i "$KEY_PATH" -o StrictHostKeyChecking=no -r controllers "$REMOTE_USER@$REMOTE_IP:$REMOTE_DIR/"
 scp -i "$KEY_PATH" -o StrictHostKeyChecking=no -r models "$REMOTE_USER@$REMOTE_IP:$REMOTE_DIR/"
@@ -51,7 +53,7 @@ echo \"AWS_S3_PREFIX=kidsbible-content\" >> .env
 '"
 
 echo "🔄 Restarting application on AWS via PM2..."
-ssh -i "$KEY_PATH" -o StrictHostKeyChecking=no "$REMOTE_USER@$REMOTE_IP" "AWS_ACCESS_KEY_ID= AWS_SECRET_ACCESS_KEY= AWS_SESSION_TOKEN= pm2 restart KidBibleService --update-env"
+ssh -i "$KEY_PATH" -o StrictHostKeyChecking=no "$REMOTE_USER@$REMOTE_IP" "cd $REMOTE_DIR && npm install --omit=dev && AWS_ACCESS_KEY_ID= AWS_SECRET_ACCESS_KEY= AWS_SESSION_TOKEN= pm2 restart KidBibleService --update-env"
 
 echo "✅ Update complete! Checking service health..."
 curl -s -H "User-Agent: bible-appclient" -o /dev/null -w "HTTP Response Code: %{http_code}\n" "https://app.thekidsbiblestories.com/login"
