@@ -113,6 +113,8 @@ class VideoController {
   async create(req, res) {
     try {
       let { title, slug, categoryId, category, videoUrl, verticalBannerUrl, subtitleUrl, isLocked, isPublished, orderIndex } = req.body;
+      videoUrl = videoUrl || req.body.video || '';
+      verticalBannerUrl = verticalBannerUrl || req.body.verticalBanner || '';
 
       if (req.files) {
         if (req.files['video'] && req.files['video'][0]) {
@@ -175,6 +177,8 @@ class VideoController {
   async update(req, res) {
     try {
       let { title, slug, categoryId, category, videoUrl, verticalBannerUrl, subtitleUrl, isLocked, isPublished, orderIndex } = req.body;
+      videoUrl = videoUrl || req.body.video;
+      verticalBannerUrl = verticalBannerUrl || req.body.verticalBanner;
 
       if (req.files) {
         if (req.files['video'] && req.files['video'][0]) {

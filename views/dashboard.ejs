@@ -3196,6 +3196,14 @@
           });
           $('#videosTableBody').html(rows);
           $('#videosTable').DataTable({ "responsive": true, "autoWidth": false });
+        },
+        error: function(err) {
+          console.error('Video list could not be loaded', err.responseText || err.statusText || err);
+          $('#videosTableBody').html(`
+            <tr>
+              <td colspan="12" class="text-center text-danger">Videos could not be loaded. Please refresh and try again.</td>
+            </tr>
+          `);
         }
       });
     };
@@ -3335,7 +3343,7 @@
           data: payload,
           success: function() {
             progressBar.css('width', '100%');
-            progressText.text('100%');
+            progressText.text('Upload complete 100%');
             $('#videoModal').modal('hide');
             loadVideos();
           },
