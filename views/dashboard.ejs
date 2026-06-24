@@ -4627,7 +4627,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="alert alert-light border mb-3" style="font-size: 13px; line-height: 1.45;">
-            <strong>Quick use:</strong> Select a file and save. URL fields are only needed if you want to use an external link.
+            <strong>Quick use:</strong> Select the banner and video files, then save.
           </div>
           <div class="form-group">
             <label for="videoTitle" class="font-weight-bold">Title *</label>
@@ -4642,19 +4642,19 @@
           <div class="form-group">
             <label for="videoVerticalBannerFile" class="font-weight-bold">Vertical Banner <span class="text-muted">(preferred)</span></label>
             <input type="file" class="form-control-file" id="videoVerticalBannerFile" accept="image/*">
-            <input type="text" class="form-control mt-2" id="videoVerticalBannerUrl" placeholder="Optional: paste banner URL">
+            <input type="hidden" id="videoVerticalBannerUrl">
             <small class="text-muted d-block mt-1">Selecting a file is the fastest option for the cover image.</small>
           </div>
           <div class="form-group">
             <label for="videoFile" class="font-weight-bold">Video File <span class="text-muted">(preferred)</span></label>
             <input type="file" class="form-control-file" id="videoFile" accept="video/*">
-            <input type="text" class="form-control mt-2" id="videoUrl" placeholder="Optional: paste video URL">
+            <input type="hidden" id="videoUrl">
             <small class="text-muted d-block mt-1">Direct file upload is recommended for large files.</small>
           </div>
           <div class="form-group">
             <label for="videoSrtFile" class="font-weight-bold">Subtitle File <span class="text-muted">(optional)</span></label>
             <input type="file" class="form-control-file" id="videoSrtFile" accept=".srt,.vtt,text/plain,text/vtt">
-            <input type="text" class="form-control mt-2" id="videoSrtUrl" placeholder="Optional: paste subtitle URL">
+            <input type="hidden" id="videoSrtUrl">
           </div>
           <div class="video-form-card">
             <div class="form-group">
