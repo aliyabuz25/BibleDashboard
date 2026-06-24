@@ -3251,22 +3251,41 @@
       $('#videoModal').modal('show');
     };
 
-    async function uploadFileToPresignedUrl(file, presign) {
-      const response = await fetch(presign.uploadUrl, {
-        method: 'PUT',
-        body: file
+    function uploadToS3WithProgress(uploadUrl, file, onProgress) {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('PUT', uploadUrl, true);
+
+        xhr.upload.onprogress = function(event) {
+          if (event.lengthComputable && typeof onProgress === 'function') {
+            const percent = Math.round((event.loaded / event.total) * 100);
+            onProgress(percent, event.loaded, event.total);
+          }
+        };
+
+        xhr.onload = function() {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            if (typeof onProgress === 'function') {
+              onProgress(100, file.size, file.size);
+            }
+            resolve();
+          } else {
+            console.error('S3 upload failed', xhr.status, xhr.responseText);
+            reject(new Error('S3 upload failed: ' + xhr.status));
+          }
+        };
+
+        xhr.onerror = function() {
+          console.error('S3 upload network error', xhr.status, xhr.responseText);
+          reject(new Error('S3 upload network error'));
+        };
+
+        xhr.send(file);
       });
+    }
 
-      if (!response.ok) {
-        const details = await response.text();
-        console.error('S3 upload failed', {
-          fieldName: presign.fieldName,
-          status: response.status,
-          details
-        });
-        throw new Error(`S3 upload failed for ${presign.fieldName}.`);
-      }
-
+    async function uploadFileToPresignedUrl(file, presign, onProgress) {
+      await uploadToS3WithProgress(presign.uploadUrl, file, onProgress);
       return presign.url;
     }
 
@@ -3363,11 +3382,24 @@
             if (!presign) {
               throw new Error(`Presigned URL eksik: ${entry.fieldName}`);
             }
-            const uploadedUrl = await uploadFileToPresignedUrl(entry.file, presign);
+            const label = entry.fieldName === 'video'
+              ? 'Video uploading...'
+              : entry.fieldName === 'verticalBanner'
+                ? 'Banner uploading...'
+                : 'Subtitle uploading...';
+            const uploadedUrl = await uploadFileToPresignedUrl(entry.file, presign, (percent) => {
+              progressWrap.show();
+              progressBar.css('width', percent + '%');
+              progressText.text(label + ' ' + percent + '%');
+            });
             if (entry.fieldName === 'video') videoUrl = uploadedUrl;
             if (entry.fieldName === 'verticalBanner') verticalBannerUrl = uploadedUrl;
             if (entry.fieldName === 'subtitleFile') subtitleUrl = uploadedUrl;
           }
+
+          progressWrap.show();
+          progressBar.css('width', '100%');
+          progressText.text('Upload complete 100%');
         }
 
         const payload = {
