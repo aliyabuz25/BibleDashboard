@@ -14,8 +14,8 @@ Bu rehber, AWS Management Console üzerindeki **AWS CloudShell**'i (tarayıcı t
 ## Adım 2: S3 Kova (Bucket) Yapılandırma
 
 Bu proje için kullanılacak bucket:
-- **Bucket name:** `biblecms`
-- **Region:** `eu-north-1`
+- **Bucket name:** `biblecms-media-2026-app`
+- **Region:** `us-east-1`
 - **Folder/prefix:** `kidsbible-content/`
 
 ### 1. Public erişim ayarı
@@ -24,7 +24,7 @@ Eğer medya dosyalarını doğrudan URL ile göstereceksen:
 - Bucket policy ile yalnızca `kidsbible-content/*` okuma izni vermelisin
 
 ### 2. Public read policy
-AWS Console > S3 > `biblecms` > `Permissions` > `Bucket policy` alanına şu içeriği koy:
+AWS Console > S3 > `biblecms-media-2026-app` > `Permissions` > `Bucket policy` alanına şu içeriği koy:
 ```json
 {
   "Version": "2012-10-17",
@@ -34,7 +34,7 @@ AWS Console > S3 > `biblecms` > `Permissions` > `Bucket policy` alanına şu iç
       "Effect": "Allow",
       "Principal": "*",
       "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::biblecms/kidsbible-content/*"
+      "Resource": "arn:aws:s3:::biblecms-media-2026-app/kidsbible-content/*"
     }
   ]
 }
@@ -58,17 +58,17 @@ AWS SDK, EC2 metadata üzerinden role credential'larını otomatik alır.
 1. **BibleCMS Admin Paneli**'ne girin.
 2. Sol menüdeki **AWS Upload Panel** sekmesine gidin.
 3. Ayarlar alanına aşağıdaki bilgileri girin:
-   - **AWS S3 Bucket:** `biblecms`
+   - **AWS S3 Bucket:** `biblecms-media-2026-app`
    - **AWS Access Key ID:** geçici `AWS_ACCESS_KEY_ID`
    - **AWS Secret Access Key:** geçici `AWS_SECRET_ACCESS_KEY`
    - **AWS Session Token:** geçici `AWS_SESSION_TOKEN`
-   - **AWS Region:** `eu-north-1`
+   - **AWS Region:** `us-east-1`
 4. Sağ taraftaki formdan dosyayı seçip **Upload to AWS** butonuna tıklayın. Yükleme tamamlandığında size kopyalamanız için bir S3 URL'si verecektir.
 
 ---
 *Not: Bilgileri kalıcı olarak sunucuya kaydetmek isterseniz, projenin kök dizinindeki `.env` dosyasına şu şekilde ekleyebilirsiniz:*
 ```env
-AWS_REGION=eu-north-1
-AWS_S3_BUCKET=biblecms
+AWS_REGION=us-east-1
+AWS_S3_BUCKET=biblecms-media-2026-app
 AWS_S3_PREFIX=kidsbible-content
 ```

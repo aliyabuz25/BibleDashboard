@@ -99,8 +99,8 @@ NODE_ENV=production
 JWT_SECRET=production_jwt_gizli_anahtari_buraya_yazilacak
 
 # AWS S3. Production'da EC2 IAM Role kullanın; static access key yazmayın.
-AWS_REGION=eu-north-1
-AWS_S3_BUCKET=biblecms
+AWS_REGION=us-east-1
+AWS_S3_BUCKET=biblecms-media-2026-app
 AWS_S3_PREFIX=kidsbible-content
 ```
 
