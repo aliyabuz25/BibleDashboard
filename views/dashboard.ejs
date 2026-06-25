@@ -950,22 +950,28 @@
       color: #fff;
       filter: brightness(0.98);
     }
-    .offcanvas-sheet .form-group {
+    .offcanvas-sheet .form-group,
+    .video-editor-view .form-group {
       margin-bottom: 1rem;
     }
     .offcanvas-sheet .form-control,
-    .offcanvas-sheet .custom-select {
+    .offcanvas-sheet .custom-select,
+    .video-editor-view .form-control,
+    .video-editor-view .custom-select {
       border-radius: 14px;
       min-height: 46px;
       border-color: #dbe3ee;
       box-shadow: none;
     }
     .offcanvas-sheet .form-control:focus,
-    .offcanvas-sheet .custom-select:focus {
+    .offcanvas-sheet .custom-select:focus,
+    .video-editor-view .form-control:focus,
+    .video-editor-view .custom-select:focus {
       border-color: #ef4444;
       box-shadow: 0 0 0 0.2rem rgba(239, 68, 68, 0.12);
     }
-    .offcanvas-sheet .form-control-file {
+    .offcanvas-sheet .form-control-file,
+    .video-editor-view .form-control-file {
       display: block;
       width: 100%;
       padding: 0.8rem 1rem;
@@ -973,7 +979,8 @@
       border-radius: 14px;
       background: #f8fafc;
     }
-    .offcanvas-sheet .form-control-file:hover {
+    .offcanvas-sheet .form-control-file:hover,
+    .video-editor-view .form-control-file:hover {
       background: #f1f5f9;
     }
     #videoModal .offcanvas-body-sheet,
@@ -986,6 +993,29 @@
       bottom: 0;
       z-index: 2;
       box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.06);
+    }
+    #videoEditorMount .video-editor-view {
+      position: static !important;
+      width: 100% !important;
+      max-width: 980px !important;
+      height: auto !important;
+      min-height: auto !important;
+      display: block !important;
+      background: #fff;
+      border: 1px solid #e4e4e7;
+      border-radius: 18px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.10) !important;
+      overflow: hidden;
+      margin: 0 auto 2rem;
+    }
+    #videoEditorMount .video-editor-view .offcanvas-body-sheet {
+      max-height: none !important;
+      overflow: visible !important;
+      padding-bottom: 1.5rem !important;
+    }
+    #videoEditorMount .video-editor-view .offcanvas-footer-sheet {
+      position: static !important;
+      box-shadow: none !important;
     }
 
   </style>
@@ -1570,6 +1600,10 @@
           </div>
         </div>
 
+        <div class="content-section d-none" id="video-editor-section">
+          <div id="videoEditorMount"></div>
+        </div>
+
         <!-- Section 4: Security Specs -->
         <div class="content-section d-none" id="security-section">
           <div class="row">
@@ -2116,6 +2150,12 @@
 
   // Section switcher helper
   function showSection(sectionId, navLinkId) {
+    if (window.isVideoUploadInProgress && sectionId !== 'video-editor-section') {
+      if (typeof window.warnVideoUploadInProgress === 'function') {
+        window.warnVideoUploadInProgress();
+      }
+      return;
+    }
     // Hide all sections
     $('.content-section').addClass('d-none');
     // Show active section
@@ -3162,6 +3202,7 @@
 
     // Videos Section Functions
     let isVideoUploadInProgress = false;
+    window.isVideoUploadInProgress = false;
     let nextVideoOrderIndex = 1;
 
     function updateNextVideoOrderIndex(videos) {
@@ -3203,6 +3244,7 @@
 
     function setVideoUploadLock(isLocked) {
       isVideoUploadInProgress = isLocked;
+      window.isVideoUploadInProgress = isLocked;
       $('#videoModal .close-btn, #videoModal .btn-secondary').prop('disabled', isLocked);
       $('#videoModal .header-save-btn, #videoModal button[type="submit"]').prop('disabled', isLocked);
     }
@@ -3211,6 +3253,33 @@
       $('#videoUploadProgressWrap').show();
       $('#videoUploadProgressText').text('Upload in progress. Please wait...');
     }
+    window.warnVideoUploadInProgress = warnVideoUploadInProgress;
+
+    function prepareVideoEditorView() {
+      const $editor = $('#videoModal');
+      if (!$editor.parent().is('#videoEditorMount')) {
+        $('#videoEditorMount').append($editor);
+      }
+      $editor.removeClass('offcanvas-sheet show').addClass('video-editor-view').show();
+      $('#offcanvas-backdrop').removeClass('show').hide();
+      $('body').css('overflow', '');
+    }
+
+    function openVideoEditorView() {
+      prepareVideoEditorView();
+      showSection('video-editor-section', 'nav-videos');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.closeVideoEditorView = function() {
+      if (isVideoUploadInProgress) {
+        warnVideoUploadInProgress();
+        return;
+      }
+      $('#videoModal').hide();
+      showSection('videos-section', 'nav-videos');
+      loadVideos();
+    };
 
     window.addEventListener('beforeunload', function(event) {
       if (!isVideoUploadInProgress) return;
@@ -3293,7 +3362,7 @@
     window.openAddVideoModal = function() {
       if (isVideoUploadInProgress) {
         warnVideoUploadInProgress();
-        $('#videoModal').modal('show');
+        openVideoEditorView();
         return;
       }
       $('#videoModalLabel').text('Add Video');
@@ -3310,7 +3379,7 @@
       setVideoOrderIndexFromServer();
       $('#videoVerticalBannerPreviewContainer').hide();
       $('#videoVerticalBannerPreview').attr('src', '');
-      $('#videoModal').modal('show');
+      openVideoEditorView();
     };
 
     function normalizeCdnImageUrl(url, fallback) {
@@ -3324,7 +3393,7 @@
     window.openEditVideoModal = function(id, title, slug, category, categoryId, verticalBanner, videoUrl, subtitleUrl, isLocked, isPublished, orderIndex) {
       if (isVideoUploadInProgress) {
         warnVideoUploadInProgress();
-        $('#videoModal').modal('show');
+        openVideoEditorView();
         return;
       }
       $('#videoModalLabel').text('Edit Video');
@@ -3350,7 +3419,7 @@
         $('#videoVerticalBannerPreview').attr('src', '/uploads/sample_vertical.jpg');
         $('#videoVerticalBannerPreviewContainer').hide();
       }
-      $('#videoModal').modal('show');
+      openVideoEditorView();
     };
 
     function uploadToS3WithProgress(uploadUrl, file, onProgress) {
@@ -3443,8 +3512,8 @@
             progressBar.css('width', '100%');
             progressText.text('Upload complete 100%');
             setVideoUploadLock(false);
-            $('#videoModal').modal('hide');
             loadVideos();
+            closeVideoEditorView();
           },
           error: function(err) {
             console.error('Video metadata save failed', err.responseJSON || err.responseText || err.statusText || err);
@@ -4179,7 +4248,7 @@
     const originalModal = $.fn.modal;
     $.fn.modal = function(action, ...args) {
       const id = this.attr('id');
-      if (['editUserModal', 'categoryModal', 'storyModal', 'audioItemModal', 'productModal', 'musicItemModal', 'videoModal'].includes(id)) {
+      if (['editUserModal', 'categoryModal', 'storyModal', 'audioItemModal', 'productModal', 'musicItemModal'].includes(id)) {
         if (action === 'show') {
           openOffcanvas(id);
         } else if (action === 'hide') {
@@ -4655,7 +4724,7 @@
       <button type="submit" form="videoForm" class="btn btn-light text-danger header-save-btn">
         <i class="fas fa-save mr-1"></i> Save &amp; Publish
       </button>
-      <button type="button" class="close-btn text-white" onclick="closeOffcanvas('videoModal')">&times;</button>
+      <button type="button" class="close-btn text-white" onclick="closeVideoEditorView()">&times;</button>
     </div>
   </div>
   <form id="videoForm" class="h-100 d-flex flex-column m-0">
@@ -4725,7 +4794,7 @@
       </div>
     </div>
     <div class="offcanvas-footer-sheet">
-      <button type="button" class="btn btn-secondary" onclick="closeOffcanvas('videoModal')"><i class="fas fa-times mr-1"></i> Close</button>
+      <button type="button" class="btn btn-secondary" onclick="closeVideoEditorView()"><i class="fas fa-times mr-1"></i> Back to Videos</button>
       <button type="submit" class="btn btn-danger"><i class="fas fa-save mr-1"></i> Save & Publish</button>
     </div>
   </form>
