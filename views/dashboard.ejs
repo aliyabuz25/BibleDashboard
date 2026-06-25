@@ -3162,6 +3162,15 @@
 
     // Videos Section Functions
     let isVideoUploadInProgress = false;
+    let nextVideoOrderIndex = 1;
+
+    function updateNextVideoOrderIndex(videos) {
+      const maxOrder = (Array.isArray(videos) ? videos : []).reduce((max, video) => {
+        const order = Number(video && video.orderIndex);
+        return Number.isFinite(order) && order > max ? order : max;
+      }, 0);
+      nextVideoOrderIndex = maxOrder + 1;
+    }
 
     function setVideoUploadLock(isLocked) {
       isVideoUploadInProgress = isLocked;
@@ -3189,6 +3198,7 @@
         url: '/api/videos',
         type: 'GET',
         success: function(videos) {
+          updateNextVideoOrderIndex(videos);
           let rows = '';
           videos.forEach(v => {
             const actions = v.isS3Only
@@ -3268,8 +3278,7 @@
       $('#videoSrtFile').val('');
       $('#videoUrl').val('');
       $('#videoSrtUrl').val('');
-      $('#videoOrderIndex').val('');
-      $('#videoOrderAdvanced').prop('open', false);
+      $('#videoOrderIndex').val(nextVideoOrderIndex);
       $('#videoVerticalBannerPreviewContainer').hide();
       $('#videoVerticalBannerPreview').attr('src', '');
       $('#videoModal').modal('show');
@@ -3302,7 +3311,6 @@
       $('#videoIsLocked').val(isLocked ? 'true' : 'false');
       $('#videoIsPublished').val(isPublished ? 'true' : 'false');
       $('#videoOrderIndex').val(orderIndex);
-      $('#videoOrderAdvanced').prop('open', false);
       $('#videoVerticalBannerFile').val('');
       $('#videoFile').val('');
       if (verticalBanner) {
@@ -4677,14 +4685,11 @@
                 <option value="true">Locked</option>
               </select>
             </div>
-            <details id="videoOrderAdvanced" class="mt-2">
-              <summary class="font-weight-bold text-secondary" style="cursor:pointer;">Advanced: change order manually</summary>
-              <div class="form-group mb-0 mt-2">
-                <label for="videoOrderIndex" class="font-weight-bold">Order Index</label>
-                <input type="number" class="form-control" id="videoOrderIndex" placeholder="Auto">
-                <small class="text-muted">Leave blank to place this video after the latest item automatically.</small>
-              </div>
-            </details>
+            <div class="form-group mb-0">
+              <label for="videoOrderIndex" class="font-weight-bold">Order Index</label>
+              <input type="number" class="form-control" id="videoOrderIndex" placeholder="Auto">
+              <small class="text-muted">Auto-filled from the current list. Change only if you need a custom order.</small>
+            </div>
           </div>
         </div>
       </div>
